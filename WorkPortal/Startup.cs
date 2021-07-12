@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WorkPortal.Data;
+using WorkPortal.Infrastructure;
 
 namespace WorkPortal
 {
@@ -21,9 +22,8 @@ namespace WorkPortal
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration
+                .AddDbContext<WorkPortalDbContext>(options =>
+                options.UseSqlServer(Configuration
                         .GetConnectionString("DefaultConnection")));
             services
                 .AddDatabaseDeveloperPageExceptionFilter();
@@ -31,13 +31,15 @@ namespace WorkPortal
             services
                 .AddDefaultIdentity<IdentityUser>(options => 
                     options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<WorkPortalDbContext>();
             services
                 .AddControllersWithViews();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.PrepareDatabase();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

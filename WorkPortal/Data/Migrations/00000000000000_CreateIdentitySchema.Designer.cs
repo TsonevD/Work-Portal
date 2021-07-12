@@ -9,7 +9,7 @@ using WorkPortal.Data;
 
 namespace WorkPortal.Data.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(WorkPortalDbContext))]
     [Migration("00000000000000_CreateIdentitySchema")]
     partial class CreateIdentitySchema
     {
