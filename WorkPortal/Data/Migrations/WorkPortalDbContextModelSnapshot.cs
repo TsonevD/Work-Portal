@@ -9,14 +9,14 @@ using WorkPortal.Data;
 namespace WorkPortal.Data.Migrations
 {
     [DbContext(typeof(WorkPortalDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    partial class WorkPortalDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.7")
+                .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -228,17 +228,20 @@ namespace WorkPortal.Data.Migrations
 
                     b.Property<string>("PostCode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("StreetName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Town")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("TownId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TownId");
 
                     b.ToTable("Addresses");
                 });
@@ -256,16 +259,21 @@ namespace WorkPortal.Data.Migrations
                     b.Property<DateTime>("DateTo")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("RemainingDays")
+                    b.Property<int?>("PayslipId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("RemainingDays")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("ShiftId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("TakenDays")
+                    b.Property<decimal?>("TakenDays")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PayslipId");
 
                     b.HasIndex("ShiftId");
 
@@ -281,7 +289,8 @@ namespace WorkPortal.Data.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Bulstat")
                         .IsRequired()
@@ -289,11 +298,13 @@ namespace WorkPortal.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Town")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
 
@@ -310,29 +321,34 @@ namespace WorkPortal.Data.Migrations
                     b.Property<int>("CompanyId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ManagerId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("ManagerId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ManagerId1")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
 
-                    b.HasIndex("ManagerId");
+                    b.HasIndex("ManagerId1");
 
                     b.ToTable("Departments");
                 });
 
             modelBuilder.Entity("Models.Employee", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AddressId")
+                    b.Property<int?>("AddressId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("DeletedOn")
@@ -347,7 +363,8 @@ namespace WorkPortal.Data.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
@@ -360,14 +377,20 @@ namespace WorkPortal.Data.Migrations
 
                     b.Property<string>("JobTitle")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
-                    b.Property<string>("ManagerId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("ManagerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MiddleName")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<int>("Phone")
                         .HasColumnType("int");
@@ -375,7 +398,7 @@ namespace WorkPortal.Data.Migrations
                     b.Property<string>("ProfilePictureUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ShiftId")
+                    b.Property<int?>("ShiftId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -427,11 +450,11 @@ namespace WorkPortal.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AnnualLeaveId")
+                    b.Property<int?>("AnnualLeaveId")
                         .HasColumnType("int");
 
-                    b.Property<string>("EmployeeId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
 
                     b.Property<TimeSpan>("FinishTime")
                         .HasColumnType("time");
@@ -443,10 +466,10 @@ namespace WorkPortal.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PayslipId")
+                    b.Property<int?>("PayslipId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Rate")
+                    b.Property<decimal>("RatePerHour")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("ShiftDate")
@@ -464,6 +487,23 @@ namespace WorkPortal.Data.Migrations
                     b.HasIndex("PayslipId");
 
                     b.ToTable("Shifts");
+                });
+
+            modelBuilder.Entity("Models.Town", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Town");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -517,8 +557,23 @@ namespace WorkPortal.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Models.Address", b =>
+                {
+                    b.HasOne("Models.Town", "Town")
+                        .WithMany()
+                        .HasForeignKey("TownId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Town");
+                });
+
             modelBuilder.Entity("Models.AnnualLeave", b =>
                 {
+                    b.HasOne("Models.Payslip", null)
+                        .WithMany("AnnualLeaves")
+                        .HasForeignKey("PayslipId");
+
                     b.HasOne("Models.Shift", null)
                         .WithMany("AnnualLeaves")
                         .HasForeignKey("ShiftId");
@@ -533,10 +588,8 @@ namespace WorkPortal.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Models.Employee", "Manager")
-                        .WithMany("Departments")
-                        .HasForeignKey("ManagerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("ManagerId1");
 
                     b.Navigation("Company");
 
@@ -548,8 +601,7 @@ namespace WorkPortal.Data.Migrations
                     b.HasOne("Models.Address", "Address")
                         .WithMany("Employees")
                         .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Models.Department", "Department")
                         .WithMany("Employees")
@@ -564,9 +616,7 @@ namespace WorkPortal.Data.Migrations
 
                     b.HasOne("Models.Shift", "Shift")
                         .WithMany()
-                        .HasForeignKey("ShiftId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ShiftId");
 
                     b.Navigation("Address");
 
@@ -588,9 +638,7 @@ namespace WorkPortal.Data.Migrations
                 {
                     b.HasOne("Models.AnnualLeave", "AnnualLeave")
                         .WithMany()
-                        .HasForeignKey("AnnualLeaveId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AnnualLeaveId");
 
                     b.HasOne("Models.Employee", null)
                         .WithMany("Shifts")
@@ -599,8 +647,7 @@ namespace WorkPortal.Data.Migrations
                     b.HasOne("Models.Payslip", "Payslip")
                         .WithMany("Shifts")
                         .HasForeignKey("PayslipId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("AnnualLeave");
 
@@ -624,8 +671,6 @@ namespace WorkPortal.Data.Migrations
 
             modelBuilder.Entity("Models.Employee", b =>
                 {
-                    b.Navigation("Departments");
-
                     b.Navigation("InverseManager");
 
                     b.Navigation("Shifts");
@@ -633,6 +678,8 @@ namespace WorkPortal.Data.Migrations
 
             modelBuilder.Entity("Models.Payslip", b =>
                 {
+                    b.Navigation("AnnualLeaves");
+
                     b.Navigation("Shifts");
                 });
 
