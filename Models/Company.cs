@@ -1,19 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using GlobalConstants;
 
 namespace Models
 {
+    using static DataConstants;
     public class Company
     {
         public int Id { get; init; }
         [Required]
+        [StringLength(DefaultNameMaxLength)]
         public string Name { get; init; }
         [Required]
         public string Bulstat { get; init; }
         [Required]
-        public string Address { get; init; }
+        [StringLength(AddressNameMaxLength)]
+        public string Address { get; set; }
         [Required]
-        public string Town { get; init; }
+        [StringLength(TownNameMaxLength)]
+        public string Town { get; set; }
         public ICollection<Department> Departments { get; init; } = new HashSet<Department>();
     }
 }

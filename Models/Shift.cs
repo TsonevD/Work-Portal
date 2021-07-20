@@ -1,24 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using GlobalConstants;
 
 namespace Models
 {
+    using static DataConstants;
+
     public class Shift
     {
         public int Id { get; init; }
-        public DateTime ShiftDate { get; init; }
-        public TimeSpan StartTime { get; init; }
-        public TimeSpan FinishTime { get; init; }
-        public decimal HoursWorking { get; init; }
-        public decimal Rate { get; init; }
-        [Required]
-        public string Location { get; init; }
-        public int PayslipId { get; init; }
-        public Payslip Payslip { get; init; }
-        public int AnnualLeaveId { get; init; }
-        public AnnualLeave AnnualLeave { get; init; }
-        public ICollection<AnnualLeave> AnnualLeaves { get; init; } = new HashSet<AnnualLeave>();
-        public ICollection<Payslip> Payslips { get; init; } = new HashSet<Payslip>();
+
+        public DateTime ShiftDate { get; set; }
+
+        public TimeSpan StartTime { get; set; }
+
+        public TimeSpan FinishTime { get; set; }
+
+        [Column(TypeName = DefaultDecimalValue)]
+        [Range(minimum:ShiftMinHours, maximum:ShiftMaxHours)]
+        public decimal HoursWorking { get; set; }
+
+        [Column(TypeName = DefaultDecimalValue)]
+        public decimal RatePerHour { get; set; }
+
+        public int LocationId { get; set; }
+
+        public Location Location { get; set; }
+
+        public ICollection<Employee> Employees { get; init; } = new HashSet<Employee>();
+
     }
 }

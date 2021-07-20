@@ -3,10 +3,27 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WorkPortal.Data.Migrations
 {
-    public partial class ImplementeDb : Migration
+    public partial class ImplementedWorkPortalDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "AnnualLeaves",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DateFrom = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateTo = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TakenDays = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    RemainingDays = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AnnualLeaves", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -60,6 +77,22 @@ namespace WorkPortal.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Companies", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Payslips",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RatePerHour = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    WorkingHourPerMonth = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    IssuedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Salary = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payslips", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -182,6 +215,55 @@ namespace WorkPortal.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AnnualLeavePayslip",
+                columns: table => new
+                {
+                    AnnualLeavesId = table.Column<int>(type: "int", nullable: false),
+                    PayslipsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AnnualLeavePayslip", x => new { x.AnnualLeavesId, x.PayslipsId });
+                    table.ForeignKey(
+                        name: "FK_AnnualLeavePayslip_AnnualLeaves_AnnualLeavesId",
+                        column: x => x.AnnualLeavesId,
+                        principalTable: "AnnualLeaves",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AnnualLeavePayslip_Payslips_PayslipsId",
+                        column: x => x.PayslipsId,
+                        principalTable: "Payslips",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Shifts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ShiftDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StartTime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    FinishTime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    HoursWorking = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    RatePerHour = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PayslipId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Shifts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Shifts_Payslips_PayslipId",
+                        column: x => x.PayslipId,
+                        principalTable: "Payslips",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Addresses",
                 columns: table => new
                 {
@@ -220,7 +302,6 @@ namespace WorkPortal.Data.Migrations
                     ProfilePictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AddressId = table.Column<int>(type: "int", nullable: true),
                     DepartmentId = table.Column<int>(type: "int", nullable: false),
-                    ShiftId = table.Column<int>(type: "int", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -270,83 +351,51 @@ namespace WorkPortal.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Shifts",
+                name: "EmployeePayslip",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ShiftDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    StartTime = table.Column<TimeSpan>(type: "time", nullable: false),
-                    FinishTime = table.Column<TimeSpan>(type: "time", nullable: false),
-                    HoursWorking = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    RatePerHour = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PayslipId = table.Column<int>(type: "int", nullable: true),
-                    AnnualLeaveId = table.Column<int>(type: "int", nullable: true),
-                    EmployeeId = table.Column<int>(type: "int", nullable: true)
+                    EmployeesId = table.Column<int>(type: "int", nullable: false),
+                    PayslipsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Shifts", x => x.Id);
+                    table.PrimaryKey("PK_EmployeePayslip", x => new { x.EmployeesId, x.PayslipsId });
                     table.ForeignKey(
-                        name: "FK_Shifts_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
+                        name: "FK_EmployeePayslip_Employees_EmployeesId",
+                        column: x => x.EmployeesId,
                         principalTable: "Employees",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Payslips",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RatePerHour = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    WorkingHourPerMonth = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    IssuedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Salary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ShiftId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Payslips", x => x.Id);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Payslips_Shifts_ShiftId",
-                        column: x => x.ShiftId,
-                        principalTable: "Shifts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AnnualLeaves",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DateFrom = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateTo = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TakenDays = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    RemainingDays = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    PayslipId = table.Column<int>(type: "int", nullable: true),
-                    ShiftId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AnnualLeaves", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AnnualLeaves_Payslips_PayslipId",
-                        column: x => x.PayslipId,
+                        name: "FK_EmployeePayslip_Payslips_PayslipsId",
+                        column: x => x.PayslipsId,
                         principalTable: "Payslips",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EmployeeShift",
+                columns: table => new
+                {
+                    EmployeesId = table.Column<int>(type: "int", nullable: false),
+                    ShiftsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeShift", x => new { x.EmployeesId, x.ShiftsId });
                     table.ForeignKey(
-                        name: "FK_AnnualLeaves_Shifts_ShiftId",
-                        column: x => x.ShiftId,
+                        name: "FK_EmployeeShift_Employees_EmployeesId",
+                        column: x => x.EmployeesId,
+                        principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EmployeeShift_Shifts_ShiftsId",
+                        column: x => x.ShiftsId,
                         principalTable: "Shifts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -355,14 +404,9 @@ namespace WorkPortal.Data.Migrations
                 column: "TownId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AnnualLeaves_PayslipId",
-                table: "AnnualLeaves",
-                column: "PayslipId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AnnualLeaves_ShiftId",
-                table: "AnnualLeaves",
-                column: "ShiftId");
+                name: "IX_AnnualLeavePayslip_PayslipsId",
+                table: "AnnualLeavePayslip",
+                column: "PayslipsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -414,6 +458,11 @@ namespace WorkPortal.Data.Migrations
                 column: "ManagerId1");
 
             migrationBuilder.CreateIndex(
+                name: "IX_EmployeePayslip_PayslipsId",
+                table: "EmployeePayslip",
+                column: "PayslipsId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Employees_AddressId",
                 table: "Employees",
                 column: "AddressId");
@@ -429,24 +478,9 @@ namespace WorkPortal.Data.Migrations
                 column: "ManagerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Employees_ShiftId",
-                table: "Employees",
-                column: "ShiftId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Payslips_ShiftId",
-                table: "Payslips",
-                column: "ShiftId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Shifts_AnnualLeaveId",
-                table: "Shifts",
-                column: "AnnualLeaveId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Shifts_EmployeeId",
-                table: "Shifts",
-                column: "EmployeeId");
+                name: "IX_EmployeeShift_ShiftsId",
+                table: "EmployeeShift",
+                column: "ShiftsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Shifts_PayslipId",
@@ -460,30 +494,6 @@ namespace WorkPortal.Data.Migrations
                 principalTable: "Departments",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Employees_Shifts_ShiftId",
-                table: "Employees",
-                column: "ShiftId",
-                principalTable: "Shifts",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Shifts_AnnualLeaves_AnnualLeaveId",
-                table: "Shifts",
-                column: "AnnualLeaveId",
-                principalTable: "AnnualLeaves",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Shifts_Payslips_PayslipId",
-                table: "Shifts",
-                column: "PayslipId",
-                principalTable: "Payslips",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -493,28 +503,15 @@ namespace WorkPortal.Data.Migrations
                 table: "Addresses");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_AnnualLeaves_Payslips_PayslipId",
-                table: "AnnualLeaves");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Shifts_Payslips_PayslipId",
-                table: "Shifts");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_AnnualLeaves_Shifts_ShiftId",
-                table: "AnnualLeaves");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Employees_Shifts_ShiftId",
-                table: "Employees");
-
-            migrationBuilder.DropForeignKey(
                 name: "FK_Departments_Companies_CompanyId",
                 table: "Departments");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Departments_Employees_ManagerId1",
                 table: "Departments");
+
+            migrationBuilder.DropTable(
+                name: "AnnualLeavePayslip");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -532,22 +529,28 @@ namespace WorkPortal.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "EmployeePayslip");
+
+            migrationBuilder.DropTable(
+                name: "EmployeeShift");
+
+            migrationBuilder.DropTable(
+                name: "AnnualLeaves");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Town");
+                name: "Shifts");
 
             migrationBuilder.DropTable(
                 name: "Payslips");
 
             migrationBuilder.DropTable(
-                name: "Shifts");
-
-            migrationBuilder.DropTable(
-                name: "AnnualLeaves");
+                name: "Town");
 
             migrationBuilder.DropTable(
                 name: "Companies");

@@ -34,11 +34,11 @@ namespace WorkPortal.Infrastructure
             {
                 return;
             }
-            data.Shifts.AddRange(new []
+            data.Shifts.AddRange(new[]
             {
                 new Shift()
                 {
-                    
+
                 }
             });
 
@@ -50,17 +50,17 @@ namespace WorkPortal.Infrastructure
             {
                 return;
             }
-            data.Employees.AddRange(new []
+            data.Employees.AddRange(new[]
             {
                 new Employee()
                 {
                     FirstName = "Peter",
                     LastName = "Parker",
                     Gender = Gender.Male,
-                    HireDate = DateTime.UtcNow,
+                    HireDate = DateTime.Parse("17/05/2020"),
                     Email = "peter@abv.bg",
                     DepartmentId = 1,
-                    JobTitle = "SEO",
+                    JobTitle = "Catering Manager",
                     Phone = 0888123456,
                     Address = new Address()
                     {
@@ -71,25 +71,34 @@ namespace WorkPortal.Infrastructure
                             Name = "London",
                         },
                     },
-                    Shift = new Shift()
+                    Shifts = new List<Shift>()
+                    {
+                        new Shift()
                     {
                         HoursWorking = 8,
-                        Location = "7th Floor of the Office in London",
-                        RatePerHour = 20000,
+                        RatePerHour = 27.80m,
                         ShiftDate = DateTime.Parse("12/08/2021"),
                         StartTime = TimeSpan.Parse("10:00"),
                         FinishTime = TimeSpan.Parse("18:30"),
+                        Location = new Location()
+                        {
+                            PostCode = "2300",
+                            StreetName = "St John ",
+                            StreetNumber = 26,
+                            Town = "London"
+                        }
                     }
+                        }
                 },
                 new Employee()
                 {
                     FirstName = "Ivan",
                     LastName = "Ivanov",
                     Gender = Gender.Male,
-                    HireDate = DateTime.UtcNow,
+                    HireDate = DateTime.Parse("17/07/2020"),
                     Email = "ivan@abv.bg",
                     DepartmentId = 4,
-                    JobTitle = "VP Finance",
+                    JobTitle = "Chef",
                     Phone = 0899123456,
                     Address = new Address()
                     {
@@ -106,33 +115,45 @@ namespace WorkPortal.Infrastructure
                         new Shift()
                         {
                             HoursWorking = 8,
-                            Location = "6th floor in the Main Office in London",
-                            RatePerHour = 6000,
+                            RatePerHour = 19.25m,
                             ShiftDate = DateTime.Parse("12/08/2021"),
                             StartTime = TimeSpan.Parse("10:00"),
                             FinishTime = TimeSpan.Parse("18:30"),
-                        },     
+                            Location = new Location()
+                            {
+                                PostCode = "2300",
+                                StreetName = "St John ",
+                                StreetNumber = 26,
+                                Town = "London"
+                            }
+                        },
                         new Shift()
                         {
                             HoursWorking = 8,
-                            Location = "6th floor in the Main Office in London",
-                            RatePerHour = 6000,
+                            RatePerHour = 13.25m,
                             ShiftDate = DateTime.Parse("13/08/2021"),
                             StartTime = TimeSpan.Parse("09:00"),
                             FinishTime = TimeSpan.Parse("17:30"),
+                            Location = new Location()
+                            {
+                                PostCode = "2300",
+                                StreetName = "St John ",
+                                StreetNumber = 26,
+                                Town = "London"
+                            },
                         },
                     }
-               
+
                 },
                 new Employee()
                 {
                     FirstName = "Dim",
                     LastName = "Dim",
                     Gender = Gender.Male,
-                    HireDate = DateTime.UtcNow,
+                    HireDate = DateTime.Parse("11/07/2020"),
                     Email = "dim@abv.bg",
                     DepartmentId = 3,
-                    JobTitle = "VP Legal",
+                    JobTitle = "Bartender",
                     Phone = 0877453456,
                     Address = new Address()
                     {
@@ -149,20 +170,32 @@ namespace WorkPortal.Infrastructure
                         new Shift()
                         {
                             HoursWorking = 8,
-                            Location = "5th floor in the Main Office in London",
-                            RatePerHour = 5000,
+                            RatePerHour = 17.50m,
                             ShiftDate = DateTime.Parse("12/08/2021"),
                             StartTime = TimeSpan.Parse("10:00"),
                             FinishTime = TimeSpan.Parse("18:30"),
+                            Location = new Location()
+                            {
+                                PostCode = "2300",
+                                StreetName = "St John ",
+                                StreetNumber = 26,
+                                Town = "London"
+                            },
                         },
                         new Shift()
                         {
                             HoursWorking = 8,
-                            Location = "5th floor in the Main Office in London",
-                            RatePerHour = 5000,
+                            RatePerHour = 17.50m,
                             ShiftDate = DateTime.Parse("13/08/2021"),
                             StartTime = TimeSpan.Parse("09:00"),
                             FinishTime = TimeSpan.Parse("17:30"),
+                            Location = new Location()
+                            {
+                                PostCode = "2300",
+                                StreetName = "St John ",
+                                StreetNumber = 26,
+                                Town = "London"
+                            },
                         },
                     }
                 },
@@ -171,11 +204,11 @@ namespace WorkPortal.Infrastructure
                     FirstName = "Jenna",
                     LastName = "Jonas",
                     Gender = Gender.Female,
-                    HireDate = DateTime.UtcNow,
+                    HireDate = DateTime.Parse("01/07/2020"),
                     Email = "jenna@abv.bg",
                     DepartmentId = 2,
-                    JobTitle = "VP HR",
-                    Phone = 0877453456,
+                    JobTitle = "Hostess",
+                    Phone = 087745345,
                     Address = new Address()
                     {
                         StreetName = "Third Avenue 23",
@@ -191,20 +224,33 @@ namespace WorkPortal.Infrastructure
                         new Shift()
                         {
                             HoursWorking = 8,
-                            Location = "At Home",
-                            RatePerHour = 8000,
+                            RatePerHour = 20.25m,
                             ShiftDate = DateTime.Parse("12/08/2021"),
                             StartTime = TimeSpan.Parse("07:00"),
                             FinishTime = TimeSpan.Parse("15:30"),
+                            Location = new Location()
+                            {
+                                PostCode = "2300",
+                                StreetName = "St John ",
+                                StreetNumber = 26,
+                                Town = "London"
+                            },
+
                         },
                         new Shift()
                         {
                             HoursWorking = 8,
-                            Location = "At Home",
-                            RatePerHour = 8000,
+                            RatePerHour = 20.25m,
                             ShiftDate = DateTime.Parse("13/08/2021"),
                             StartTime = TimeSpan.Parse("07:00"),
                             FinishTime = TimeSpan.Parse("15:30"),
+                            Location = new Location()
+                            {
+                                PostCode = "2300",
+                                StreetName = "St John ",
+                                StreetNumber = 26,
+                                Town = "London"
+                            },
                         },
                     }
                 },
@@ -226,7 +272,7 @@ namespace WorkPortal.Infrastructure
                 Town = "New York"
             };
             data.Companies.Add(company);
-            data.Departments.AddRange(new []
+            data.Departments.AddRange(new[]
             {
                 new Department()
                 {

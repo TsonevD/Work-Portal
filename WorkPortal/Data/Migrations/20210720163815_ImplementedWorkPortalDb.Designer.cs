@@ -10,8 +10,8 @@ using WorkPortal.Data;
 namespace WorkPortal.Data.Migrations
 {
     [DbContext(typeof(WorkPortalDbContext))]
-    [Migration("20210714104327_ImplementeDb")]
-    partial class ImplementeDb
+    [Migration("20210720163815_ImplementedWorkPortalDb")]
+    partial class ImplementedWorkPortalDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,51 @@ namespace WorkPortal.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("AnnualLeavePayslip", b =>
+                {
+                    b.Property<int>("AnnualLeavesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PayslipsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AnnualLeavesId", "PayslipsId");
+
+                    b.HasIndex("PayslipsId");
+
+                    b.ToTable("AnnualLeavePayslip");
+                });
+
+            modelBuilder.Entity("EmployeePayslip", b =>
+                {
+                    b.Property<int>("EmployeesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PayslipsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EmployeesId", "PayslipsId");
+
+                    b.HasIndex("PayslipsId");
+
+                    b.ToTable("EmployeePayslip");
+                });
+
+            modelBuilder.Entity("EmployeeShift", b =>
+                {
+                    b.Property<int>("EmployeesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ShiftsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EmployeesId", "ShiftsId");
+
+                    b.HasIndex("ShiftsId");
+
+                    b.ToTable("EmployeeShift");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -261,23 +306,16 @@ namespace WorkPortal.Data.Migrations
                     b.Property<DateTime>("DateTo")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("PayslipId")
-                        .HasColumnType("int");
-
                     b.Property<decimal?>("RemainingDays")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("ShiftId")
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<decimal?>("TakenDays")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PayslipId");
-
-                    b.HasIndex("ShiftId");
 
                     b.ToTable("AnnualLeaves");
                 });
@@ -400,9 +438,6 @@ namespace WorkPortal.Data.Migrations
                     b.Property<string>("ProfilePictureUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ShiftId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
@@ -410,8 +445,6 @@ namespace WorkPortal.Data.Migrations
                     b.HasIndex("DepartmentId");
 
                     b.HasIndex("ManagerId");
-
-                    b.HasIndex("ShiftId");
 
                     b.ToTable("Employees");
                 });
@@ -432,15 +465,10 @@ namespace WorkPortal.Data.Migrations
                     b.Property<decimal>("Salary")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("ShiftId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("WorkingHourPerMonth")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ShiftId");
 
                     b.ToTable("Payslips");
                 });
@@ -451,12 +479,6 @@ namespace WorkPortal.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("AnnualLeaveId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EmployeeId")
-                        .HasColumnType("int");
 
                     b.Property<TimeSpan>("FinishTime")
                         .HasColumnType("time");
@@ -482,10 +504,6 @@ namespace WorkPortal.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AnnualLeaveId");
-
-                    b.HasIndex("EmployeeId");
-
                     b.HasIndex("PayslipId");
 
                     b.ToTable("Shifts");
@@ -506,6 +524,51 @@ namespace WorkPortal.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Town");
+                });
+
+            modelBuilder.Entity("AnnualLeavePayslip", b =>
+                {
+                    b.HasOne("Models.AnnualLeave", null)
+                        .WithMany()
+                        .HasForeignKey("AnnualLeavesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Models.Payslip", null)
+                        .WithMany()
+                        .HasForeignKey("PayslipsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EmployeePayslip", b =>
+                {
+                    b.HasOne("Models.Employee", null)
+                        .WithMany()
+                        .HasForeignKey("EmployeesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Models.Payslip", null)
+                        .WithMany()
+                        .HasForeignKey("PayslipsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EmployeeShift", b =>
+                {
+                    b.HasOne("Models.Employee", null)
+                        .WithMany()
+                        .HasForeignKey("EmployeesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Models.Shift", null)
+                        .WithMany()
+                        .HasForeignKey("ShiftsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -570,17 +633,6 @@ namespace WorkPortal.Data.Migrations
                     b.Navigation("Town");
                 });
 
-            modelBuilder.Entity("Models.AnnualLeave", b =>
-                {
-                    b.HasOne("Models.Payslip", null)
-                        .WithMany("AnnualLeaves")
-                        .HasForeignKey("PayslipId");
-
-                    b.HasOne("Models.Shift", null)
-                        .WithMany("AnnualLeaves")
-                        .HasForeignKey("ShiftId");
-                });
-
             modelBuilder.Entity("Models.Department", b =>
                 {
                     b.HasOne("Models.Company", "Company")
@@ -602,8 +654,7 @@ namespace WorkPortal.Data.Migrations
                 {
                     b.HasOne("Models.Address", "Address")
                         .WithMany("Employees")
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("AddressId");
 
                     b.HasOne("Models.Department", "Department")
                         .WithMany("Employees")
@@ -616,44 +667,18 @@ namespace WorkPortal.Data.Migrations
                         .HasForeignKey("ManagerId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Models.Shift", "Shift")
-                        .WithMany()
-                        .HasForeignKey("ShiftId");
-
                     b.Navigation("Address");
 
                     b.Navigation("Department");
 
                     b.Navigation("Manager");
-
-                    b.Navigation("Shift");
-                });
-
-            modelBuilder.Entity("Models.Payslip", b =>
-                {
-                    b.HasOne("Models.Shift", null)
-                        .WithMany("Payslips")
-                        .HasForeignKey("ShiftId");
                 });
 
             modelBuilder.Entity("Models.Shift", b =>
                 {
-                    b.HasOne("Models.AnnualLeave", "AnnualLeave")
-                        .WithMany()
-                        .HasForeignKey("AnnualLeaveId");
-
-                    b.HasOne("Models.Employee", null)
+                    b.HasOne("Models.Payslip", null)
                         .WithMany("Shifts")
-                        .HasForeignKey("EmployeeId");
-
-                    b.HasOne("Models.Payslip", "Payslip")
-                        .WithMany("Shifts")
-                        .HasForeignKey("PayslipId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("AnnualLeave");
-
-                    b.Navigation("Payslip");
+                        .HasForeignKey("PayslipId");
                 });
 
             modelBuilder.Entity("Models.Address", b =>
@@ -674,22 +699,11 @@ namespace WorkPortal.Data.Migrations
             modelBuilder.Entity("Models.Employee", b =>
                 {
                     b.Navigation("InverseManager");
-
-                    b.Navigation("Shifts");
                 });
 
             modelBuilder.Entity("Models.Payslip", b =>
                 {
-                    b.Navigation("AnnualLeaves");
-
                     b.Navigation("Shifts");
-                });
-
-            modelBuilder.Entity("Models.Shift", b =>
-                {
-                    b.Navigation("AnnualLeaves");
-
-                    b.Navigation("Payslips");
                 });
 #pragma warning restore 612, 618
         }

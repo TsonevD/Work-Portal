@@ -5,15 +5,17 @@ using WorkPortal.Models.Employee;
 
 namespace WorkPortal.Controllers
 {
-    public class EmployeeController : Controller
+    public class EmployeeController : Controller 
     {
         private readonly WorkPortalDbContext data;
 
         public EmployeeController(WorkPortalDbContext data) 
             => this.data = data;
 
+
         public IActionResult Portal()
         {
+            ViewBag.Title = "My profile";
             var id = 1;
             var profile = this.data.Employees.Where(x => x.Id == id)
                 .Select(x => new ProfileViewModel()
