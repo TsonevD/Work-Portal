@@ -1,0 +1,38 @@
+﻿@using System.Globalization
+@model AllShiftsViewModel
+
+@{
+    ViewBag.Title = "Shifts";
+}
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+
+<section class="py-5 bg-dark">
+    <div class="container">
+        @foreach (var shift in Model.Shifts)
+        {
+            <div class="row mb-3">
+                <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row text-center ">
+                            <div class="col-md-1 mr-2">
+                                <i class="fa fa-tachometer fa-2x "></i>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>@shift.Location.CompanyName</h5>
+
+                                <h6>on @shift.ShiftDate.ToString("D", CultureInfo.InvariantCulture)</h6>
+                                <p>From: @shift.StartTime to @shift.FinishTime</p>
+                            </div>
+                            <div class="col-md-4">
+                                <a asp-controller="Shifts" asp-action="Details" asp-route-id="@shift.Id" type="button" class="btn btn-outline-info btn-sm">View more details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>}
+    </div>
+
+</section>

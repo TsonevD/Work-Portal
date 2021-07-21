@@ -1,0 +1,50 @@
+﻿@using System.Globalization
+@model ShiftViewModel
+
+@{
+    ViewBag.Title = "Shift details";
+}
+
+<br/>
+<div class="container">
+    <div class="section">
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <div class="page-header text-center">
+                    <h2 id="tables">@ViewBag.Title for: </h2>
+                    <h2 class="font-weight-bold font-italic">@Model.Location.CompanyName</h2>
+                    <br />
+                </div>
+                <div class="component">
+                    <table class="table table-hover">
+                        <thead class=" table-active">
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Rate</th>
+                                <th scope="col">Shift Times</th>
+                                <th scope="col">Working Hours</th>
+                                <th scope="col">Full Address</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="table-light">
+                            <td>@Model.ShiftDate.ToString("M" , CultureInfo.InvariantCulture)</td>
+                            <td>@Model.RatePerHour $ </td>
+                            <td>@Model.StartTime - @Model.FinishTime</td>
+                            <td>@Model.HoursWorking</td>
+
+                            <td>
+                                                        @Model.Location.Town
+                                @Model.Location.StreetName № @Model.Location.StreetNumber, @Model.Location.PostCode
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                    <br />
+                <a asp-controller="Shifts" asp-action="All" type="button" class="btn btn-outline-info btn-sm float-sm-right">Back</a>
+            </div>
+        </div>
+    </div>
+</div>

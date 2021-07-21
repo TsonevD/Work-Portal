@@ -61,6 +61,7 @@ namespace WorkPortal.Infrastructure
                     Email = "peter@abv.bg",
                     DepartmentId = 1,
                     JobTitle = "Catering Manager",
+                    ProfilePictureUrl = "https://st.depositphotos.com/2101611/4338/v/600/depositphotos_43381243-stock-illustration-male-avatar-profile-picture.jpg",
                     Phone = 0888123456,
                     Address = new Address()
                     {
@@ -73,22 +74,39 @@ namespace WorkPortal.Infrastructure
                     },
                     Shifts = new List<Shift>()
                     {
-                        new Shift()
-                    {
-                        HoursWorking = 8,
-                        RatePerHour = 27.80m,
-                        ShiftDate = DateTime.Parse("12/08/2021"),
-                        StartTime = TimeSpan.Parse("10:00"),
-                        FinishTime = TimeSpan.Parse("18:30"),
-                        Location = new Location()
+                            new Shift()
                         {
-                            PostCode = "2300",
-                            StreetName = "St John ",
-                            StreetNumber = 26,
-                            Town = "London"
-                        }
+                            HoursWorking = 8,
+                            RatePerHour = 27.80m,
+                            ShiftDate = DateTime.Parse("12/08/2021"),
+                            StartTime = TimeSpan.Parse("10:00"),
+                            FinishTime = TimeSpan.Parse("18:30"),
+                            Location = new Location()
+                            {
+                                PostCode = "W1F 7LP",
+                                StreetName = "St John ",
+                                StreetNumber = 26,
+                                Town = "London",
+                                CompanyName = "JP Morgan"
+                            }
+                        },
+                            new Shift()
+                            {
+                            HoursWorking = 4,
+                            RatePerHour = 27.80m,
+                            ShiftDate = DateTime.Parse("13/08/2021"),
+                            StartTime = TimeSpan.Parse("12:00"),
+                            FinishTime = TimeSpan.Parse("16:30"),
+                            Location = new Location()
+                            {
+                                PostCode = "W1F 1LM",
+                                StreetName = "John Harrington",
+                                StreetNumber = 12,
+                                Town = "London",
+                                CompanyName = "Google"
+                            }
                     }
-                        }
+                    }
                 },
                 new Employee()
                 {
@@ -98,6 +116,7 @@ namespace WorkPortal.Infrastructure
                     HireDate = DateTime.Parse("17/07/2020"),
                     Email = "ivan@abv.bg",
                     DepartmentId = 4,
+                    ProfilePictureUrl = "https://lh3.googleusercontent.com/proxy/P0DAnWIuO6cMmkm6BcNXSNSDgESlw2_60f6QY2Gfkm5HAnp-rEpt0oOUrXmH_yjN6s3zgkmcSOv3iXotv9jWMXKQoWi_N0d_t9hFg4-OgoNP",
                     JobTitle = "Chef",
                     Phone = 0899123456,
                     Address = new Address()
@@ -121,10 +140,11 @@ namespace WorkPortal.Infrastructure
                             FinishTime = TimeSpan.Parse("18:30"),
                             Location = new Location()
                             {
-                                PostCode = "2300",
+                                PostCode = "W1F 7LP",
                                 StreetName = "St John ",
                                 StreetNumber = 26,
-                                Town = "London"
+                                Town = "London",
+                                CompanyName = "JP Morgan"
                             }
                         },
                         new Shift()
@@ -136,11 +156,12 @@ namespace WorkPortal.Infrastructure
                             FinishTime = TimeSpan.Parse("17:30"),
                             Location = new Location()
                             {
-                                PostCode = "2300",
+                                PostCode = "W1F 7LP",
                                 StreetName = "St John ",
                                 StreetNumber = 26,
-                                Town = "London"
-                            },
+                                Town = "London",
+                                CompanyName = "JP Morgan"
+                            }
                         },
                     }
 
@@ -154,6 +175,7 @@ namespace WorkPortal.Infrastructure
                     Email = "dim@abv.bg",
                     DepartmentId = 3,
                     JobTitle = "Bartender",
+                    ProfilePictureUrl = "https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-19.jpg",
                     Phone = 0877453456,
                     Address = new Address()
                     {
@@ -176,11 +198,12 @@ namespace WorkPortal.Infrastructure
                             FinishTime = TimeSpan.Parse("18:30"),
                             Location = new Location()
                             {
-                                PostCode = "2300",
+                                PostCode = "W1F 7LP",
                                 StreetName = "St John ",
                                 StreetNumber = 26,
-                                Town = "London"
-                            },
+                                Town = "London",
+                                CompanyName = "JP Morgan"
+                            }
                         },
                         new Shift()
                         {
@@ -191,11 +214,12 @@ namespace WorkPortal.Infrastructure
                             FinishTime = TimeSpan.Parse("17:30"),
                             Location = new Location()
                             {
-                                PostCode = "2300",
-                                StreetName = "St John ",
-                                StreetNumber = 26,
-                                Town = "London"
-                            },
+                                PostCode = "W1F 1LM",
+                                StreetName = "John Harrington",
+                                StreetNumber = 12,
+                                Town = "London",
+                                CompanyName = "Google"
+                            }
                         },
                     }
                 },
@@ -208,6 +232,7 @@ namespace WorkPortal.Infrastructure
                     Email = "jenna@abv.bg",
                     DepartmentId = 2,
                     JobTitle = "Hostess",
+                    ProfilePictureUrl = "https://image.shutterstock.com/image-vector/woman-profile-picture-vector-260nw-438752173.jpg",
                     Phone = 087745345,
                     Address = new Address()
                     {
@@ -230,11 +255,12 @@ namespace WorkPortal.Infrastructure
                             FinishTime = TimeSpan.Parse("15:30"),
                             Location = new Location()
                             {
-                                PostCode = "2300",
-                                StreetName = "St John ",
-                                StreetNumber = 26,
-                                Town = "London"
-                            },
+                                PostCode = "W1F 1LM",
+                                StreetName = "John Harrington",
+                                StreetNumber = 12,
+                                Town = "London",
+                                CompanyName = "Google"
+                            }
 
                         },
                         new Shift()
@@ -246,11 +272,12 @@ namespace WorkPortal.Infrastructure
                             FinishTime = TimeSpan.Parse("15:30"),
                             Location = new Location()
                             {
-                                PostCode = "2300",
-                                StreetName = "St John ",
-                                StreetNumber = 26,
-                                Town = "London"
-                            },
+                                PostCode = "W1F 1LM",
+                                StreetName = "John Harrington",
+                                StreetNumber = 12,
+                                Town = "London",
+                                CompanyName = "Google"
+                            }
                         },
                     }
                 },
