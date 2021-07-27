@@ -1,0 +1,100 @@
+﻿@model AnnualLeaveInputModel;
+
+@{
+    ViewBag.Title = "Add new annual Leave";
+
+}
+
+<div id="content" class="pmd-content admin section-container">
+    <h1 class="text-center">Annual Leave</h1>
+    <div class="page-content">
+        <!-- Apply Leave Form -->
+        <div class="card pmd-card single-col-form">
+            <form name="myForm" id="myForm" method="post" action="" novalidate="novalidate">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                <label asp-for="LeaveType">Leave Type</label>
+                                <select asp-for="LeaveType" id="leave-type" class="form-control" title="Please select a Leave Type" required="">
+                                    <option></option>
+                                    <option value="1">Sick Leave</option>
+                                    <option value="2">Unpaid Leave</option>
+                                    <option value="3">Paid Leave</option>
+                                </select><span class="pmd-textfield-focused"></span>
+                                <span asp-validation-for="LeaveType" class="small text-danger"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed col-6">
+                            <label asp-for="StartDate" class="text-center">From:</label>
+                            <input asp-for="StartDate" type="date" id="inputDate" name="startDate" onchange="getDate()">
+                            <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                            <span asp-validation-for="StartDate" class="small text-danger"></span>
+                            <p id="result"></p>
+                        </div>
+                        <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed col-6">
+                            <label asp-for="EndDate">To:</label>
+                            <input asp-for="EndDate" type="date" id="endDate" name="endDate" onchange="compareDates()">
+                            <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                            <span asp-validation-for="EndDate" class="small text-danger"></span>
+                            <p id="compare"></p>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                <label asp-for="Reason">Reason</label>
+                                <textarea asp-for="Reason" class="form-control" id="reason" name="reason"></textarea>
+                                <span asp-validation-for="Reason" class="small text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary pmd-ripple-effect pmd-btn-raised" name="applyleave" value="Apply Leave">Apply Leave</button>
+                    <a asp-action="All" class="btn btn-outline-secondary pmd-ripple-effect float-right">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<script type="text/javascript">
+
+    function getDate() {
+        var givenDate = Date.parse(document.myForm.inputDate.value);
+
+        if (!givenDate.isNaN) {
+            givenDate = new Date(givenDate).setHours(0, 0, 0, 0);
+            var todayDate = new Date().setHours(0, 0, 0, 0);
+
+            if (givenDate >= todayDate) {
+                result.innerHTML = 'Great!';
+                result.style.color = 'green';
+            } else {
+                result.innerHTML = "Please choose a future date.";
+                result.style.color = 'red';
+            }
+        }
+    };
+    function compareDates() {
+        var givenDate = Date.parse(document.myForm.inputDate.value);
+        var endDate = Date.parse(document.myForm.endDate.value);
+
+        if (!givenDate.isNaN && !endDate.isNaN) {
+            givenDate = new Date(givenDate).setHours(0, 0, 0, 0);
+            endDate = new Date(endDate).setHours(0, 0, 0, 0);
+
+            if (endDate >= givenDate) {
+                compare.innerHTML = 'Great!';
+                compare.style.color = 'green';
+            } else {
+                compare.innerHTML = "Please choose a future date.";
+                compare.style.color = 'red';
+            }
+        }
+    }
+</script>

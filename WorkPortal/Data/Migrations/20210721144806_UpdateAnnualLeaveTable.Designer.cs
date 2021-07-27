@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorkPortal.Data;
 
 namespace WorkPortal.Data.Migrations
 {
     [DbContext(typeof(WorkPortalDbContext))]
-    partial class WorkPortalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210721144806_UpdateAnnualLeaveTable")]
+    partial class UpdateAnnualLeaveTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -304,23 +306,14 @@ namespace WorkPortal.Data.Migrations
                     b.Property<DateTime>("DateTo")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DaysToBeTaken")
-                        .HasMaxLength(28)
-                        .HasColumnType("int");
-
-                    b.Property<string>("Reason")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("RemainingDays")
-                        .HasMaxLength(28)
-                        .HasColumnType("int");
+                    b.Property<decimal?>("RemainingDays")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
+                    b.Property<decimal?>("TakenDays")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
