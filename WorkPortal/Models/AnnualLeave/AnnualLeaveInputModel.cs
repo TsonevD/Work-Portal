@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using GlobalConstants;
+using Models.Enums;
 
 namespace WorkPortal.Models.AnnualLeave
 {
@@ -9,7 +10,8 @@ namespace WorkPortal.Models.AnnualLeave
     {
 
         [Required]
-        public string LeaveType { get; set; }
+        public AnnualLeaveType LeaveType { get; set; }
+
         [Required]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]

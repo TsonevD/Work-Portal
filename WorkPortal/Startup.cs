@@ -39,6 +39,7 @@ namespace WorkPortal
                     options.Password.RequireNonAlphanumeric = false;
 
                 })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<WorkPortalDbContext>();
             services
                 .AddControllersWithViews(options =>

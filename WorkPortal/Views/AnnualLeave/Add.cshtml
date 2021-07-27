@@ -16,13 +16,15 @@
                         <div class="col-12">
                             <div class="form-group pmd-textfield pmd-textfield-floating-label">
                                 <label asp-for="LeaveType">Leave Type</label>
+
                                 <select asp-for="LeaveType" id="leave-type" class="form-control" title="Please select a Leave Type" required="">
                                     <option></option>
-                                    <option value="1">Sick Leave</option>
-                                    <option value="2">Unpaid Leave</option>
-                                    <option value="3">Paid Leave</option>
+                                    <option value="0">Sick Leave</option>
+                                    <option value="1">Unpaid Leave</option>
+                                    <option value="2">Paid Leave</option>
                                 </select><span class="pmd-textfield-focused"></span>
                                 <span asp-validation-for="LeaveType" class="small text-danger"></span>
+
                             </div>
                         </div>
                         
