@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WorkPortal.Data.Migrations
 {
-    public partial class ImplementedWorkPortalDb : Migration
+    public partial class ImplementedDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,9 +15,11 @@ namespace WorkPortal.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DateFrom = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateTo = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TakenDays = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    RemainingDays = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: false)
+                    DaysToBeTaken = table.Column<int>(type: "int", maxLength: 28, nullable: true),
+                    RemainingDays = table.Column<int>(type: "int", maxLength: 28, nullable: true),
+                    Reason = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -43,6 +45,10 @@ namespace WorkPortal.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsApproved = table.Column<bool>(type: "bit", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -77,6 +83,23 @@ namespace WorkPortal.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Companies", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Locations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Town = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    StreetName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    StreetNumber = table.Column<int>(type: "int", nullable: false),
+                    PostCode = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    CompanyName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Locations", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -249,12 +272,18 @@ namespace WorkPortal.Data.Migrations
                     FinishTime = table.Column<TimeSpan>(type: "time", nullable: false),
                     HoursWorking = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     RatePerHour = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LocationId = table.Column<int>(type: "int", nullable: false),
                     PayslipId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Shifts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Shifts_Locations_LocationId",
+                        column: x => x.LocationId,
+                        principalTable: "Locations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Shifts_Payslips_PayslipId",
                         column: x => x.PayslipId,
@@ -281,7 +310,7 @@ namespace WorkPortal.Data.Migrations
                         column: x => x.TownId,
                         principalTable: "Town",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -290,12 +319,11 @@ namespace WorkPortal.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     MiddleName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     JobTitle = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: false),
-                    Phone = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ManagerId = table.Column<int>(type: "int", nullable: true),
                     HireDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -312,6 +340,12 @@ namespace WorkPortal.Data.Migrations
                         name: "FK_Employees_Addresses_AddressId",
                         column: x => x.AddressId,
                         principalTable: "Addresses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Employees_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -341,7 +375,7 @@ namespace WorkPortal.Data.Migrations
                         column: x => x.CompanyId,
                         principalTable: "Companies",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Departments_Employees_ManagerId1",
                         column: x => x.ManagerId1,
@@ -478,9 +512,20 @@ namespace WorkPortal.Data.Migrations
                 column: "ManagerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Employees_UserId",
+                table: "Employees",
+                column: "UserId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_EmployeeShift_ShiftsId",
                 table: "EmployeeShift",
                 column: "ShiftsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Shifts_LocationId",
+                table: "Shifts",
+                column: "LocationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Shifts_PayslipId",
@@ -501,6 +546,10 @@ namespace WorkPortal.Data.Migrations
             migrationBuilder.DropForeignKey(
                 name: "FK_Addresses_Town_TownId",
                 table: "Addresses");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Employees_AspNetUsers_UserId",
+                table: "Employees");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Departments_Companies_CompanyId",
@@ -541,16 +590,19 @@ namespace WorkPortal.Data.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Shifts");
 
             migrationBuilder.DropTable(
-                name: "Shifts");
+                name: "Locations");
 
             migrationBuilder.DropTable(
                 name: "Payslips");
 
             migrationBuilder.DropTable(
                 name: "Town");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Companies");

@@ -1,0 +1,54 @@
+﻿@using System.Globalization
+@model IEnumerable<WorkPortal.Areas.Admin.Models.Employee.AllEmployeeViewModel>
+@{
+    ViewBag.Title = "All";
+}
+
+
+<div id="content" class="pmd-content section-container">
+    <h1 class="text-center">All Employees for Approval</h1>
+    <div class="page-content">
+        <div class="tab-pane active show">
+            <table class="table table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Date of Birth</th>
+                        <th>Email Address</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                @if (Model.Any())
+                {
+                    <div>
+                        <p> There isn`t any new Employees for approval.</p>
+                    </div>
+                }
+                else
+                {
+                    @foreach (var employee in Model)
+                    {
+                        <tbody>
+                            <tr role="row">
+                                <td data-title="First Name">@employee.FirstName</td>
+                                <td data-title="Last Name">@employee.LastName</td>
+                                <td data-title="Date of Birth">@employee.DateOfBirth.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture)</td>
+                                <td data-title="Email Address">@employee.Email</td>
+                                <td data-title="Actions">
+                                    <a href="@Url.Action($"Approve", "Employee", new { id = $"{employee.Id}" , area = "Admin" }) " class="btn btn-primary pmd-ripple-effect btn-sm">Approve</a>
+                                    <a href="@Url.Action($"Delete", "Employee", new { id = $"{employee.Id}" , area = "Admin" })" class="btn btn-danger pmd-ripple-effect btn-sm">Delete</a>
+
+
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    }
+                }
+                </table>
+
+            </div>
+    </div>
+</div>
+

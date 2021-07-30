@@ -8,7 +8,6 @@ namespace WorkPortal.Models.AnnualLeave
     using static DataConstants.AnnualLeave;
     public class AnnualLeaveInputModel
     {
-
         [Required]
         public AnnualLeaveType LeaveType { get; set; }
 
@@ -16,6 +15,7 @@ namespace WorkPortal.Models.AnnualLeave
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }
+
         [Required]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]

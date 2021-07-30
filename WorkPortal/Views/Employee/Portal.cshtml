@@ -10,87 +10,99 @@
 <!-- Title -->
     <h1 class="text-center">@ViewBag.Title</h1>
 <!-- End Title -->
-        <div class="container display-table center">
-            <div class="row display-table-row">
-                <div class="col-md-10 col-sm-11 display-table-cell v-align">
-                    <div class="row">
-                        <header>
-                            <div class="col-md-6">
-                                <nav class="navbar-default float-md-left">
-                                    <div class="navbar-header">
-                                        <h5 class="text-center">Hello @Model.FirstName @Model.LastName</h5>
-                                    </div>
-                                </nav>
-                            </div>
-                        </header>
-                    </div>
-                    <br />
-                    <div class="container-fluid">
+<div class="container display-table center">
+    <div class="row display-table-row">
+
+  
+        <div>
+            <p class="text-center">
+                Your portal need to be updated by your Administrator.
+                Please contact them.
+            </p>
+        </div>
+        
+        @if (Model != null)
+        {
+        <div class="col-md-10 col-sm-11 display-table-cell v-align">
                         <div class="row">
-                            <div class="col-xs-12 col-sm-9">
-                                <!-- User profile -->
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <div class="profile__avatar">
-                                            <img class="img-fluid" src="@Model.ImageUrl" alt="@Model.FirstName @Model.LastName">
+                            <header>
+                                <div class="col-md-6">
+                                    <nav class="navbar-default float-md-left">
+                                        <div class="navbar-header">
+                                            <h5 class="text-center">Hello @Model.FirstName @Model.LastName</h5>
                                         </div>
-                                        <div class="profile__header">
-                                            <p class="text-muted">
-                                                This is your profile page. You can see all your Shifts and Payslips.
-                                                You can request for annual leaves or off days.
-                                            </p>
-                                            <p>
-                                        </div>
-                                    </div>
-                                    <!-- User info -->
+                                    </nav>
+                                </div>
+                            </header>
+                        </div>
+                        <br />
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-9">
+                                    <!-- User profile -->
                                     <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">User info</h4>
-                                        </div>
                                         <div class="panel-body">
-                                            <table class="table profile__table">
-                                                <tbody>
-                                                    <tr>
-                                                        <th><strong>Location</strong></th>
-                                                        <td>@Model.CompanyLocation</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th><strong>Company name</strong></th>
-                                                        <td>@Model.CompanyName</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th><strong>Position</strong></th>
-                                                        <td>@Model.JobTitle</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                            <div class="profile__avatar">
+                                                <img class="img-fluid" src="@Model.ImageUrl" alt="@Model.FirstName @Model.LastName">
+                                            </div>
+                                            <div class="profile__header">
+                                                <p class="text-muted">
+                                                    This is your profile page. You can see all your Shifts and Payslips.
+                                                    You can request for annual leaves or off days.
+                                                </p>
+                                                <p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <!-- Community -->
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">Community</h4>
+                                        <!-- User info -->
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">User info</h4>
+                                            </div>
+                                            <div class="panel-body">
+                                                <table class="table profile__table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th><strong>Location</strong></th>
+                                                            <td>@Model.CompanyLocation</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th><strong>Company name</strong></th>
+                                                            <td>@Model.CompanyName</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th><strong>Position</strong></th>
+                                                            <td>@Model.JobTitle</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
-                                        <div class="panel-body">
-                                            <table class="table profile__table">
-                                                <tbody>
-                                                    <tr>
-                                                        <th><strong>Member since</strong></th>
-                                                        <td>@Model.HireDate.ToString("yyyy MMMM dd", CultureInfo.InvariantCulture)</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th><strong>Last login</strong></th>
-                                                        <td>1 day ago</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                        <!-- Community -->
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">Community</h4>
+                                            </div>
+                                            <div class="panel-body">
+                                                <table class="table profile__table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th><strong>Member since</strong></th>
+                                                            <td>@Model.HireDate.ToString("yyyy MMMM dd", CultureInfo.InvariantCulture)</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th><strong>Last login</strong></th>
+                                                            <td>1 day ago</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </div>}
+
+    </div>
         </div>
 </div>

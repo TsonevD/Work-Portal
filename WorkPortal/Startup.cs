@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Models;
 using WorkPortal.Data;
 using WorkPortal.Infrastructure;
 
@@ -24,15 +25,14 @@ namespace WorkPortal
         {
             services
                 .AddDbContext<WorkPortalDbContext>(options =>
-                options.UseSqlServer(Configuration
-                        .GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services
                 .AddDatabaseDeveloperPageExceptionFilter();
 
             services
-                .AddDefaultIdentity<IdentityUser>(options =>
+                .AddDefaultIdentity<User>(options =>
                 {
-                    options.SignIn.RequireConfirmedAccount = true;
                     options.Password.RequireDigit = false;
                     options.Password.RequireLowercase = false;
                     options.Password.RequireUppercase = false;
@@ -41,9 +41,14 @@ namespace WorkPortal
                 })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<WorkPortalDbContext>();
+
             services
                 .AddControllersWithViews(options =>
-                options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>());
+                {
+                    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+                });
+
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -70,9 +75,8 @@ namespace WorkPortal
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapDefaultAreaRoute();
+                endpoints.MapDefaultControllerRoute();
                 endpoints.MapRazorPages();
             });
         }

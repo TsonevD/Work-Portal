@@ -7,8 +7,15 @@
 
 <div id="content" class="pmd-content admin section-container">
 
+
     <h1 class="text-center">@ViewData["Title"]</h1>
-        <div class="container">
+
+    <div class="border-info">
+        <h2>New User Registration</h2>
+        <p class="text-center">In the fields to the right please enter all of your details so that we can verify that you are a our employee</p>
+        <p class="text-center">Date of Birth must be in format DD/MM/YYYY</p>
+    </div>
+    <div class="container border-right">
         <div class="row">
             <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
                 <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
@@ -19,6 +26,21 @@
                         <label asp-for="Input.Email"></label>
                         <input asp-for="Input.Email" class="form-control" />
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.FirstName"></label>
+                        <input asp-for="Input.FirstName" class="form-control" />
+                        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.LastName"></label>
+                        <input asp-for="Input.LastName" class="form-control" />
+                        <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.DateOfBirth"></label>
+                        <input type="date" asp-for="Input.DateOfBirth" class="form-control" />
+                        <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Input.Password"></label>
