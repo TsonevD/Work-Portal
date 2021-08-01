@@ -324,7 +324,6 @@ namespace WorkPortal.Data.Migrations
                     Gender = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ManagerId = table.Column<int>(type: "int", nullable: true),
                     HireDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ProfilePictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -347,7 +346,7 @@ namespace WorkPortal.Data.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Employees_Employees_ManagerId",
                         column: x => x.ManagerId,
@@ -514,8 +513,7 @@ namespace WorkPortal.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_UserId",
                 table: "Employees",
-                column: "UserId",
-                unique: true);
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeShift_ShiftsId",

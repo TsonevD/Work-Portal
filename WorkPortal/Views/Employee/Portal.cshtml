@@ -14,14 +14,16 @@
     <div class="row display-table-row">
 
   
+        @if (Model == null)
+        {
         <div>
             <p class="text-center">
                 Your portal need to be updated by your Administrator.
                 Please contact them.
             </p>
         </div>
-        
-        @if (Model != null)
+        }
+        else
         {
         <div class="col-md-10 col-sm-11 display-table-cell v-align">
                         <div class="row">
@@ -29,7 +31,7 @@
                                 <div class="col-md-6">
                                     <nav class="navbar-default float-md-left">
                                         <div class="navbar-header">
-                                            <h5 class="text-center">Hello @Model.FirstName @Model.LastName</h5>
+                                            <h5 class="text-center">Hello @Model.UserFirstName @Model.UserLastName</h5>
                                         </div>
                                     </nav>
                                 </div>
@@ -43,7 +45,7 @@
                                     <div class="panel panel-default">
                                         <div class="panel-body">
                                             <div class="profile__avatar">
-                                                <img class="img-fluid" src="@Model.ImageUrl" alt="@Model.FirstName @Model.LastName">
+                                                <img class="img-fluid" src="@Model.ImageUrl" alt="@Model.UserFirstName @Model.UserLastName">
                                             </div>
                                             <div class="profile__header">
                                                 <p class="text-muted">

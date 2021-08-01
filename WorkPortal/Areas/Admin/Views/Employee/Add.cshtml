@@ -1,182 +1,166 @@
-﻿@model WorkPortal.Areas.Admin.Models.Employee.AddViewModel
-
+﻿@model AddEmployeeViewModel
 @{
     ViewBag.Title = "Add Employee";
 }
 
-
-<div class="page-content">
-    <div class="pmd-tabs pmd-tabs-dark bg-primary">
-        <div class="pmd-tab-active-bar" style="width: 93.125px; left: 0px;"></div><ul class="nav nav-tabs" role="tablist" style="width: 325.575px;">
-            <li class="nav-item"><a class="nav-link active" href="#about" aria-controls="about" role="tab" data-toggle="tab">About</a></li>
-            <li class="nav-item"><a class="nav-link" href="#documents" aria-controls="documents" role="tab" data-toggle="tab">Documents</a></li>
-            <li class="nav-item"><a class="nav-link" href="#salary" aria-controls="salary" role="tab" data-toggle="tab">Salary</a></li>
-        </ul>
-    </div>
-    <!-- Tab panes -->
-    <div class="tab-content">
-        <!-- About Tab -->
-        <div role="tabpanel" class="tab-pane active" id="about">
-            <div class="card pmd-card">
-                <form>
-                    <div class="card-body">
-                        <!-- Upload Picture -->
-                        <div class="details-tab">
-                            <h3 class="card-title mb-3">Profile Picture</h3>
-                                <div class="action-button">
-                                    <span class="btn btn-secondary pmd-btn-fab btn-sm pmd-btn-raised btn-file pmd-ripple-effect">
-                                        <input type="url" name="...">
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Basic Information -->
+<div id="content" class="pmd-content admin section-container">
+    <h1 class="text-center">@ViewBag.Title</h1>
+    <div class="page-content  mt-3">
+        <div class="tab-content">
+            <!-- About Tab -->
+            <div role="tabpanel" class="tab-pane active" id="about">
+                <div class="card pmd-card">
+                    <form method="post">
                         <div class="details-tab">
                             <h3 class="card-title">Basic Information</h3>
                             <div class="row">
                                 <div class="col-12 col-sm-6 col-md-3">
                                     <div class="form-group pmd-textfield pmd-textfield-floating-label ">
-                                        <label for="fn" class="col-form-label control-label">First Name</label>
-                                        <input type="text" class="form-control" value="@Model.Firstname" id="fn"><span class="pmd-textfield-focused"></span>
+                                        <label asp-for="Firstname" class="col-form-label control-label">First Name</label>
+                                        <input asp-for="Firstname" type="text" class="form-control">
+                                        <span asp-validation-for="Firstname" class="small text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-6 col-md-3">
-                                    <div class="form-group pmd-textfield pmd-textfield-floating-label ">
-                                        <label for="ln" class="col-form-label control-label">Last Name</label>
-                                        <input type="text" class="form-control" value="@Model.Lastname" id="ln"><span class="pmd-textfield-focused"></span>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-3">
-                                    <div class="form-group pmd-textfield pmd-textfield-floating-label ">
-                                        <label for="mn" class="col-form-label control-label">Middle Name</label>
-                                        <input type="text" class="form-control" value="" id="mn"><span class="pmd-textfield-focused"></span>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-3">
-                                    <div class="form-group pmd-textfield pmd-textfield-floating-label ">
-                                        <label for="phone" class="col-form-label control-label">Phone</label>
-                                        <input type="tel" class="form-control" value="" id="phone"><span class="pmd-textfield-focused"></span>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-3">
-                                    <div class="form-group pmd-textfield pmd-textfield-floating-label ">
-                                        <label for="personal-email" class="col-form-label control-label">Personal Email</label>
-                                        <input type="email" class="form-control" id="personal-email" value="@Model.Email"><span class="pmd-textfield-focused"></span>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-3">
-                                    <div class="form-group pmd-textfield pmd-textfield-floating-label">
-                                        <label for="dob" class="col-form-label control-label">Date of Birth</label>
-                                        <input type="date" class="form-control" id="birthdate-picker" value="@Model.DateOfBirth"><span class="pmd-textfield-focused"></span>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-3">
-                                    <label for="email" class="d-block title-label">Gender</label>
-                                    <div class="custom-control custom-radio pmd-radio custom-control-inline">
-                                        <input type="radio" id="male" name="gender" class="custom-control-input">
-                                        <label class="custom-control-label pmd-radio-ripple-effect" for="male">Male</label>
-                                    </div>
-                                    <div class="custom-control custom-radio pmd-radio custom-control-inline">
-                                        <input type="radio" id="female" name="gender" class="custom-control-input">
-                                        <label class="custom-control-label pmd-radio-ripple-effect" for="female">Female</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Employee Information -->
-                        <div class="details-tab">
-                            <h3 class="card-title">Employee Information</h3>
-                            <div class="row">
-                                <div class="col-12 col-md-6 col-lg-3">
-                                    <div class="form-group pmd-textfield pmd-textfield-floating-label ">
-                                        <label for="id" class="col-form-label control-label">Employee Enrollment ID</label>
-                                        <input type="text" class="form-control" value="" id="id"><span class="pmd-textfield-focused"></span>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-3">
-                                    <div class="form-group pmd-textfield pmd-textfield-floating-label">
-                                        <label for="doj" class="col-form-label control-label">Date of Joining</label>
-                                        <input type="date" class="form-control" id="joindate-picker"><span class="pmd-textfield-focused"></span>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-3">
-                                    <div class="form-group pmd-textfield pmd-textfield-floating-label ">
-                                        <label for="email" class="col-form-label control-label">Company Email</label>
-                                        <input type="email" class="form-control" value="" id="email"><span class="pmd-textfield-focused"></span>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-3">
-                                    <div class="form-group pmd-textfield pmd-textfield-floating-label ">
-                                        <label for="advance_department">Department</label>
-                                        <select name="select" id="advance_department" class="form-control">
-                                            <option></option>
-                                            <option>Design</option>
-                                            <option>Development</option>
-                                            <option>Marketing</option>
-                                            <option>Sales</option>
-                                            <option>Quality Assurance</option>
-                                        </select><span class="pmd-textfield-focused"></span>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-3">
-                                    <div class="form-group pmd-textfield pmd-textfield-floating-label ">
-                                        <label for="advance_designation">Designation</label>
-                                        <select name="select" id="advance_designation" class="form-control">
-                                            <option></option>
-                                            <option>UI / UX Designer</option>
-                                            <option>Marketing Manager</option>
-                                            <option>PHP Developer</option>
-                                            <option>Mobile App Developer</option>
-                                            <option>Sales and Marketing Head</option>
-                                        </select><span class="pmd-textfield-focused"></span>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-3">
-                                    <div class="form-group pmd-textfield pmd-textfield-floating-label ">
-                                        <label for="reporting">Reporting Employee</label>
-                                        <select name="select" id="reporting" class="form-control">
-                                            <option></option>
-                                            <option>Darlene C. Larsen</option>
-                                            <option>John L. Wade</option>
-                                            <option>Lolita M. Bradley</option>
-                                            <option>Kenneth R. Brooks</option>
-                                            <option>Joseph S. Richardson</option>
-                                        </select><span class="pmd-textfield-focused"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- Contact Information -->
-                        <div class="details-tab">
-                            <h3 class="card-title">Contact Information</h3>
-                            <div class="row">
-                                <div class="col-12 col-md-6 col-lg-4">
+                                <div class="col-12 col-sm-6 col-md-3">
                                     <div class="form-group pmd-textfield pmd-textfield-floating-label ">
-                                        <label for="addline1" class="col-form-label control-label">Address Line 1</label>
-                                        <input type="text" class="form-control" value="" id="addline1"><span class="pmd-textfield-focused"></span>
+                                        <label asp-for="Lastname" class="col-form-label control-label">Last Name</label>
+                                        <input asp-for="Lastname" type="text" class="form-control">
+                                        <span asp-validation-for="Lastname" class="small text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-4">
+                                <div class="col-12 col-sm-6 col-md-3">
                                     <div class="form-group pmd-textfield pmd-textfield-floating-label ">
-                                        <label for="city" class="col-form-label control-label">City</label>
-                                        <input type="text" class="form-control" value="" id="city"><span class="pmd-textfield-focused"></span>
+                                        <label asp-for="MiddleName" class="col-form-label control-label">Middle Name</label>
+                                        <input asp-for="MiddleName" type="text" class="form-control">
+                                        <span asp-validation-for="MiddleName" class="small text-danger"></span>
+                                    </div>
+
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-3">
+                                    <div class="form-group pmd-textfield pmd-textfield-floating-label ">
+                                        <label asp-for="Phone" class="col-form-label control-label">Phone</label>
+                                        <input asp-for="Phone" type="text" class="form-control">
+                                        <span asp-validation-for="Phone" class="small text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-4">
-                                    <div class="form-group pmd-textfield pmd-textfield-floating-label">
-                                        <label for="zipcode" class="col-form-label control-label">Zip Code</label>
-                                        <input type="text" class="form-control" value="" id="zipcode"><span class="pmd-textfield-focused"></span>
+                                <div class="col-12 col-sm-6 col-md-3">
+                                    <div class="form-group pmd-textfield pmd-textfield-floating-label ">
+                                        <label asp-for="Email" class="col-form-label control-label">Email</label>
+                                        <input asp-for="Email" type="email" class="form-control">
+                                        <span asp-validation-for="Email" class="small text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-3">
+                                    <div class="form-group pmd-textfield pmd-textfield-floating-label ">
+                                        <label asp-for="ImageUrl" class="col-form-label control-label">Picture URL</label>
+                                        <input asp-for="ImageUrl" type="url" class="form-control">
+                                        <span asp-validation-for="ImageUrl" class="small text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-3">
+                                    <div class="form-group pmd-textfield">
+                                        <label asp-for="DateOfBirth" class="col-form-label">Date of Birth</label>
+                                        <input asp-for="DateOfBirth" type="date" value="1995-04-27" class="form-control">
+                                        <span asp-validation-for="DateOfBirth" class="small text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-3">
+                                    <div class="custom-control custom-radio pmd-radio custom-control-inline">
+                                        <input asp-for="Gender" type="radio" value="Male" id="Gender" name="Gender" />Male
+                                        <input asp-for="Gender" type="radio" value="Female" id="Gender" name="Gender" />Female
+                                        <span asp-validation-for="Gender" class="small text-danger"></span>
                                     </div>
                                 </div>
                             </div>
+                            <!-- Employee Information -->
+                            <div class="details-tab">
+                                <h3 class="card-title">Employee Information</h3>
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 col-md-3">
+                                        <div class="form-group pmd-textfield pmd-textfield-floating-label ">
+                                            <label asp-for="JobTitle" class="col-form-label control-label">Job Title</label>
+                                            <input asp-for="JobTitle" type="text" class="form-control">
+                                            <span asp-validation-for="JobTitle" class="small text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-3">
+                                        <div class="form-group pmd-textfield">
+                                            <label asp-for="HireDate" class="col-form-label control-label">Hire Date</label>
+                                            <input asp-for="HireDate" type="date" value="@DateTime.UtcNow" class="form-control" id="joindate-picker">
+                                            <span asp-validation-for="HireDate" class="small text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 col-lg-3">
+                                        <div class="form-group pmd-textfield pmd-textfield-floating-label ">
+                                            <label asp-for="DepartmentId">Department</label>
+                                            <select asp-for="DepartmentId" class="form-control">
+                                                <option></option>
+                                                @foreach (var department in Model.Departments)
+                                                {
+                                                    <option value="@department.Id">@department.Name</option>
+                                                }
+                                            </select>
+                                            <span asp-validation-for="DepartmentId" class="small text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 col-lg-3">
+                                        <div class="form-group pmd-textfield pmd-textfield-floating-label ">
+                                            <label asp-for="ManagerId">Reporting Employee</label>
+                                            <select asp-for="ManagerId" class="form-control">
+                                                <option></option>
+                                                @foreach (var manager in Model.Managers)
+                                                {
+                                                    <option value="@manager.Id">@manager.FirstName @manager.LastName</option>
+                                                }
+                                            </select>
+                                            <span asp-validation-for="ManagerId" class="small text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Contact Information -->
+                            <div class="details-tab">
+                                <h3 class="card-title">Contact Information</h3>
+                                <div class="row">
+                                    <div class="col-12 col-md-6 col-lg-4">
+                                        <div class="form-group pmd-textfield pmd-textfield-floating-label ">
+                                            <label asp-for="StreetName" class="col-form-label control-label">Address Line </label>
+                                            <input asp-for="StreetName" type="text" class="form-control">
+                                            <span asp-validation-for="StreetName" class="small text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-4">
+                                        <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                            <label asp-for="PostCode" for="zipcode" class="col-form-label control-label">Zip Code</label>
+                                            <input asp-for="PostCode" type="text" class="form-control" value="" id="zipcode">
+                                            <span asp-validation-for="PostCode" class="small text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-4">
+                                        <div class="form-group pmd-textfield pmd-textfield-floating-label ">
+                                            <label asp-for="TownName" for="city" class="col-form-label control-label">City</label>
+                                            <input asp-for="TownName" type="text" class="form-control" value="" id="city">
+                                            <span asp-validation-for="TownName" class="small text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer pmd-card-border">
+                                <input class="btn pmd-ripple-effect btn-primary pmd-btn-raised" type="submit" value="Save" />
+                                <input class="btn pmd-ripple-effect btn-outline-secondary" type="reset" value="Reset" />
+
+                            </div>
                         </div>
-                        <div class="card-footer pmd-card-border">
-                            <button class="btn pmd-ripple-effect btn-primary pmd-btn-raised" type="button">Save</button>
-                            <button class="btn pmd-ripple-effect btn-outline-secondary" type="button">Reset</button>
-                        </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

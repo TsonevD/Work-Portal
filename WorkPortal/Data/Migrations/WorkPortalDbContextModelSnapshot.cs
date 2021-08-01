@@ -339,10 +339,6 @@ namespace WorkPortal.Data.Migrations
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
@@ -383,8 +379,7 @@ namespace WorkPortal.Data.Migrations
 
                     b.HasIndex("ManagerId");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("Employees");
                 });
@@ -724,10 +719,10 @@ namespace WorkPortal.Data.Migrations
                         .HasForeignKey("ManagerId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Models.User", null)
-                        .WithOne()
-                        .HasForeignKey("Models.Employee", "UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Address");
@@ -735,6 +730,8 @@ namespace WorkPortal.Data.Migrations
                     b.Navigation("Department");
 
                     b.Navigation("Manager");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Models.Shift", b =>

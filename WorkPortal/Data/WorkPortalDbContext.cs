@@ -48,12 +48,12 @@ namespace WorkPortal.Data
                 .HasForeignKey(d => d.ManagerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder
-                .Entity<Employee>()
-                .HasOne<User>()
-                .WithOne()
-                .HasForeignKey<Employee>(d => d.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+            //builder
+            //    .Entity<Employee>()
+            //    .HasOne<User>()
+            //    .WithOne()
+            //    .HasForeignKey<Employee>(d => d.UserId)
+            //    .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Shift>()
                 .HasOne(x => x.Location)

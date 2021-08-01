@@ -19,21 +19,20 @@ namespace WorkPortal.Controllers
         {
             var id = this.User.GetId();
 
-            //var profile = this.data.Employees.Where(x => x.UserId == id)
-            //    .Select(x => new ProfileViewModel()
-            //    {
-            //        FirstName = x.FirstName,
-            //        LastName = x.LastName,
-            //        HireDate = x.HireDate,
-            //        JobTitle = x.JobTitle,
-            //        Id = x.Id,
-            //        CompanyName = x.Department.Company.Name,
-            //        CompanyLocation = x.Department.Company.Town,
-            //        ImageUrl = x.ProfilePictureUrl,
-            //    }).FirstOrDefault();
+            var profile = this.data.Employees.Where(x => x.UserId == id)
+                .Select(x => new ProfileViewModel()
+                {
+                    UserFirstName = x.User.FirstName,
+                    UserLastName= x.User.LastName,
+                    HireDate = x.HireDate,
+                    JobTitle = x.JobTitle,
+                    Id = x.Id,
+                    CompanyName = x.Department.Company.Name,
+                    CompanyLocation = x.Department.Company.Town,
+                    ImageUrl = x.ProfilePictureUrl,
+                }).FirstOrDefault();
 
-            return View();
+            return View(profile);
         }
-
     }
 }

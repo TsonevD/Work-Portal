@@ -53,7 +53,7 @@ namespace WorkPortal
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.PrepareDatabase();
+            app.PrepareDatabaseAsync();
 
             if (env.IsDevelopment())
             {
