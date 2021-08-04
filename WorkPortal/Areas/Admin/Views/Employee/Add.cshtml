@@ -14,53 +14,53 @@
                             <h3 class="card-title">Basic Information</h3>
                             <div class="row">
                                 <div class="col-12 col-sm-6 col-md-3">
-                                    <div class="form-group pmd-textfield pmd-textfield-floating-label ">
-                                        <label asp-for="Firstname" class="col-form-label control-label">First Name</label>
-                                        <input asp-for="Firstname" type="text" class="form-control">
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        <label asp-for="Firstname" class="mdl-textfield__label">First Name</label>
+                                        <input asp-for="Firstname" type="text" class="mdl-textfield__input">
                                         <span asp-validation-for="Firstname" class="small text-danger"></span>
                                     </div>
                                 </div>
 
                                 <div class="col-12 col-sm-6 col-md-3">
-                                    <div class="form-group pmd-textfield pmd-textfield-floating-label ">
-                                        <label asp-for="Lastname" class="col-form-label control-label">Last Name</label>
-                                        <input asp-for="Lastname" type="text" class="form-control">
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        <label asp-for="Lastname" class="mdl-textfield__label">Last Name</label>
+                                        <input asp-for="Lastname" type="text" class="mdl-textfield__input">
                                         <span asp-validation-for="Lastname" class="small text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-3">
-                                    <div class="form-group pmd-textfield pmd-textfield-floating-label ">
-                                        <label asp-for="MiddleName" class="col-form-label control-label">Middle Name</label>
-                                        <input asp-for="MiddleName" type="text" class="form-control">
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        <label asp-for="MiddleName" class="mdl-textfield__label">Middle Name</label>
+                                        <input asp-for="MiddleName" type="text" class="mdl-textfield__input">
                                         <span asp-validation-for="MiddleName" class="small text-danger"></span>
                                     </div>
 
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-3">
-                                    <div class="form-group pmd-textfield pmd-textfield-floating-label ">
-                                        <label asp-for="Phone" class="col-form-label control-label">Phone</label>
-                                        <input asp-for="Phone" type="text" class="form-control">
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        <label asp-for="Phone" class="mdl-textfield__label">Phone</label>
+                                        <input asp-for="Phone" type="text" class="mdl-textfield__input">
                                         <span asp-validation-for="Phone" class="small text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-3">
-                                    <div class="form-group pmd-textfield pmd-textfield-floating-label ">
-                                        <label asp-for="Email" class="col-form-label control-label">Email</label>
-                                        <input asp-for="Email" type="email" class="form-control">
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        <label asp-for="Email" class="mdl-textfield__label">Email</label>
+                                        <input asp-for="Email" type="email" class="mdl-textfield__input">
                                         <span asp-validation-for="Email" class="small text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-3">
-                                    <div class="form-group pmd-textfield pmd-textfield-floating-label ">
-                                        <label asp-for="ImageUrl" class="col-form-label control-label">Picture URL</label>
-                                        <input asp-for="ImageUrl" type="url" class="form-control">
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        <label asp-for="ImageUrl" class="mdl-textfield__label">Picture URL</label>
+                                        <input asp-for="ImageUrl" type="url"class="mdl-textfield__input">
                                         <span asp-validation-for="ImageUrl" class="small text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-3">
                                     <div class="form-group pmd-textfield">
                                         <label asp-for="DateOfBirth" class="col-form-label">Date of Birth</label>
-                                        <input asp-for="DateOfBirth" type="date" value="1995-04-27" class="form-control">
+                                        <input asp-for="DateOfBirth" type="date" value="1995-04-27" class="mdl-textfield__input">
                                         <span asp-validation-for="DateOfBirth" class="small text-danger"></span>
                                     </div>
                                 </div>
@@ -77,24 +77,24 @@
                                 <h3 class="card-title">Employee Information</h3>
                                 <div class="row">
                                     <div class="col-12 col-sm-6 col-md-3">
-                                        <div class="form-group pmd-textfield pmd-textfield-floating-label ">
-                                            <label asp-for="JobTitle" class="col-form-label control-label">Job Title</label>
-                                            <input asp-for="JobTitle" type="text" class="form-control">
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            <label asp-for="JobTitle" class="mdl-textfield__label">Job Title</label>
+                                            <input asp-for="JobTitle" type="text" class="mdl-textfield__input">
                                             <span asp-validation-for="JobTitle" class="small text-danger"></span>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-3">
                                         <div class="form-group pmd-textfield">
-                                            <label asp-for="HireDate" class="col-form-label control-label">Hire Date</label>
+                                            <label asp-for="HireDate" >Hire Date</label>
                                             <input asp-for="HireDate" type="date" value="@DateTime.UtcNow" class="form-control" id="joindate-picker">
                                             <span asp-validation-for="HireDate" class="small text-danger"></span>
                                         </div>
                                     </div>
 
                                     <div class="col-12 col-md-6 col-lg-3">
-                                        <div class="form-group pmd-textfield pmd-textfield-floating-label ">
-                                            <label asp-for="DepartmentId">Department</label>
-                                            <select asp-for="DepartmentId" class="form-control">
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            <label asp-for="DepartmentId" class="mdl-textfield__label">Department</label>
+                                            <select asp-for="DepartmentId" class="mdl-textfield__input">
                                                 <option></option>
                                                 @foreach (var department in Model.Departments)
                                                 {
@@ -106,9 +106,9 @@
                                     </div>
 
                                     <div class="col-12 col-md-6 col-lg-3">
-                                        <div class="form-group pmd-textfield pmd-textfield-floating-label ">
-                                            <label asp-for="ManagerId">Reporting Employee</label>
-                                            <select asp-for="ManagerId" class="form-control">
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            <label asp-for="ManagerId" class="mdl-textfield__label">Reporting Employee</label>
+                                            <select asp-for="ManagerId" class="mdl-textfield__input">
                                                 <option></option>
                                                 @foreach (var manager in Model.Managers)
                                                 {
@@ -125,23 +125,23 @@
                                 <h3 class="card-title">Contact Information</h3>
                                 <div class="row">
                                     <div class="col-12 col-md-6 col-lg-4">
-                                        <div class="form-group pmd-textfield pmd-textfield-floating-label ">
-                                            <label asp-for="StreetName" class="col-form-label control-label">Address Line </label>
-                                            <input asp-for="StreetName" type="text" class="form-control">
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            <label asp-for="StreetName"class="mdl-textfield__label">Address Line </label>
+                                            <input asp-for="StreetName" type="text" class="mdl-textfield__input">
                                             <span asp-validation-for="StreetName" class="small text-danger"></span>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-4">
-                                        <div class="form-group pmd-textfield pmd-textfield-floating-label">
-                                            <label asp-for="PostCode" for="zipcode" class="col-form-label control-label">Zip Code</label>
-                                            <input asp-for="PostCode" type="text" class="form-control" value="" id="zipcode">
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            <label asp-for="PostCode" for="zipcode" class="mdl-textfield__label">Zip Code</label>
+                                            <input asp-for="PostCode" type="text" class="mdl-textfield__input" value="" id="zipcode">
                                             <span asp-validation-for="PostCode" class="small text-danger"></span>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-4">
-                                        <div class="form-group pmd-textfield pmd-textfield-floating-label ">
-                                            <label asp-for="TownName" for="city" class="col-form-label control-label">City</label>
-                                            <input asp-for="TownName" type="text" class="form-control" value="" id="city">
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            <label asp-for="TownName" for="city" class="mdl-textfield__label">City</label>
+                                            <input asp-for="TownName" type="text" class="mdl-textfield__input" value="" id="city">
                                             <span asp-validation-for="TownName" class="small text-danger"></span>
                                         </div>
                                     </div>

@@ -27,6 +27,5 @@ namespace Models
 
         public ICollection<Employee> Employees { get; init; } = new HashSet<Employee>();
 
-
     }
 }

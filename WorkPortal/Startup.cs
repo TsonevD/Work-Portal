@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Models;
 using WorkPortal.Data;
@@ -41,6 +42,8 @@ namespace WorkPortal
                 })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<WorkPortalDbContext>();
+
+            services.AddAutoMapper(typeof(Startup));
 
             services
                 .AddControllersWithViews(options =>

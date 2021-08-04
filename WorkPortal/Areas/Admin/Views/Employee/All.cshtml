@@ -4,7 +4,6 @@
     ViewBag.Title = "All";
 }
 
-
 <div id="content" class="pmd-content section-container">
     <h1 class="text-center">Employees for Approval</h1>
     <div class="page-content  mt-5">
@@ -54,16 +53,12 @@
                                 <td data-title="Actions">
                                     <a href="@Url.Action($"Approve", "Employee", new {id = $"{employee.Id}", area = "Admin"}) " class="btn btn-primary pmd-ripple-effect btn-sm mt-3">Approve</a>
                                     <a href="@Url.Action($"Delete", "Employee", new {id = $"{employee.Id}", area = "Admin"})" class="btn btn-danger pmd-ripple-effect btn-sm mt-3">Delete</a>
-
-
                                 </td>
-
                             </tr>
                         </tbody>
                     }
                 }
             </table>
-
         </div>
     </div>
 </div>

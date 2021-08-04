@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using GlobalConstants;
 using Models.Enums;
 
@@ -12,21 +10,27 @@ namespace Models
     {
         public int Id { get; init; }
 
-        public DateTime DateFrom { get; set; }
+        public DateTime StartDate { get; set; }
 
-        public DateTime DateTo { get; set; }
+        public DateTime EndDate { get; set; }
 
-        [Column(TypeName = DefaultDecimalValue)]
-        [Range(minimum:AnnualLeaveMinDaysValue , maximum:AnnualLeaveMaxDaysValue)]
-        public decimal? TakenDays { get; set; }
+        [MaxLength(DataConstants.AnnualLeave.DaysMaxValue)]
+        public int? DaysToBeTaken { get; set; }
 
-        [Column(TypeName = DefaultDecimalValue)]
-        [Range(minimum: AnnualLeaveMinDaysValue, maximum: AnnualLeaveMaxDaysValue)]
-        public decimal? RemainingDays { get; set; }
+        [MaxLength(DataConstants.AnnualLeave.DaysMaxValue)]
+        public int? RemainingDays { get; set; }
+        
+        [Required]
+        public string Reason { get; set; }
 
         public AnnualLeaveStatus Status { get; set; }
 
-        public ICollection<Payslip> Payslips { get; init; } = new HashSet<Payslip>();
+        public AnnualLeaveType Type { get; set; }
+
+        [Required]
+        public int EmployeeId { get; set; }
+
+        public Employee Employee { get; set; }
 
     }
 }

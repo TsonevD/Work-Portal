@@ -22,5 +22,8 @@ namespace Models
         [Required]
         [StringLength(AddressPostCodeMaxLength)]
         public string PostCode { get; set; }
+        [Required]
+        [StringLength(DefaultNameMaxLength)]
+        public string CompanyName { get; set; }
     }
 }
