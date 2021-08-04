@@ -8,9 +8,9 @@
                 <div class="card-body ">
                     <div class="row">
                         <div class="col-12">
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mt-3 mb-3">
-                                <label asp-for="LeaveType" class="mdl-textfield__label" >Leave Type</label>
-                                <select asp-for="LeaveType" id="leave-type" class="mdl-textfield__input" title="Please select a Leave Type" required="">
+                            <div class="form-group mt-3 mb-3">
+                                <label asp-for="LeaveType">Leave Type</label>
+                                <select asp-for="LeaveType" id="leave-type" class="form-control" title="Please select a Leave Type" required="">
                                     <option></option>
                                     <option value="0">Sick Leave</option>
                                     <option value="1">Unpaid Leave</option>
@@ -19,33 +19,36 @@
                                 <span asp-validation-for="LeaveType" class="small text-danger"></span>
                             </div>
                         </div>
-                        <div  class="form-group  col-6 mt-5">
+
+                        <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed col-6 mt-5">
                             <label asp-for="StartDate" class="text-center">From:</label>
-                            <input asp-for="StartDate" class="mdl-textfield__input" type="date" id="inputDate" name="startDate" onchange="getDate()">
+                            <input asp-for="StartDate" type="date" id="inputDate" name="startDate" onchange="getDate()">
                             <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
                             <p id="result"></p>
                             <span asp-validation-for="StartDate" class="small text-danger"></span>
                             <span class="pmd-textfield-focused"></span>
                         </div>
-                        <div  class="form-group  col-6 mt-5">
-                            <label asp-for="EndDate" class="text-center">To:</label>
-                            <input asp-for="EndDate" type="date" class="mdl-textfield__input" id="endDate" name="endDate" onchange="compareDates()">
+                        <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed col-6 mt-5">
+                            <label asp-for="EndDate">To:</label>
+                            <input asp-for="EndDate" type="date" id="endDate" name="endDate" onchange="compareDates()">
                             <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
                             <p id="compare"></p>
                             <span asp-validation-for="EndDate" class="small text-danger"></span>
                             <span class="pmd-textfield-focused"></span>
                         </div>
-                        <div  class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-group col-4 mt-3 mb-3">
-                            <label asp-for="DaysToBeTaken" class="mdl-textfield__label">Day To Be Taken</label>
-                            <input asp-for="DaysToBeTaken" class="mdl-textfield__input" type="number">
+                        <div class="form-group col-4 mt-3 mb-3">
+                            <label asp-for="DaysToBeTaken">Day To Be Taken</label>
+                            <input asp-for="DaysToBeTaken" class="form-control" type="number">
                             <span asp-validation-for="DaysToBeTaken" class="small text-danger"></span>
                             <span class="pmd-textfield-focused"></span>
                         </div>
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-group form-group col-12">
-                                <label asp-for="Reason" class="mdl-textfield__label">Reason</label>
-                                <textarea asp-for="Reason" class="mdl-textfield__input" id="reason" name="reason"></textarea>
-                                <span asp-validation-for="Reason" class="small text-danger"></span>
-                                <span class="pmd-textfield-focused"></span>
+                        <div class="col-12">
+                            <div class="form-group mt-3 mb-3">
+                                <label asp-for="Reason">Reason</label>
+                                <textarea asp-for="Reason" class="form-control" id="reason" name="reason"></textarea>
+                            </div>
+                            <span asp-validation-for="Reason" class="small text-danger"></span>
+                            <span class="pmd-textfield-focused"></span>
                         </div>
                     </div>
                 </div>
@@ -61,11 +64,9 @@
 <script type="text/javascript">
     function getDate() {
         var givenDate = Date.parse(document.myForm.inputDate.value);
-
         if (!givenDate.isNaN) {
             givenDate = new Date(givenDate).setHours(0, 0, 0, 0);
             var todayDate = new Date().setHours(0, 0, 0, 0);
-
             if (givenDate >= todayDate) {
                 result.innerHTML = 'Great!';
                 result.style.color = 'green';
@@ -78,11 +79,9 @@
     function compareDates() {
         var givenDate = Date.parse(document.myForm.inputDate.value);
         var endDate = Date.parse(document.myForm.endDate.value);
-
         if (!givenDate.isNaN && !endDate.isNaN) {
             givenDate = new Date(givenDate).setHours(0, 0, 0, 0);
             endDate = new Date(endDate).setHours(0, 0, 0, 0);
-
             if (endDate >= givenDate) {
                 compare.innerHTML = 'Great!';
                 compare.style.color = 'green';

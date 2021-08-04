@@ -9,6 +9,7 @@ namespace WorkPortal.Models.AnnualLeave
     public class AnnualLeaveInputModel
     {
         [Required]
+        [Display]
         public AnnualLeaveType LeaveType { get; set; }
 
         [Required]
@@ -21,7 +22,9 @@ namespace WorkPortal.Models.AnnualLeave
         [DataType(DataType.Date)]
         public DateTime EndDate { get; set; }
 
-        [Range(DaysMinValue , DaysMaxValue)]
+        [Range(DaysMinValue , DaysMaxValue, 
+            ErrorMessage = "The field must be between {1} and {2}")]
+        
         public int DaysToBeTaken { get; set; }
 
         [Required]

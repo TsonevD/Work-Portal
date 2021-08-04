@@ -56,11 +56,11 @@
                     <tbody>
                         <tr>
                             <td data-title="Employee">@Model.FirstName @Model.LastName</td>
-                            <td data-title="Leave Type">@leave.LeaveType</td>
-                            <td data-title="Start Date">1<sup>st</sup>@leave.StartDate.ToString("yy-MMM-dd", CultureInfo.InvariantCulture)</td>
-                            <td data-title="End Date">3<sup>rd</sup>@leave.EndDate.ToString("yy-MMM-dd", CultureInfo.InvariantCulture)</td>
+                            <td data-title="Leave Type">@leave.LeaveType.GetDisplayName()</td>
+                            <td data-title="Start Date">@leave.StartDate.ToString("D", CultureInfo.InvariantCulture)</td>
+                            <td data-title="End Date">@leave.EndDate.ToString("D", CultureInfo.InvariantCulture)</td>
                             <td data-title="Reason">@leave.Reason</td>
-                            <td data-title="No of Leave">@leave.Id</td>
+                            <td data-title="No of Days">@leave.DaysToBeTaken</td>
                             <td data-title="Status">@leave.Status</td>
                             @if (leave.Status == AnnualLeaveStatus.Pending)
                             {
