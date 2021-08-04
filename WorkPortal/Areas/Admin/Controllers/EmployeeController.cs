@@ -79,7 +79,6 @@ namespace WorkPortal.Areas.Admin.Controllers
             }
 
             var pass = "asd123";
-
             var user = new User
             {
                 UserName = employee.Email,

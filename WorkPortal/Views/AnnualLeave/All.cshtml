@@ -1,65 +1,77 @@
-﻿@{
+﻿@using System.Globalization
+@using Models.Enums
+@model AllAnnualLeaveViewModel
+@{
     ViewBag.Title = "Annual Leave";
 }
 
 <div id="content" class="pmd-content inner-page admin">
-    <h1  class="text-center"id="leave">@ViewBag.Title</h1>
+    <h1 class="text-center  " id="leave">@ViewBag.Title</h1>
 
-    <section class="component-section" id="employee">
-        <div class="menu pmd-floating-action align-content-center" role="navigation">
-            <a class="pmd-floating-action-btn btn pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-secondary" data-title="Apply Leave" asp-action="Add">
-                <i class="material-icons pmd-sm">add</i> 
-            </a>
+    @if (!Model.AnnualLeave.Any())
+    {
+        <div class="text-center align-self-center mt-5">
+            <svg version="1.1" id="Layer_1" x="0px" y="0px" width="100px" height="100px" viewBox="-58 -58 140 140" enable-background="new -58 -58 140 140" xml:space="preserve">
+            <circle fill="#E7E9EF" cx="12" cy="12" r="70"></circle>
+            <g opacity="0.4">
+            <g id="XMLID_233_">
+
+            <circle id="XMLID_235_" fill="none" stroke="#3075BA" stroke-width="6" stroke-miterlimit="10" cx="11.998" cy="-3.917" r="20.464"></circle>
+                    </g>
+            <g id="XMLID_236_">
+            <path id="XMLID_237_" fill="none" stroke="#3075BA" stroke-width="6" stroke-miterlimit="10" d="M12,16.55
+                            c-17.581,0-31.833,14.249-31.833,31.831h63.667C43.834,30.799,29.58,16.55,12,16.55z"></path>
+                    </g>
+                </g>
+            </svg>
+            <h2 class="mt-3 mb-3">You haven`t submit any Annual leave yet!</h2>
+            <p>Do you want to add a new one?</p>
+            <a asp-action="Add" class="btn btn-primary pmd-ripple-effect pmd-btn-raised mt-3">Add Annual Leave</a>
         </div>
-        <table class="table pmd-table table-hover pmd-table-card">
-            <thead class="thead-light">
-            <tr>
-                <th>Employee</th>
-                <th>Leave Type</th>
-                <th>Half Day</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Reason</th>
-                <th>No of Leave</th>
-                <th>Paid / Unpaid</th>
-                <th>Status</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td data-title="Employee">Tarah L. Faulkner</td>
-                <td data-title="Leave Type">Casual Leave</td>
-                <td data-title="Half Day">No</td>
-                <td data-title="Start Date">1<sup>st</sup> September, 2018</td>
-                <td data-title="End Date">3<sup>rd</sup> September, 2018</td>
-                <td data-title="Reason">Attend Cousin's Wedding</td>
-                <td data-title="No of Leave">3</td>
-                <td data-title="Paid / Unpaid">Paid</td>
-                <td data-title="Status">Pending</td>
-                <td data-title="">
-                    <a href="javascript:void(0);" title="Accept" class="pmd-btn-fab btn-xs btn-outline-secondary btn mr-2 pmd-ripple-effect">
-                        <i class="material-icons">done</i>
-                    </a>
-                    <a href="javascript:void(0);" title="Reject" class="pmd-btn-fab btn-xs btn-outline-danger btn pmd-ripple-effect" data-toggle="modal" data-target="#reject-modal">
-                        <i class="material-icons">close</i>
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td data-title="Employee">James L. Faulkner</td>
-                <td data-title="Leave Type">Sick Leave</td>
-                <td data-title="Half Day">No</td>
-                <td data-title="Start Date">1<sup>st</sup> September, 2018</td>
-                <td data-title="End Date">3<sup>rd</sup> September, 2018</td>
-                <td data-title="Reason">Having Fever</td>
-                <td data-title="No of Leave">3</td>
-                <td data-title="Paid / Unpaid">Paid</td>
-                <td data-title="Status">Approved</td>
-                <td data-title=""></td>
-            </tr>
-            </tbody>
+    }
+    else
+    {
+        <section class="component-section" id="employee">
+            <div class="menu pmd-floating-action align-content-center" role="navigation">
+                <a class="pmd-floating-action-btn btn pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-secondary" data-title="Apply Leave" asp-action="Add">
+                    <i class="material-icons pmd-sm">add</i>
+                </a>
+            </div>
 
-        </table>
-    </section>
+            <table class="table pmd-table table-hover pmd-table-card">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Employee</th>
+                        <th>Leave Type</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Reason</th>
+                        <th>No of Leave</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                @foreach (var leave in Model.AnnualLeave)
+                {
+                    <tbody>
+                        <tr>
+                            <td data-title="Employee">@Model.FirstName @Model.LastName</td>
+                            <td data-title="Leave Type">@leave.LeaveType</td>
+                            <td data-title="Start Date">1<sup>st</sup>@leave.StartDate.ToString("yy-MMM-dd", CultureInfo.InvariantCulture)</td>
+                            <td data-title="End Date">3<sup>rd</sup>@leave.EndDate.ToString("yy-MMM-dd", CultureInfo.InvariantCulture)</td>
+                            <td data-title="Reason">@leave.Reason</td>
+                            <td data-title="No of Leave">@leave.Id</td>
+                            <td data-title="Status">@leave.Status</td>
+                            @if (leave.Status == AnnualLeaveStatus.Pending)
+                            {
+                                <td data-title="">
+                                    <a asp-action="Edit" asp-route-id="@leave.Id" class="btn btn-primary pmd-ripple-effect pmd-btn-raised">Edit</a>
+                                </td>
+                            }
+                        </tr>
+                    </tbody>
+                }
+            </table>
+        </section>
+    }
 </div>
