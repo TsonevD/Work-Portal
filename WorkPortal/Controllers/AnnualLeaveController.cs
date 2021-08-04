@@ -138,5 +138,28 @@ namespace WorkPortal.Controllers
             return RedirectToAction(nameof(All));
         }
 
+        [Authorize]
+        public IActionResult Delete(int id)
+        {
+            var idByUser = this.data
+                .Employees
+                .Where(d => d.UserId == this.User.GetId())
+                .Select(d => d.Id)
+                .FirstOrDefault();
+
+            var annualLeave = this.data.AnnualLeaves
+                .FirstOrDefault(x => x.Id == id && x.EmployeeId == idByUser);
+
+            if (annualLeave == null)
+            {
+                return BadRequest();
+            }
+
+            this.data.AnnualLeaves.Remove(annualLeave);
+            this.data.SaveChanges();
+
+            return RedirectToAction(nameof(All));
+        }
+
     }
 }

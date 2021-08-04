@@ -8,7 +8,7 @@
                 <div class="card-body ">
                     <div class="row">
                         <div class="col-12">
-                            <div class="form-group pmd-textfield pmd-textfield-floating-label mt-3 mb-3">
+                            <div class="form-group mt-3 mb-3">
                                 <label asp-for="LeaveType">Leave Type</label>
                                 <select asp-for="LeaveType" id="leave-type" class="form-control" title="Please select a Leave Type" required="">
                                     <option></option>
@@ -20,7 +20,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed col-6 mt-5">
+                        <div class="form-group  col-6 mt-5">
                             <label asp-for="StartDate" class="text-center">From:</label>
                             <input asp-for="StartDate" type="date" id="inputDate" name="startDate" onchange="getDate()">
                             <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
@@ -28,7 +28,7 @@
                             <span asp-validation-for="StartDate" class="small text-danger"></span>
                             <span class="pmd-textfield-focused"></span>
                         </div>
-                        <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed col-6 mt-5">
+                        <div class="form-group  col-6 mt-5">
                             <label asp-for="EndDate">To:</label>
                             <input asp-for="EndDate" type="date" id="endDate" name="endDate" onchange="compareDates()">
                             <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
@@ -42,15 +42,12 @@
                             <span asp-validation-for="DaysToBeTaken" class="small text-danger"></span>
                             <span class="pmd-textfield-focused"></span>
                         </div>
-                        <div class="col-12">
-
-                            <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                        <div class=" form-group col-12">
                                 <label asp-for="Reason">Reason</label>
                                 <textarea asp-for="Reason" class="form-control" id="reason" name="reason"></textarea>
-                            </div>
-                            <span asp-validation-for="Reason" class="small text-danger"></span>
-                            <span class="pmd-textfield-focused"></span>
-                            </div>
+                                <span asp-validation-for="Reason" class="small text-danger"></span>
+                                <span class="pmd-textfield-focused"></span>
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer">
@@ -63,7 +60,6 @@
 </div>
 
 <script type="text/javascript">
-
     function getDate() {
         var givenDate = Date.parse(document.myForm.inputDate.value);
 

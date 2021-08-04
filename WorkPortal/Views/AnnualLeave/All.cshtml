@@ -65,7 +65,16 @@
                             @if (leave.Status == AnnualLeaveStatus.Pending)
                             {
                                 <td data-title="">
-                                    <a asp-action="Edit" asp-route-id="@leave.Id" class="btn btn-primary pmd-ripple-effect pmd-btn-raised">Edit</a>
+                                    <a asp-action="Edit" asp-route-id="@leave.Id" class="btn btn-warning pmd-ripple-effect pmd-btn-raised">Edit</a>
+                                    <span id="confirmDeleteSpan_@leave.Id" style="display:none">
+                                        <a asp-action="Delete" asp-route-id="@leave.Id" class="btn btn-danger">Yes</a>
+                                        <a class="btn btn-outline-info" onclick="confirmDelete('@leave.Id', false)">No</a>
+                                        <a class="pmd-floating-action-btn pmd-btn-raised pmd-ripple-effect text-danger">Are you sure you want to delete?</a>
+                                    </span>
+                                    <span id="deleteSpan_@leave.Id">
+                                        <a href="#" class="btn btn-danger"
+                                           onclick="confirmDelete('@leave.Id', true)">Delete</a>
+                                    </span>
                                 </td>
                             }
                         </tr>
@@ -75,3 +84,19 @@
         </section>
     }
 </div>
+@section Scripts{
+    <script>
+        function confirmDelete(uniqueId, isDeleteClicked) {
+            var deleteSpan = 'deleteSpan_' + uniqueId;
+            var confirmDeleteSpan = 'confirmDeleteSpan_' + uniqueId;
+
+            if (isDeleteClicked) {
+                $('#' + deleteSpan).hide();
+                $('#' + confirmDeleteSpan).show();
+            } else {
+                $('#' + deleteSpan).show();
+                $('#' + confirmDeleteSpan).hide();
+            }
+        }
+    </script>
+}
