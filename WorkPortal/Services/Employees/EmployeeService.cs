@@ -67,13 +67,7 @@ namespace WorkPortal.Services.Employees
 
         }
 
-        public void AdminApproveUser(User user)
-        {
-            user.IsApproved = true;
-            this.data.SaveChanges();
-        }
-
-        public ICollection<AllEmployeesServiceModel> All()
+        public ICollection<AllEmployeesServiceModel> AllUnApprovedUsers()
         {
             var all = this.data.Users
                 .Where(x => x.IsApproved == false)
@@ -130,13 +124,22 @@ namespace WorkPortal.Services.Employees
 
         public User FindUser(string id)
            => this.data.Users.FirstOrDefault(x => x.Id == id);
+        public bool IsUserApproved(string userId)
+            => this.data.Users.Where(x => x.Id == userId)
+                .Any(x => x.IsApproved);
+
+        public void AdminApproveUser(User user)
+        {
+            user.IsApproved = true;
+            this.data.SaveChanges();
+        }
 
         public void AdminDeleteUser(User user)
         {
             this.data.Users.Remove(user);
             this.data.SaveChanges();
         }
-
+       
         public ICollection<DepartmentServiceModel> GetDepartments()
                 => this.data.Departments
                 .Select(x => new DepartmentServiceModel()

@@ -12,8 +12,9 @@ namespace WorkPortal.Services.Employees
         void AdminDeleteUser(User user);
         void AdminApproveUser(User user);
 
+        bool IsUserApproved(string userId);
 
-        ICollection<AllEmployeesServiceModel> All();
+        ICollection<AllEmployeesServiceModel> AllUnApprovedUsers();
 
         void CompleteProfile(ProfileServiceModel profile , string userId);
 

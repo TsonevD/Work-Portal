@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkPortal", "WorkPortal\Wo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{3F422BCF-183E-4D7A-9D3D-94460E49B9FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalConstants", "GlobalConstants\GlobalConstants.csproj", "{2363430A-5980-41BC-BABB-20D8F06A0EB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GlobalConstants", "GlobalConstants\GlobalConstants.csproj", "{2363430A-5980-41BC-BABB-20D8F06A0EB1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -46,6 +46,7 @@ namespace WorkPortal.Controllers
         [HttpPost]
         public IActionResult CompleteProfile(ProfileServiceModel profile)
         {
+            ;
             var userId = this.User.GetId();
 
             employeeService.CompleteProfile(profile, userId);

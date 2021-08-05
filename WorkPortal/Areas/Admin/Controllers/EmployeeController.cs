@@ -1,9 +1,7 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WorkPortal.Areas.Admin.Models.Employee;
-using WorkPortal.Data;
 using WorkPortal.Services.Employees;
 
 namespace WorkPortal.Areas.Admin.Controllers
@@ -21,19 +19,20 @@ namespace WorkPortal.Areas.Admin.Controllers
             this.employeeService = employeeService;
         }
 
-
         public IActionResult All()
         {
-            var allUsers = employeeService.All();
+            var allUsers = employeeService
+                .AllUnApprovedUsers();
 
             return View(allUsers);
         }
 
         public IActionResult Add()
         {
-            var departments = employeeService.GetDepartments();
-
-            var managers = employeeService.GetManagers();
+            var departments = employeeService
+                .GetDepartments();
+            var managers = employeeService
+                .GetManagers();
 
             var view = new AddEmployeeInputModel()
             {
@@ -51,34 +50,39 @@ namespace WorkPortal.Areas.Admin.Controllers
                 return View(employee);
             }
 
-            await employeeService.AdminAddUser(employee);
+            await employeeService
+                .AdminAddUser(employee);
 
             return RedirectToAction("All");
         }
 
         public IActionResult Approve(string id)
         {
-            var employee = employeeService.FindUser(id);
+            var employee = employeeService
+                .FindUser(id);
 
             if (employee == null)
             {
                 return BadRequest();
             }
 
-            employeeService.AdminApproveUser(employee);
+            employeeService
+                .AdminApproveUser(employee);
 
             return RedirectToAction(nameof(All));
         }
 
         public IActionResult Delete(string id)
         {
-            var employee = employeeService.FindUser(id);
+            var employee = employeeService
+                .FindUser(id);
 
             if (employee == null)
             {
                 return BadRequest();
             }
-            employeeService.AdminDeleteUser(employee);
+            employeeService
+                .AdminDeleteUser(employee);
 
             return RedirectToAction(nameof(All));
         }

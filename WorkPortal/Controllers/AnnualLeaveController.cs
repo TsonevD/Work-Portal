@@ -3,55 +3,76 @@ using Microsoft.AspNetCore.Mvc;
 using WorkPortal.Infrastructure;
 using WorkPortal.Models.AnnualLeave;
 using WorkPortal.Services.AnnualLeave;
+using WorkPortal.Services.Employees;
 
 namespace WorkPortal.Controllers
 {
     public class AnnualLeaveController : Controller
     {
         private readonly IAnnualLeaveService annualLeaveService;
+        private readonly IEmployeeService employeeService;
 
-        public AnnualLeaveController(IAnnualLeaveService service)
-            => this.annualLeaveService = service;
+        public AnnualLeaveController(IAnnualLeaveService service, IEmployeeService employeeService)
+        {
+            this.annualLeaveService = service;
+            this.employeeService = employeeService;
+        }
 
 
         [Authorize]
         public IActionResult All()
         {
             var userId = this.User.GetId();
-            if (userId == null)
+            var isUserApproved = employeeService.IsUserApproved(userId);
+
+            if (userId == null || !isUserApproved)
             {
                 return Unauthorized();
             }
-            var all = annualLeaveService.All(userId);
+            var all = annualLeaveService
+                .All(userId);
 
             return View(all);
         }
 
         [Authorize]
         public IActionResult Add()
-            => View();
+        {
+            var isUserApproved = employeeService.IsUserApproved(this.User.GetId());
+            if (!isUserApproved)
+            {
+                return Unauthorized();
+            }
+            return View();
+        }
 
 
         [HttpPost]
         [Authorize]
         public IActionResult Add(AnnualLeaveInputModel annualLeave)
         {
-            var daysDifference = (annualLeave.EndDate-annualLeave.StartDate).TotalDays;
-            
+            var isUserApproved = employeeService.IsUserApproved(this.User.GetId());
+
+            if (!isUserApproved)
+            {
+                return Unauthorized();
+            }
+            var daysDifference = (annualLeave.EndDate - annualLeave.StartDate).TotalDays;
+
             if (annualLeave.EndDate < annualLeave.StartDate)
             {
                 ModelState.AddModelError("FinishDate", "Finish Date needs to be after the Start Date!");
             }
             if (annualLeave.DaysToBeTaken > daysDifference)
             {
-                ModelState.AddModelError("DaysToBeTaken" , "You cannot take more days than the calendar difference.");
+                ModelState.AddModelError("DaysToBeTaken", "You cannot take more days than the calendar difference.");
             }
             if (!ModelState.IsValid)
             {
                 return View(annualLeave);
             }
 
-            annualLeaveService.Add(annualLeave , this.User.GetId());
+            annualLeaveService.Add(annualLeave, this.User.GetId());
 
             return RedirectToAction(nameof(All));
         }
@@ -59,7 +80,15 @@ namespace WorkPortal.Controllers
         [Authorize]
         public IActionResult Edit(int id)
         {
-            var userId = annualLeaveService.UserId(this.User.GetId());
+            var getId = this.User.GetId();
+
+            var userId = annualLeaveService.UserId(getId);
+
+            var isUserApproved = employeeService.IsUserApproved(getId);
+            if (!isUserApproved)
+            {
+                return Unauthorized();
+            }
 
             var annualLeave = annualLeaveService.EditDetails(id, userId);
 
@@ -70,7 +99,15 @@ namespace WorkPortal.Controllers
         [HttpPost]
         public IActionResult Edit(int id, AnnualLeaveInputModel annualLeave)
         {
-            var userId = annualLeaveService.UserId(User.GetId());
+            var getId = User.GetId();
+            var isUserApproved = employeeService.IsUserApproved(getId);
+            if (!isUserApproved)
+            {
+                return Unauthorized();
+            }
+
+            var userId = annualLeaveService.UserId(getId);
+
             var isByUser = annualLeaveService.IsByUser(id, userId);
 
             if (!isByUser && !User.IsAdmin())
@@ -78,7 +115,7 @@ namespace WorkPortal.Controllers
                 return BadRequest();
             }
 
-            annualLeaveService.Edit(id , annualLeave, userId);
+            annualLeaveService.Edit(id, annualLeave, userId);
 
             return RedirectToAction(nameof(All));
         }
@@ -86,7 +123,14 @@ namespace WorkPortal.Controllers
         [Authorize]
         public IActionResult Delete(int id)
         {
-            var userId = annualLeaveService.UserId(User.GetId());
+            var getId = User.GetId();
+            var isUserApproved = employeeService.IsUserApproved(getId);
+            if (!isUserApproved)
+            {
+                return Unauthorized();
+            }
+
+            var userId = annualLeaveService.UserId(getId);
             var isByUser = annualLeaveService.IsByUser(id, userId);
 
             if (!isByUser)

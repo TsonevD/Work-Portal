@@ -7,11 +7,8 @@ namespace WorkPortal.Infrastructure
     public static class ClaimsPrincipalExtensions
     {
         public static string GetId(this ClaimsPrincipal user)
-            => user.FindFirst(ClaimTypes.NameIdentifier).Value;
+            => user.FindFirstValue(ClaimTypes.NameIdentifier);
 
-
-        public static string IsUserApproved(this ClaimsPrincipal user)
-            => user.FindFirst(ClaimTypes.NameIdentifier).Value;
         public static bool IsAdmin(this ClaimsPrincipal user)
             => user.IsInRole(AdministratorRoleName);
 
