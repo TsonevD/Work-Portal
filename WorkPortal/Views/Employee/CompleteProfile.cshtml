@@ -1,6 +1,6 @@
-﻿@model AddEmployeeInputModel
+﻿@model ProfileServiceModel
 @{
-    ViewBag.Title = "Add Employee";
+    ViewBag.Title = "Finish your profile";
 }
 
 <div id="content" class="pmd-content admin section-container">
@@ -15,26 +15,10 @@
                             <div class="row">
                                 <div class="col-12 col-sm-6 col-md-3">
                                     <div class="form-group mb-3">
-                                        <label asp-for="Firstname" class="col-form-label control-label">First Name</label>
-                                        <input asp-for="Firstname" type="text" class="form-control">
-                                        <span asp-validation-for="Firstname" class="small text-danger"></span>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-sm-6 col-md-3">
-                                    <div class="form-group mb-3">
-                                        <label asp-for="Lastname" class="col-form-label control-label">Last Name</label>
-                                        <input asp-for="Lastname" type="text" class="form-control">
-                                        <span asp-validation-for="Lastname" class="small text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-3">
-                                    <div class="form-group mb-3">
                                         <label asp-for="MiddleName" class="col-form-label control-label">Middle Name</label>
                                         <input asp-for="MiddleName" type="text" class="form-control">
                                         <span asp-validation-for="MiddleName" class="small text-danger"></span>
                                     </div>
-
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-3">
                                     <div class="form-group mb-3">
@@ -45,25 +29,12 @@
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-3">
                                     <div class="form-group mb-3">
-                                        <label asp-for="Email" class="col-form-label control-label">Email</label>
-                                        <input asp-for="Email" type="email" class="form-control">
-                                        <span asp-validation-for="Email" class="small text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-3">
-                                    <div class="form-group mb-3">
                                         <label asp-for="ImageUrl" class="col-form-label control-label">Picture URL</label>
                                         <input asp-for="ImageUrl" type="url" class="form-control">
                                         <span asp-validation-for="ImageUrl" class="small text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-6 col-md-3">
-                                    <div class="form-group pmd-textfield">
-                                        <label asp-for="DateOfBirth" class="col-form-label control-label">Date of Birth</label>
-                                        <input asp-for="DateOfBirth" type="date" value="1995-04-27" class="form-control">
-                                        <span asp-validation-for="DateOfBirth" class="small text-danger"></span>
-                                    </div>
-                                </div>
+                            
                                 <div class="col-12 col-sm-6 col-md-3">
                                     <div class="form-check">
                                         <input asp-for="Gender" class="form-check-input" type="radio" value="Male" name="Gender" />Male
@@ -73,7 +44,7 @@
                                         <input asp-for="Gender" class="form-check-input" type="radio" value="Female" id="Gender" name="Gender" />Female
                                         <span asp-validation-for="Gender" class="small text-danger"></span>
                                     </div>
-                                  
+
                                 </div>
                             </div>
                             <!-- Employee Information -->

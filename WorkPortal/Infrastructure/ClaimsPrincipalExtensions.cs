@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-using GlobalConstants;
 using WorkPortal.Areas.Admin;
 
 namespace WorkPortal.Infrastructure
@@ -10,6 +9,9 @@ namespace WorkPortal.Infrastructure
         public static string GetId(this ClaimsPrincipal user)
             => user.FindFirst(ClaimTypes.NameIdentifier).Value;
 
+
+        public static string IsUserApproved(this ClaimsPrincipal user)
+            => user.FindFirst(ClaimTypes.NameIdentifier).Value;
         public static bool IsAdmin(this ClaimsPrincipal user)
             => user.IsInRole(AdministratorRoleName);
 

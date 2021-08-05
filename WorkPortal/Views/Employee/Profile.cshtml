@@ -1,0 +1,139 @@
+﻿@using System.Globalization
+@model ProfileQueryModel
+@{ ViewBag.Title = "My Profile"; }
+
+
+<div id="content" class="pmd-content section-container center">
+    <h1 class="text-center">@ViewBag.Title</h1>
+    @if (Model == null)
+    {
+<div class="text-center align-self-center mt-5">
+    <svg version="1.1" id="Layer_1" x="0px" y="0px" width="100px" height="100px" viewBox="-58 -58 140 140" enable-background="new -58 -58 140 140" xml:space="preserve">
+    <circle fill="#E7E9EF" cx="12" cy="12" r="70"></circle>
+    <g opacity="0.4">
+    <g id="XMLID_233_">
+
+    <circle id="XMLID_235_" fill="none" stroke="#3075BA" stroke-width="6" stroke-miterlimit="10" cx="11.998" cy="-3.917" r="20.464"></circle>
+                        </g>
+    <g id="XMLID_236_">
+    <path id="XMLID_237_" fill="none" stroke="#3075BA" stroke-width="6" stroke-miterlimit="10" d="M12,16.55
+                            c-17.581,0-31.833,14.249-31.833,31.831h63.667C43.834,30.799,29.58,16.55,12,16.55z"></path>
+                        </g>
+                    </g>
+                </svg>
+    <h2 class="mt-3 mb-3">Your profile need to be Approved by Admin!</h2>
+</div>      }
+</div>
+@if(Model!=null)
+{
+<div class="page-content">
+    <div class="d-flex align-items-center mobile-view">
+        <img src="@Model.ImageUrl" alt="Profile-Pic" class="profile-pic rounded-circle mr-md-4 mr-sm-0" height="200" width="200">
+    </div>
+    <div class="page-content profile-view">
+        <div class="row">
+            <div class="col-12">
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <!-- About Tab -->
+                    <div role="tabpanel" class="tab-pane active" id="about">
+                        <div class="card pmd-card">
+                            <div class="card-body">
+                                <!-- Basic Information -->
+                                <div class="details-tab">
+                                    <div class="d-flex flex-row align-items-center mb-2">
+                                        <h3 class="card-title media-body">Basic Information</h3>
+                                    </div>
+                                    <div class="row view-basic-card">
+                                        <div class="col-12 col-md-6 col-lg-3">
+                                            <label class="pmd-list-subtitle">First Name</label>
+                                            <p class="pmd-list-title">@Model.UserFirstName</p>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-3">
+                                            <label class="pmd-list-subtitle">Last Name</label>
+                                            <p class="pmd-list-title">@Model.UserLastName</p>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-3">
+                                            <label class="pmd-list-subtitle">Middle Name</label>
+                                            <p class="pmd-list-title">@Model.MiddleName</p>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-3">
+                                            <label class="pmd-list-subtitle">Phone</label>
+                                            <p class="pmd-list-title"><a href="tel:@Model.Phone" title="@Model.Phone">@Model.Phone</a></p>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-3">
+                                            <label class="pmd-list-subtitle">Email</label>
+                                            <p class="pmd-list-title"><a href="mailto:marie@gmail.com" title="marie@xyz.com">@Model.Email</a></p>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-3">
+                                            <label class="pmd-list-subtitle">Date of Birth</label>
+                                            <p class="pmd-list-title">16<sup>th</sup>@Model.DateOfBirth.ToString("d", CultureInfo.InvariantCulture)</p>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-3">
+                                            <label class="pmd-list-subtitle">Gender</label>
+                                            <p class="pmd-list-title">@Model.Gender</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Employee Information -->
+                                <div class="details-tab">
+                                    <div class="d-flex flex-row align-items-center mb-2">
+                                        <h3 class="card-title media-body">Employee Information</h3>
+                                    </div>
+                                    <!-- View Card -->
+                                    <div class="row view-employee-card">
+                                        <div class="col-12 col-md-6 col-lg-3">
+                                            <label class="pmd-list-subtitle">Employee Enrollment ID</label>
+                                            <p class="pmd-list-title">XYZ - 1111</p>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-3">
+                                            <label class="pmd-list-subtitle">Date of Joining</label>
+                                            <p class="pmd-list-title">@Model.HireDate.ToString("d", CultureInfo.InvariantCulture)</p>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-3">
+                                            <label class="pmd-list-subtitle">Department</label>
+                                            <p class="pmd-list-title">@Model.DepartmentName</p>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-3">
+                                            <label class="pmd-list-subtitle">Designation</label>
+                                            <p class="pmd-list-title">@Model.JobTitle</p>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-3">
+                                            <label class="pmd-list-subtitle">Reporting Employee</label>
+                                            <p class="pmd-list-title">@Model.ManagerFirstName @Model.ManagerLastName</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Contact Information -->
+                                <div class="details-tab">
+                                    <!-- View Card -->
+                                    <div class="d-flex flex-row align-items-center mb-2">
+                                        <h3 class="card-title media-body">Contact Information</h3>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 col-lg-3">
+                                            <label class="pmd-list-subtitle">Address Line</label>
+                                            <p class="pmd-list-title">@Model.AddressStreetName</p>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-3">
+                                            <label class="pmd-list-subtitle">City</label>
+                                            <p class="pmd-list-title">@Model.TownName</p>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-3">
+                                            <label class="pmd-list-subtitle">Zip Code</label>
+                                            <p class="pmd-list-title">@Model.AddressPostCode</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}

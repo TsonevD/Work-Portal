@@ -1,12 +1,11 @@
 ﻿using WorkPortal.Data;
-using WorkPortal.Services.AnnualLeave;
 using WorkPortal.Services.AnnualLeave.Models;
 using System.Linq;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using WorkPortal.Models.AnnualLeave;
 
-namespace WorkPortal.Services
+namespace WorkPortal.Services.AnnualLeave
 {
     public class AnnualLeaveService : IAnnualLeaveService
     {

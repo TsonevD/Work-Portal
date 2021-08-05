@@ -12,6 +12,7 @@ using WorkPortal.Data;
 using WorkPortal.Infrastructure;
 using WorkPortal.Services;
 using WorkPortal.Services.AnnualLeave;
+using WorkPortal.Services.Employees;
 
 namespace WorkPortal
 {
@@ -54,6 +55,7 @@ namespace WorkPortal
                 });
 
             services.AddTransient<IAnnualLeaveService, AnnualLeaveService>();
+            services.AddTransient<IEmployeeService, EmployeeService>();
 
         }
 

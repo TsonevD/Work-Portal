@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WorkPortal.Areas.Admin.Models.Employee
+namespace WorkPortal.Services.Employees.Models
 {
-    public class DepartmentViewModel
+    public class DepartmentServiceModel
     {
         public int Id { get; set; }
 

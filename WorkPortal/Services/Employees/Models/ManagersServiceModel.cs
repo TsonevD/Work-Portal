@@ -1,6 +1,6 @@
-﻿namespace WorkPortal.Areas.Admin.Models.Employee
+﻿namespace WorkPortal.Services.Employees.Models
 {
-    public class ManagersViewModel
+    public class ManagersServiceModel
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

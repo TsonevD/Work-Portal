@@ -1,38 +1,56 @@
-﻿using System.Linq;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WorkPortal.Data;
 using WorkPortal.Infrastructure;
-using WorkPortal.Models.Employee;
+using WorkPortal.Services.Employees;
+using WorkPortal.Services.Employees.Models;
 
 namespace WorkPortal.Controllers
 {
     public class EmployeeController : Controller 
     {
-        private readonly WorkPortalDbContext data;
+        private readonly IEmployeeService employeeService;
 
-        public EmployeeController(WorkPortalDbContext data) 
-            => this.data = data;
+        public EmployeeController(IEmployeeService employeeService)
+        {
+            this.employeeService = employeeService;
+        }
 
         [Authorize]
-        public IActionResult Portal()
+        public IActionResult Profile()
         {
-            var id = this.User.GetId();
+            var userId = this.User.GetId();
 
-            var profile = this.data.Employees.Where(x => x.UserId == id)
-                .Select(x => new ProfileViewModel()
-                {
-                    UserFirstName = x.User.FirstName,
-                    UserLastName= x.User.LastName,
-                    HireDate = x.HireDate,
-                    JobTitle = x.JobTitle,
-                    Id = x.Id,
-                    CompanyName = x.Department.Company.Name,
-                    CompanyLocation = x.Department.Company.Town,
-                    ImageUrl = x.ProfilePictureUrl,
-                }).FirstOrDefault();
+            var profile = employeeService.GetProfile(userId);
 
             return View(profile);
+        }
+
+        [Authorize]
+        public IActionResult CompleteProfile()
+        {
+            var departments = employeeService.GetDepartments();
+
+            var managers = employeeService.GetManagers();
+
+            var view = new ProfileServiceModel()
+            {
+                Departments = departments,
+                Managers = managers,
+            };
+
+            return View(view);
+        }
+
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult CompleteProfile(ProfileServiceModel profile)
+        {
+            var userId = this.User.GetId();
+
+            employeeService.CompleteProfile(profile, userId);
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

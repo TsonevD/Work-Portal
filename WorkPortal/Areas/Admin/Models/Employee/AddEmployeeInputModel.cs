@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using GlobalConstants;
 using Models.Enums;
+using WorkPortal.Services.Employees.Models;
 
 namespace WorkPortal.Areas.Admin.Models.Employee
 {
     using static DataConstants;
-    public class AddEmployeeViewModel
+    public class AddEmployeeInputModel
     {
         [Required]
         [StringLength(DefaultNameMaxLength , MinimumLength = DefaultNameMinLength)]
@@ -53,9 +54,9 @@ namespace WorkPortal.Areas.Admin.Models.Employee
         [Display(Name = "Department")]
         public int DepartmentId { get; set; }
 
-        public IEnumerable<DepartmentViewModel> Departments { get; set; }
+        public IEnumerable<DepartmentServiceModel> Departments { get; set; }
 
-        public IEnumerable<ManagersViewModel> Managers { get; set; }
+        public IEnumerable<ManagersServiceModel> Managers { get; set; }
 
     }
 }
