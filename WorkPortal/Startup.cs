@@ -10,6 +10,8 @@ using Microsoft.Extensions.Hosting;
 using Models;
 using WorkPortal.Data;
 using WorkPortal.Infrastructure;
+using WorkPortal.Services;
+using WorkPortal.Services.AnnualLeave;
 
 namespace WorkPortal
 {
@@ -51,6 +53,7 @@ namespace WorkPortal
                     options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
                 });
 
+            services.AddTransient<IAnnualLeaveService, AnnualLeaveService>();
 
         }
 

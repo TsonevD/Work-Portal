@@ -9,7 +9,6 @@ namespace WorkPortal.Models.AnnualLeave
     public class AnnualLeaveInputModel
     {
         [Required]
-        [Display]
         public AnnualLeaveType LeaveType { get; set; }
 
         [Required]

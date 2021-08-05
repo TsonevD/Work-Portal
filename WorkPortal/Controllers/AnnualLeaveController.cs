@@ -1,54 +1,41 @@
-﻿using System.Linq;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Models;
-using WorkPortal.Data;
 using WorkPortal.Infrastructure;
 using WorkPortal.Models.AnnualLeave;
+using WorkPortal.Services.AnnualLeave;
 
 namespace WorkPortal.Controllers
 {
     public class AnnualLeaveController : Controller
     {
-        private readonly WorkPortalDbContext data;
+        private readonly IAnnualLeaveService annualLeaveService;
 
-        public AnnualLeaveController(WorkPortalDbContext data)
-        {
-            this.data = data;
-        }
+        public AnnualLeaveController(IAnnualLeaveService service)
+            => this.annualLeaveService = service;
 
 
         [Authorize]
         public IActionResult All()
         {
-            var allAnnualLeave = this.data.Employees.Where(x => x.UserId == this.User.GetId())
-                .Select(x => new AllAnnualLeaveViewModel()
-                {
-                    FirstName = x.User.FirstName,
-                    LastName = x.User.LastName,
-                    AnnualLeave = x.AnnualLeaves.Select(a => new AnnualLeaveModel()
-                    {
-                        Id = a.Id,
-                        DaysToBeTaken = (int)a.DaysToBeTaken,
-                        StartDate = a.StartDate,
-                        EndDate = a.EndDate,
-                        Status = a.Status,
-                        Reason = a.Reason,
-                        LeaveType = a.Type,
-                    }).ToList(),
-                }).FirstOrDefault();
+            var userId = this.User.GetId();
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+            var all = annualLeaveService.All(userId);
 
-            return View(allAnnualLeave);
+            return View(all);
         }
 
+        [Authorize]
         public IActionResult Add()
             => View();
+
 
         [HttpPost]
         [Authorize]
         public IActionResult Add(AnnualLeaveInputModel annualLeave)
         {
-            var id = this.User.GetId();
             var daysDifference = (annualLeave.EndDate-annualLeave.StartDate).TotalDays;
             
             if (annualLeave.EndDate < annualLeave.StartDate)
@@ -64,22 +51,7 @@ namespace WorkPortal.Controllers
                 return View(annualLeave);
             }
 
-            var employee = this.data.Employees.First(x => x.UserId == id);
-
-            var newLeaveRequest = new AnnualLeave()
-            {
-                EmployeeId = employee.Id,
-                StartDate = annualLeave.StartDate,
-                EndDate = annualLeave.EndDate,
-                Reason = annualLeave.Reason,
-                Type = annualLeave.LeaveType,
-                DaysToBeTaken = annualLeave.DaysToBeTaken,
-            };
-            this.data.AnnualLeaves.Add(newLeaveRequest);
-
-            employee.AnnualLeaves.Add(newLeaveRequest);
-
-            this.data.SaveChanges();
+            annualLeaveService.Add(annualLeave , this.User.GetId());
 
             return RedirectToAction(nameof(All));
         }
@@ -87,23 +59,9 @@ namespace WorkPortal.Controllers
         [Authorize]
         public IActionResult Edit(int id)
         {
-            var idByUser = this.data
-                .Employees
-                .Where(d => d.UserId == this.User.GetId())
-                .Select(d => d.Id)
-                .FirstOrDefault();
+            var userId = annualLeaveService.UserId(this.User.GetId());
 
-            var annualLeave = this.data.AnnualLeaves
-                .Where(x => x.Id == id && x.EmployeeId==idByUser)
-                .Select(a => new AnnualLeaveEditModel()
-                {
-                    Id = a.EmployeeId,
-                    DaysToBeTaken = (int)a.DaysToBeTaken,
-                    StartDate = a.StartDate,
-                    EndDate = a.EndDate,
-                    Reason = a.Reason,
-                    LeaveType = a.Type,
-                }).FirstOrDefault();
+            var annualLeave = annualLeaveService.EditDetails(id, userId);
 
             return View(annualLeave);
         }
@@ -112,28 +70,15 @@ namespace WorkPortal.Controllers
         [HttpPost]
         public IActionResult Edit(int id, AnnualLeaveInputModel annualLeave)
         {
-            var userId = User.GetId();
+            var userId = annualLeaveService.UserId(User.GetId());
+            var isByUser = annualLeaveService.IsByUser(id, userId);
 
-            var idByUser = this.data
-                .Employees
-                .Where(d => d.UserId == userId)
-                .Select(d => d.Id)
-                .FirstOrDefault();
-
-            var userAnnualLeave = this.data.AnnualLeaves.FirstOrDefault(x => x.Id== id && x.EmployeeId==idByUser);
-
-            if (userAnnualLeave == null || !User.IsAdmin())
+            if (!isByUser && !User.IsAdmin())
             {
                 return BadRequest();
             }
 
-            userAnnualLeave.StartDate = annualLeave.StartDate;
-            userAnnualLeave.EndDate = annualLeave.EndDate;
-            userAnnualLeave.Type = annualLeave.LeaveType;
-            userAnnualLeave.Reason= annualLeave.Reason;
-            userAnnualLeave.DaysToBeTaken = annualLeave.DaysToBeTaken;
-
-            this.data.SaveChanges();
+            annualLeaveService.Edit(id , annualLeave, userId);
 
             return RedirectToAction(nameof(All));
         }
@@ -141,25 +86,17 @@ namespace WorkPortal.Controllers
         [Authorize]
         public IActionResult Delete(int id)
         {
-            var idByUser = this.data
-                .Employees
-                .Where(d => d.UserId == this.User.GetId())
-                .Select(d => d.Id)
-                .FirstOrDefault();
+            var userId = annualLeaveService.UserId(User.GetId());
+            var isByUser = annualLeaveService.IsByUser(id, userId);
 
-            var annualLeave = this.data.AnnualLeaves
-                .FirstOrDefault(x => x.Id == id && x.EmployeeId == idByUser);
-
-            if (annualLeave == null)
+            if (!isByUser)
             {
                 return BadRequest();
             }
 
-            this.data.AnnualLeaves.Remove(annualLeave);
-            this.data.SaveChanges();
+            annualLeaveService.Delete(id);
 
             return RedirectToAction(nameof(All));
         }
-
     }
 }

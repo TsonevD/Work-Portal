@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 using Models.Enums;
 
-namespace WorkPortal.Models.AnnualLeave
+namespace WorkPortal.Services.AnnualLeave.Models
 {
-    public class AnnualLeaveModel
+    public class AnnualLeaveServiceModel
     {
         public int Id { get; set; }
 
