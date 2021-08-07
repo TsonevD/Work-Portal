@@ -122,6 +122,13 @@ namespace WorkPortal.Services.Employees
             return profile;
         }
 
+        public int UserId(string userId)
+            => this.data
+                .Employees
+                .Where(d => d.UserId == userId)
+                .Select(d => d.Id)
+                .FirstOrDefault();
+
         public User FindUser(string id)
            => this.data.Users.FirstOrDefault(x => x.Id == id);
         public bool IsUserApproved(string userId)

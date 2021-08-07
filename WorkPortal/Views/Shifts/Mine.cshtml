@@ -1,5 +1,5 @@
 ﻿@using System.Globalization
-@model AllShiftsViewModel
+@model ICollection<ShiftViewModel>
 
 @{ ViewBag.Title = "Shifts"; }
 
@@ -7,11 +7,30 @@
 
 
 <div id="content" class="pmd-content section-container center">
-    <!-- Title -->
     <h1 class="text-center">@ViewBag.Title</h1>
-    <div class="container">
-        @foreach (var shift in Model.Shifts)
-        {
+    @if (Model == null)
+    {
+<div class="text-center align-self-center mt-5">
+    <svg version="1.1" id="Layer_1" x="0px" y="0px" width="100px" height="100px" viewBox="-58 -58 140 140" enable-background="new -58 -58 140 140" xml:space="preserve">
+    <circle fill="#E7E9EF" cx="12" cy="12" r="70"></circle>
+    <g opacity="0.4">
+    <g id="XMLID_233_">
+
+    <circle id="XMLID_235_" fill="none" stroke="#3075BA" stroke-width="6" stroke-miterlimit="10" cx="11.998" cy="-3.917" r="20.464"></circle>
+                    </g>
+    <g id="XMLID_236_">
+    <path id="XMLID_237_" fill="none" stroke="#3075BA" stroke-width="6" stroke-miterlimit="10" d="M12,16.55
+                            c-17.581,0-31.833,14.249-31.833,31.831h63.667C43.834,30.799,29.58,16.55,12,16.55z"></path>
+                    </g>
+                </g>
+            </svg>
+    <h2 class="mt-3 mb-3">You haven`t got any Shifts yet!</h2>
+</div> }
+else
+{
+<div class="container">
+    @foreach (var shift in Model)
+    {
 <div class="row mb-5">
     <div class="col-md-10">
         <div class="card shadow">
@@ -33,6 +52,6 @@
             </div>
         </div>
     </div>
-</div>            }
-    </div>
+</div>}
+</div>}
 </div>

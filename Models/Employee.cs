@@ -53,7 +53,7 @@ namespace Models
 
         public ICollection<AnnualLeave> AnnualLeaves { get; set; } = new HashSet<AnnualLeave>();
 
-        public ICollection<Shift> Shifts { get; init; } = new HashSet<Shift>();
+        public ICollection<Shift> Shifts { get; init; } = new HashSet<Shift>(); 
 
         public ICollection<Payslip> Payslips { get; init; } = new HashSet<Payslip>();
 

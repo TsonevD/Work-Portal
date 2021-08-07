@@ -1,73 +1,42 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Models;
 using WorkPortal.Data;
+using WorkPortal.Infrastructure;
 using WorkPortal.Models.Shifts;
+using WorkPortal.Services.Employees;
+using WorkPortal.Services.Shifts;
 
 namespace WorkPortal.Controllers
 {
     public class ShiftsController : Controller
     {
-        private readonly WorkPortalDbContext data;
+        private readonly IShiftService shiftService;
+        private readonly IEmployeeService employeeService;
 
-        public ShiftsController(WorkPortalDbContext data)
+        public ShiftsController(IShiftService shiftService, IEmployeeService employeeService)
         {
-            this.data = data;
+            this.shiftService = shiftService;
+            this.employeeService = employeeService;
         }
 
-        public IActionResult All(AllShiftsViewModel query)
+        [Authorize]
+        public IActionResult Mine(ShiftViewModel query)
         {
-            var id = 2;
+            var id = this.User.GetId();
+            var userId = this.employeeService.UserId(id);
 
-            var shifts = this.data.Shifts
-                .Where(x => x.Employees.Any(e => e.Id == id))
-                .Select(x => new ShiftViewModel()
-                {
-                    Id = x.Id,
-                    StartTime = x.StartTime,
-                    RatePerHour = x.RatePerHour,
-                    FinishTime = x.FinishTime,
-                    HoursWorking = x.HoursWorking,
-                    ShiftDate = x.ShiftDate,
-                    Location = new LocationViewModel()
-                    {
-                        PostCode = x.Location.PostCode,
-                        StreetName = x.Location.StreetName,
-                        StreetNumber = x.Location.StreetNumber,
-                        Town = x.Location.Town,
-                        CompanyName = x.Location.CompanyName,
-                    },
-                }).ToList();
+            var mineShifts = this.shiftService.Mine(userId);
 
-            query.Shifts = shifts;
-
-            return View(query);
+            return View(mineShifts);
         }
 
-
+        [Authorize]
         public IActionResult Details(int id)
         {
-            var shift = this.data.Shifts
-                .Where(x=>x.Id==id)
-                .Select(x => new ShiftViewModel()
-                {
-                    Id = x.Id,
-                    StartTime = x.StartTime,
-                    RatePerHour = x.RatePerHour,
-                    FinishTime = x.FinishTime,
-                    HoursWorking = x.HoursWorking,
-                    ShiftDate = x.ShiftDate,
-                    Location = new LocationViewModel()
-                    {
-                        PostCode = x.Location.PostCode,
-                        StreetName = x.Location.StreetName,
-                        StreetNumber = x.Location.StreetNumber,
-                        Town = x.Location.Town,
-                        CompanyName = x.Location.CompanyName,
-                    },
-                }).FirstOrDefault();
-
+            var shift = shiftService.Details(id);
+           
             return View(shift);
         }
     }

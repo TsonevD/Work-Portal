@@ -25,6 +25,10 @@ namespace Models
         [Column(TypeName = DefaultDecimalValue)]
         public decimal RatePerHour { get; set; }
 
+        public bool IsAssigned { get; set; }
+
+        public int? EmployeeId { get; set; }
+
         public int LocationId { get; set; }
 
         public Location Location { get; set; }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorkPortal.Data;
 
 namespace WorkPortal.Data.Migrations
 {
     [DbContext(typeof(WorkPortalDbContext))]
-    partial class WorkPortalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210806133416_UpdateShiftTable")]
+    partial class UpdateShiftTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

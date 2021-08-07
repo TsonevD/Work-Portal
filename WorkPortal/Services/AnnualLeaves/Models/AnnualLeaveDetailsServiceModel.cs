@@ -1,6 +1,6 @@
 ﻿using WorkPortal.Models.AnnualLeave;
 
-namespace WorkPortal.Services.AnnualLeave.Models
+namespace WorkPortal.Services.AnnualLeaves.Models
 {
     public class AnnualLeaveDetailsServiceModel : AnnualLeaveInputModel
     {

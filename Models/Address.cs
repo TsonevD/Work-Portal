@@ -10,11 +10,11 @@ namespace Models
         public int Id { get; init; }
 
         [Required]
-        [StringLength(AddressNameMaxLength)]
+        [StringLength(DataConstants.Address.AddressNameMaxLength)]
         public string StreetName { get; set; }
 
         [Required]
-        [StringLength(AddressPostCodeMaxLength)]
+        [StringLength(DataConstants.Address.AddressPostCodeMaxLength)]
         public string PostCode { get; set; }
 
         public int TownId { get; set; }

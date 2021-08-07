@@ -1,11 +1,12 @@
 ﻿using WorkPortal.Data;
-using WorkPortal.Services.AnnualLeave.Models;
+using WorkPortal.Services.AnnualLeaves.Models;
 using System.Linq;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using WorkPortal.Models.AnnualLeave;
+using Models;
 
-namespace WorkPortal.Services.AnnualLeave
+namespace WorkPortal.Services.AnnualLeaves
 {
     public class AnnualLeaveService : IAnnualLeaveService
     {
@@ -23,21 +24,7 @@ namespace WorkPortal.Services.AnnualLeave
         {
             var all = this.data.Employees
                 .Where(x => x.UserId == userId)
-                .Select(x => new AllAnnualLeavesServiceModel()
-                {
-                    FirstName = x.User.FirstName,
-                    LastName = x.User.LastName,
-                    AnnualLeave = x.AnnualLeaves.Select(a => new AnnualLeaveServiceModel()
-                    {
-                        Id = a.Id,
-                        DaysToBeTaken = (int)a.DaysToBeTaken,
-                        StartDate = a.StartDate,
-                        EndDate = a.EndDate,
-                        Status = a.Status,
-                        Reason = a.Reason,
-                        LeaveType = a.Type,
-                    }).ToList(),
-                })
+                .ProjectTo<AllAnnualLeavesServiceModel>(mapper)
                 .FirstOrDefault();
 
             return all;
@@ -47,7 +34,7 @@ namespace WorkPortal.Services.AnnualLeave
         {
             var employee = this.data.Employees.First(x => x.UserId == userById);
 
-            var newLeaveRequest = new global::Models.AnnualLeave()
+            var newLeaveRequest = new AnnualLeave()
             {
                 EmployeeId = employee.Id,
                 StartDate = annualLeave.StartDate,
@@ -95,13 +82,6 @@ namespace WorkPortal.Services.AnnualLeave
         public bool IsByUser(int id, int userId)
             => this.data.AnnualLeaves
                 .Any(x => x.Id == id && x.EmployeeId == userId);
-
-        public int UserId(string userId)
-            => this.data
-                .Employees
-                .Where(d => d.UserId == userId)
-                .Select(d => d.Id)
-                .FirstOrDefault();
 
     }
 }

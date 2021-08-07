@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WorkPortal.Infrastructure;
 using WorkPortal.Models.AnnualLeave;
-using WorkPortal.Services.AnnualLeave;
+using WorkPortal.Services.AnnualLeaves;
 using WorkPortal.Services.Employees;
 
 namespace WorkPortal.Controllers
@@ -82,7 +82,7 @@ namespace WorkPortal.Controllers
         {
             var getId = this.User.GetId();
 
-            var userId = annualLeaveService.UserId(getId);
+            var userId = employeeService.UserId(getId);
 
             var isUserApproved = employeeService.IsUserApproved(getId);
             if (!isUserApproved)
@@ -106,7 +106,7 @@ namespace WorkPortal.Controllers
                 return Unauthorized();
             }
 
-            var userId = annualLeaveService.UserId(getId);
+            var userId = employeeService.UserId(getId);
 
             var isByUser = annualLeaveService.IsByUser(id, userId);
 
@@ -130,7 +130,7 @@ namespace WorkPortal.Controllers
                 return Unauthorized();
             }
 
-            var userId = annualLeaveService.UserId(getId);
+            var userId = employeeService.UserId(getId);
             var isByUser = annualLeaveService.IsByUser(id, userId);
 
             if (!isByUser)

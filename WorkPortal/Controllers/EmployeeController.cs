@@ -41,7 +41,6 @@ namespace WorkPortal.Controllers
             return View(view);
         }
 
-
         [Authorize]
         [HttpPost]
         public IActionResult CompleteProfile(ProfileServiceModel profile)

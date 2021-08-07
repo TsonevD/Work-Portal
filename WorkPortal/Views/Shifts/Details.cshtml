@@ -4,7 +4,6 @@
 @{
     ViewBag.Title = "Shift details";
 }
-
 <div id="content" class="pmd-content section-container center">
     <br />
     <div class="container">
@@ -14,7 +13,7 @@
                     <div class="page-header text-center">
                         <h2 id="tables">@ViewBag.Title for: </h2>
                         <h2 class="font-weight-bold font-italic">@Model.Location.CompanyName</h2>
-                        <br />
+                        <br/>
                     </div>
                     <div class="component">
                         <table class="table table-hover">
@@ -34,7 +33,6 @@
                                     <td>@Model.RatePerHour $ </td>
                                     <td>@Model.StartTime - @Model.FinishTime</td>
                                     <td>@Model.HoursWorking</td>
-
                                     <td>
                                         @Model.Location.Town
                                         @Model.Location.StreetName № @Model.Location.StreetNumber, @Model.Location.PostCode
@@ -44,7 +42,7 @@
                         </table>
                     </div>
                     <br />
-                    <a asp-controller="Shifts" asp-action="All" type="button" class="btn btn-outline-info btn-sm float-sm-right">Back</a>
+                    <a asp-controller="Shifts" asp-action="Mine" type="button" class="btn btn-outline-info btn-sm float-sm-right">Back</a>
                 </div>
             </div>
         </div>

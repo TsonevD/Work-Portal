@@ -1,9 +1,9 @@
 ﻿using WorkPortal.Areas.Admin.Models.Employee;
 using WorkPortal.Models.AnnualLeave;
 using WorkPortal.Models.Shifts;
-using WorkPortal.Services.AnnualLeave.Models;
+using WorkPortal.Services.AnnualLeaves.Models;
 
-namespace WorkPortal.Services.AnnualLeave
+namespace WorkPortal.Services.AnnualLeaves
 {
     public interface IAnnualLeaveService
     {
@@ -19,7 +19,5 @@ namespace WorkPortal.Services.AnnualLeave
         void Delete(int id);
 
         bool IsByUser(int id, int userId);
-        int UserId(string id);
-
     }
 }

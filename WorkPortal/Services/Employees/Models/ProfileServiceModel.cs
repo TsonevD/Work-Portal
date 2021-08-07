@@ -25,11 +25,11 @@ namespace WorkPortal.Services.Employees.Models
         public string JobTitle { get; set; }
 
         [Required]
-        [StringLength(AddressNameMaxLength, MinimumLength = AddressNameMinLength)]
+        [StringLength(Address.AddressNameMaxLength, MinimumLength = Address.AddressNameMinLength)]
         public string StreetName { get; set; }
 
         [Required]
-        [StringLength(AddressPostCodeMaxLength, MinimumLength = AddressPostCodeMinLength)]
+        [StringLength(Address.AddressPostCodeMaxLength, MinimumLength = Address.AddressPostCodeMinLength)]
         public string PostCode { get; set; }
         [Required]
         [StringLength(TownNameMaxLength, MinimumLength = TownNameMinLength)]

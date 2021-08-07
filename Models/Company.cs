@@ -9,12 +9,12 @@ namespace Models
     {
         public int Id { get; init; }
         [Required]
-        [StringLength(DefaultNameMaxLength)]
+        [StringLength(CompanyMaxLength)]
         public string Name { get; init; }
         [Required]
         public string Bulstat { get; init; }
         [Required]
-        [StringLength(AddressNameMaxLength)]
+        [StringLength(DataConstants.Address.AddressNameMaxLength)]
         public string Address { get; set; }
         [Required]
         [StringLength(TownNameMaxLength)]

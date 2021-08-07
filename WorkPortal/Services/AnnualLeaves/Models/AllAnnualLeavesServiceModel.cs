@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WorkPortal.Services.AnnualLeave.Models
+namespace WorkPortal.Services.AnnualLeaves.Models
 {
     public class AllAnnualLeavesServiceModel
     {

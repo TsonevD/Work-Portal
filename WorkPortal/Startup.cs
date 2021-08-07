@@ -5,14 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Models;
 using WorkPortal.Data;
 using WorkPortal.Infrastructure;
-using WorkPortal.Services;
-using WorkPortal.Services.AnnualLeave;
+using WorkPortal.Services.AnnualLeaves;
 using WorkPortal.Services.Employees;
+using WorkPortal.Services.Shifts;
 
 namespace WorkPortal
 {
@@ -56,6 +55,8 @@ namespace WorkPortal
 
             services.AddTransient<IAnnualLeaveService, AnnualLeaveService>();
             services.AddTransient<IEmployeeService, EmployeeService>();
+            services.AddTransient<IShiftService, ShiftService>();
+
 
         }
 

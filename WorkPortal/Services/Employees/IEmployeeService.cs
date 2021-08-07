@@ -22,7 +22,8 @@ namespace WorkPortal.Services.Employees
 
         User FindUser(string id);
 
-    
+        int UserId(string userId);
+
         ICollection<DepartmentServiceModel> GetDepartments();
 
         ICollection<ManagersServiceModel> GetManagers();

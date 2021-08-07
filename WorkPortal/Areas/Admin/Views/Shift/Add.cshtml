@@ -1,0 +1,110 @@
+﻿@model WorkPortal.Services.Shifts.Models.ShiftInputServiceModel
+
+@{
+    ViewBag.Title = "Add Shift";
+    @Html.DisplayFor(m => m.RatePerHour)
+}
+
+<div id="content" class="pmd-content admin section-container">
+    <h1 class="text-center mb-3">New Shift</h1>
+    <div class="page-content">
+        <div class="card pmd-card">
+            <form name="myForm" id="myForm" method="post" action="" novalidate="novalidate">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed col-7 mt-5">
+                            <label asp-for="ShiftDate">Shift Date</label>
+                            <input asp-for="ShiftDate" type="date" value="@DateTime.UtcNow" id="inputDate" class="form-control" onchange="getDate()">
+                            <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                            <p id="result"></p>
+                            <span asp-validation-for="ShiftDate" class="small text-danger"></span>
+                            <span class="pmd-textfield-focused"></span>
+                        </div>
+
+                        <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed col-6 mt-5">
+                            <label asp-for="StartTime" class="text-center">Starting at:</label>
+                            <input asp-for="StartTime" type="time">
+                            <span asp-validation-for="StartTime" class="small text-danger"></span>
+                            <span class="pmd-textfield-focused"></span>
+                        </div>
+                        <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed col-6 mt-5">
+                            <label asp-for="FinishTime" class="text-center">Finishing at:</label>
+                            <input asp-for="FinishTime" type="time">
+                            <span asp-validation-for="FinishTime" class="small text-danger"></span>
+                            <span class="pmd-textfield-focused"></span>
+                        </div>
+                        <div class="form-group col-4 mt-3 mb-3">
+                            <label asp-for="RatePerHour">Rate per hour</label>
+                            <input asp-for="RatePerHour" type="text" class="form-control" value="0.00">
+                            <span asp-validation-for="RatePerHour" class="small text-danger"></span>
+                            <span class="pmd-textfield-focused"></span>
+                        </div>
+                        <div class="form-group col-4 mt-3 mb-3">
+                            <label asp-for="HoursWorking">Total hours</label>
+                            <input asp-for="HoursWorking" class="form-control" type="text" value="0">
+                            <span asp-validation-for="HoursWorking" class="small text-danger"></span>
+                            <span class="pmd-textfield-focused"></span>
+                        </div>
+                    </div>
+                    <div class="card-body ">
+                        <div class="row">
+                            <div class="form-group col-4 mt-3 mb-3">
+                                <label asp-for="Location.CompanyName">Company Name</label>
+                                <input asp-for="Location.CompanyName" class="form-control" />
+                                <span asp-validation-for="Location.CompanyName" class="small text-danger"></span>
+                                <span class="pmd-textfield-focused"></span>
+                            </div>
+                            <div class="form-group col-4 mt-3 mb-3">
+                                <label asp-for="Location.Town">Town</label>
+                                <input asp-for="Location.Town" class="form-control" />
+                                <span asp-validation-for="Location.Town" class="small text-danger"></span>
+                                <span class="pmd-textfield-focused"></span>
+                            </div>
+                            <div class="form-group col-4 mt-3 mb-3">
+                                <label asp-for="Location.StreetName">Street name</label>
+                                <input asp-for="Location.StreetName" class="form-control" />
+                                <span asp-validation-for="Location.StreetName" class="small text-danger"></span>
+                                <span class="pmd-textfield-focused"></span>
+                            </div>
+                            <div class="form-group col-4 mt-3 mb-3">
+                                <label asp-for="Location.StreetNumber">Street number</label>
+                                <input asp-for="Location.StreetNumber" class="form-control" />
+                                <span asp-validation-for="Location.StreetNumber" class="small text-danger"></span>
+                                <span class="pmd-textfield-focused"></span>
+                            </div>
+                            <div class="form-group col-4 mt-3 mb-3">
+                                <label asp-for="Location.PostCode">Post code</label>
+                                <input asp-for="Location.PostCode" class="form-control" />
+                                <span asp-validation-for="Location.PostCode" class="small text-danger"></span>
+                                <span class="pmd-textfield-focused"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary pmd-ripple-effect pmd-btn-raised">Add Shift</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+<script>
+    function getDate() {
+        var givenDate = Date.parse(document.myForm.inputDate.value);
+        if (!givenDate.isNaN) {
+            givenDate = new Date(givenDate).setHours(0, 0, 0, 0);
+            var todayDate = new Date().setHours(0, 0, 0, 0);
+            if (givenDate >= todayDate) {
+                result.innerHTML = 'Great!';
+                result.style.color = 'green';
+            } else {
+                result.innerHTML = "Please choose a future date.";
+                result.style.color = 'red';
+            }
+        }
+    };
+</script>
