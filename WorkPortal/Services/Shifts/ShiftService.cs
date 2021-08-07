@@ -4,7 +4,6 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Models;
 using WorkPortal.Data;
-using WorkPortal.Models.Shifts;
 using WorkPortal.Services.Shifts.Models;
 
 namespace WorkPortal.Services.Shifts
@@ -42,22 +41,10 @@ namespace WorkPortal.Services.Shifts
             this.data.Shifts.Add(currentShift);
             this.data.SaveChanges();
         }
-
-
-
-        public void Assign(ShiftQueryModel query)
-        {
-            ;
-            var shift = this.data.Shifts.FirstOrDefault(x => x.Id == query.Id);
-
-            shift.IsAssigned = true;
-
-            this.data.SaveChanges();
-        }
-
         public ICollection<ShiftQueryModel> All()
         {
-            var allShifts = this.data.Shifts
+            var allShifts = this.data
+                .Shifts
                 .Where(x => x.IsAssigned == false)
                 .ProjectTo<ShiftQueryModel>(mapper)
                 .ToList();
@@ -65,57 +52,59 @@ namespace WorkPortal.Services.Shifts
             return allShifts;
         }
 
+        public void Assign(int id , int employeeId)
+        {
+            var shift = this.data
+                .Shifts
+                .FirstOrDefault(x => x.Id == id);
+
+            shift.IsAssigned = true;
+            shift.EmployeeId = employeeId;
+
+            this.data.SaveChanges();
+        }
+
+
+
         public ICollection<EmployeeServiceModel> AllEmployees()
         {
-            var all = this.data.Employees
+            var all = this.data
+                .Employees
                 .ProjectTo<EmployeeServiceModel>(mapper)
                 .ToList();
 
             return all;
         }
 
-        public ICollection<ShiftViewModel> Mine(int id)
+        public ICollection<ShiftQueryModel> Mine(int id)
         {
-            var shifts = this.data.Shifts
+            var shifts = this.data
+                .Shifts
                 .Where(x => x.EmployeeId == id)
-                .ProjectTo<ShiftViewModel>(mapper)
+                .ProjectTo<ShiftQueryModel>(mapper)
                 .ToList();
 
             return shifts;
         }
 
-        public ShiftViewModel Details(int id)
+        public ShiftQueryModel Details(int id)
         {
-            var shift = this.data.Shifts
+            var shift = this.data
+                .Shifts
                 .Where(x => x.Id == id)
-                .ProjectTo<ShiftViewModel>(mapper)
+                .ProjectTo<ShiftQueryModel>(mapper)
                 .FirstOrDefault();
 
             return shift;
         }
 
-        public ShiftViewModel FindShift(int id)
+        public ShiftQueryModel FindShift(int id)
         {
             var shift = this.data
                 .Shifts
                 .Where(x => x.Id == id)
-                .Select(x => new ShiftViewModel()
-                {
-                    Id = x.Id,
-                    StartTime = x.StartTime,
-                    RatePerHour = x.RatePerHour,
-                    FinishTime = x.FinishTime,
-                    HoursWorking = x.HoursWorking,
-                    ShiftDate = x.ShiftDate,
-                    Location = new LocationViewModel()
-                    {
-                        PostCode = x.Location.PostCode,
-                        StreetName = x.Location.StreetName,
-                        StreetNumber = x.Location.StreetNumber,
-                        Town = x.Location.Town,
-                        CompanyName = x.Location.CompanyName,
-                    },
-                }).FirstOrDefault();
+                .ProjectTo<ShiftQueryModel>(mapper)
+                .FirstOrDefault();
 
             return shift;
         }

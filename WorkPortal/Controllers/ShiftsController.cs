@@ -1,12 +1,9 @@
-﻿using System.Linq;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Models;
-using WorkPortal.Data;
 using WorkPortal.Infrastructure;
-using WorkPortal.Models.Shifts;
 using WorkPortal.Services.Employees;
 using WorkPortal.Services.Shifts;
+using WorkPortal.Services.Shifts.Models;
 
 namespace WorkPortal.Controllers
 {
@@ -22,12 +19,13 @@ namespace WorkPortal.Controllers
         }
 
         [Authorize]
-        public IActionResult Mine(ShiftViewModel query)
+        public IActionResult Mine(ShiftQueryModel query)
         {
             var id = this.User.GetId();
             var userId = this.employeeService.UserId(id);
 
-            var mineShifts = this.shiftService.Mine(userId);
+            var mineShifts = this.shiftService
+                .Mine(userId);
 
             return View(mineShifts);
         }

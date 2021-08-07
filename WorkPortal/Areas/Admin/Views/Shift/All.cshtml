@@ -29,30 +29,30 @@
     {
         <div class="container">
             <form method="post">
-            @foreach (var shift in Model)
-            {
-                <div class="row mb-5">
-                    <div class="col-md-10">
-                        <div class="card shadow">
-                            <div class="card-body">
-                                <div class="row text-center ">
-                                    <div class="col-md-1 mr-2">
+                @foreach (var shift in Model)
+                {
+                    <div class="row mb-5">
+                        <div class="col-md-10">
+                            <div class="card shadow">
+                                <div class="card-body">
+                                    <div class="row text-center ">
+                                        <div class="col-md-1 mr-2">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h5>@shift.Location.CompanyName</h5>
+                                            <h6>on @shift.ShiftDate.ToString("D", CultureInfo.InvariantCulture)</h6>
+                                            <p>From: @shift.StartTime to @shift.FinishTime</p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a asp-controller="Shift" asp-action="Assign" asp-route-id="@shift.Id" type="submit" class="btn btn-outline-info btn-md">Assign</a>
+                                        </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <h5>@shift.CompanyName</h5>
 
-                                        <h6>on @shift.ShiftDate.ToString("D", CultureInfo.InvariantCulture)</h6>
-                                        <p>From: @shift.StartTime to @shift.FinishTime</p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <a asp-controller="Shift" asp-action="Assign" asp-route-id="@shift.Id" type="button" class="btn btn-outline-info btn-md">Assign</a>
-                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>}
-        </form>
+                    </div>}
+            </form>
         </div>
     }
 </div>

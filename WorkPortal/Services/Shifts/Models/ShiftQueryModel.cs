@@ -11,7 +11,10 @@ namespace WorkPortal.Services.Shifts.Models
         public TimeSpan StartTime { get; set; }
 
         public TimeSpan FinishTime { get; set; }
+        public decimal HoursWorking { get; set; }
 
-        public string CompanyName { get; set; }
+        public decimal RatePerHour { get; set; }
+
+        public LocationQueryModel Location { get; set; }
     }
 }

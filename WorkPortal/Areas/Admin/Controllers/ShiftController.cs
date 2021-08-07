@@ -43,19 +43,20 @@ namespace WorkPortal.Areas.Admin.Controllers
         {
             var allShifts = shiftService.All();
 
+
             return View(allShifts);
         }
 
         public IActionResult Assign(int id)
         {
-            ;
-            var all = shiftService.AllEmployees();
+            var allEmployees = shiftService.AllEmployees();
             var shift = shiftService.FindShift(id);
+
 
             return View(new ShiftAssignModel()
             {
                 Shift = shift,
-                Employees = all,
+                Employees = allEmployees,
             });
         }
 
@@ -63,9 +64,16 @@ namespace WorkPortal.Areas.Admin.Controllers
         public IActionResult Assign(int id, int employeeId)
         {
             ;
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            shiftService.Assign(id, employeeId);
 
             return RedirectToAction("All");
         }
+
+
 
 
 

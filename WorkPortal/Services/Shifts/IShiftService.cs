@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using WorkPortal.Models.Shifts;
 using WorkPortal.Services.Shifts.Models;
 
 namespace WorkPortal.Services.Shifts
@@ -8,18 +7,18 @@ namespace WorkPortal.Services.Shifts
     {
         void Add(ShiftInputServiceModel shift);
 
-        void Assign(ShiftQueryModel query);
+        void Assign(int id , int employeeId);
 
         ICollection<ShiftQueryModel> All();
 
         ICollection<EmployeeServiceModel> AllEmployees();
 
-        ICollection<ShiftViewModel> Mine(int Id);
+        ICollection<ShiftQueryModel> Mine(int Id);
 
-        ShiftViewModel Details(int id);
+        ShiftQueryModel Details(int id);
 
 
-        ShiftViewModel FindShift(int id);
+        ShiftQueryModel FindShift(int id);
 
 
     }

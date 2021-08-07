@@ -15,6 +15,9 @@ namespace WorkPortal.Infrastructure
             this.CreateMap<AnnualLeaveDetailsServiceModel, AnnualLeaveInputModel>();
             this.CreateMap<AnnualLeave, AnnualLeaveDetailsServiceModel>();
 
+            this.CreateMap<Employee, AllAnnualLeavesServiceModel>();
+
+
             this.CreateMap<AnnualLeave, AllAnnualLeavesServiceModel>()
                 .ForMember(x=>x.FirstName,
                     cfg=>cfg.MapFrom(x=>x.Employee.User.FirstName))
@@ -34,11 +37,12 @@ namespace WorkPortal.Infrastructure
                 .ForMember(x=>x.TownName,
                     cfg=>cfg.MapFrom(x=>x.Address.Town.Name));
 
-            this.CreateMap<Shift, ShiftQueryModel>()
-                .ForMember(x => x.CompanyName,
-                    cfg => cfg.MapFrom(x => x.Location.CompanyName));
+            this.CreateMap<Shift, ShiftAssignModel>();
 
-            this.CreateMap<Shift, ShiftViewModel>();
+            this.CreateMap<Shift, ShiftQueryModel>();
+
+            this.CreateMap<Location, LocationQueryModel>();
+
 
             this.CreateMap<Employee, EmployeeServiceModel>()
                 .ForMember(x=>x.UserFirstName,

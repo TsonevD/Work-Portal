@@ -1,5 +1,4 @@
 ﻿@using System.Globalization
-@using System.Linq
 @model ShiftAssignModel
 @{
     ViewBag.Title = "Shift details";
@@ -20,51 +19,46 @@
                         <div class="component">
                             <table class="table table-hover">
                                 <thead class=" table-active">
-                                <tr>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Rate</th>
-                                    <th scope="col">Shift Times</th>
-                                    <th scope="col">Working Hours</th>
-                                    <th scope="col">Full Address</th>
-                                </tr>
+                                    <tr>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Rate</th>
+                                        <th scope="col">Shift Times</th>
+                                        <th scope="col">Working Hours</th>
+                                        <th scope="col">Full Address</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="table-light">
-                                    <td>@Model.Shift.ShiftDate.ToString("M", CultureInfo.InvariantCulture)</td>
-                                    <td>@Model.Shift.RatePerHour $ </td>
-                                    <td>@Model.Shift.StartTime - @Model.Shift.FinishTime</td>
-                                    <td>@Model.Shift.HoursWorking</td>
+                                    <tr class="table-light">
+                                        <td>@Model.Shift.ShiftDate.ToString("M", CultureInfo.InvariantCulture)</td>
+                                        <td>@Model.Shift.RatePerHour $ </td>
+                                        <td>@Model.Shift.StartTime - @Model.Shift.FinishTime</td>
+                                        <td>@Model.Shift.HoursWorking</td>
 
-                                    <td>
-                                        @Model.Shift.Location.Town
-                                        @Model.Shift.Location.StreetName № @Model.Shift.Location.StreetNumber, @Model.Shift.Location.PostCode
-                                    </td>
-                                </tr>
+                                        <td>
+                                            @Model.Shift.Location.Town
+                                            @Model.Shift.Location.StreetName № @Model.Shift.Location.StreetNumber, @Model.Shift.Location.PostCode
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="form-group">
-                            <h2 class="font-weight-bold font-italic">Employees</h2>
+                            <h2 class="font-weight-bold font-italic">Assign to:</h2>
                             <select asp-for="@Model.EmployeeId" class="form-control">
                                 @foreach (var employee in Model.Employees)
                                 {
-                                    <option id="selected"value="@employee.Id">@employee.UserFirstName @employee.UserLastName</option>
+                                    <option value="@employee.Id">@employee.UserFirstName @employee.UserLastName - @employee.JobTitle</option>
                                 }
                             </select>
+                            <br />
+                            <button asp-area="Admin" asp-controller="Shift" asp-action="Assign" asp-route-id="@Model.Shift.Id" , asp-route-employeeId="@Model.EmployeeId"
+                                    type="submit" class="btn btn-outline-info btn-sm float-sm-right">
+                                Assign to Employee
+                            </button>
                         </div>
-                        <br />
-                        <a asp-area="Admin" asp-controller="Shift" asp-action="Assign" asp-route-shiftId="@Model.Shift.Id", asp-route-employeeId="@Model.EmployeeId" 
-                           type="button" class="btn btn-outline-info btn-sm float-sm-right">Assign to Employee</a>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
-<script>
-    var id = document.getElementById("selected").innerHTML;
-
-    console.log(id);
-
-
-</script>
