@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-
-namespace WorkPortal.Services.AnnualLeaves.Models
+﻿namespace WorkPortal.Services.AnnualLeaves.Models
 {
-    public class AllAnnualLeavesServiceModel
+    public class AllAnnualLeavesServiceModel : AnnualLeaveServiceModel
     {
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
-        public ICollection<AnnualLeaveServiceModel> AnnualLeave { get; set; }
+        //public ICollection<AnnualLeaveServiceModel> AnnualLeaves { get; set; }
     }
 }

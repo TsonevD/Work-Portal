@@ -8,7 +8,8 @@ namespace WorkPortal.Services.AnnualLeaves.Models
     {
         public int Id { get; set; }
 
-        public AnnualLeaveType LeaveType { get; set; }
+        public AnnualLeaveType Type { get; set; }
+
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }

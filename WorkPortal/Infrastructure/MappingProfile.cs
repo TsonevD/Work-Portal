@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Models;
 using WorkPortal.Models.AnnualLeave;
-using WorkPortal.Models.Shifts;
 using WorkPortal.Services.AnnualLeaves.Models;
 using WorkPortal.Services.Employees.Models;
 using WorkPortal.Services.Shifts.Models;
@@ -15,15 +14,20 @@ namespace WorkPortal.Infrastructure
             this.CreateMap<AnnualLeaveDetailsServiceModel, AnnualLeaveInputModel>();
             this.CreateMap<AnnualLeave, AnnualLeaveDetailsServiceModel>();
 
-            this.CreateMap<Employee, AllAnnualLeavesServiceModel>();
 
+            this.CreateMap<AnnualLeave, AnnualLeaveServiceModel>();
 
             this.CreateMap<AnnualLeave, AllAnnualLeavesServiceModel>()
                 .ForMember(x=>x.FirstName,
                     cfg=>cfg.MapFrom(x=>x.Employee.User.FirstName))
                 .ForMember(x => x.LastName,
-                    cfg => cfg.MapFrom(x => x.Employee.User.LastName))
-                ;
+                    cfg => cfg.MapFrom(x => x.Employee.User.LastName)); ;
+
+            //this.CreateMap<AnnualLeave, AllAnnualLeavesServiceModel>()
+            //    .ForMember(x => x.FirstName,
+            //        cfg => cfg.MapFrom(x => x.Employee.User.FirstName))
+                //.ForMember(x => x.LastName,
+                //    cfg => cfg.MapFrom(x => x.Employee.User.LastName));
 
             this.CreateMap<Employee, ProfileQueryModel>()
                 .ForMember(x=>x.DateOfBirth,
@@ -42,7 +46,6 @@ namespace WorkPortal.Infrastructure
             this.CreateMap<Shift, ShiftQueryModel>();
 
             this.CreateMap<Location, LocationQueryModel>();
-
 
             this.CreateMap<Employee, EmployeeServiceModel>()
                 .ForMember(x=>x.UserFirstName,

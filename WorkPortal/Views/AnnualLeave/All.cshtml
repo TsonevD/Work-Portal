@@ -1,6 +1,6 @@
 ﻿@using System.Globalization
 @using Models.Enums
-@model AllAnnualLeavesServiceModel
+@model ICollection<AnnualLeaveServiceModel>
 @{
     ViewBag.Title = "Annual Leave";
 }
@@ -8,7 +8,7 @@
 <div id="content" class="pmd-content inner-page admin">
     <h1 class="text-center  " id="leave">@ViewBag.Title</h1>
 
-    @if (Model.AnnualLeave == null)
+    @if (!Model.Any())
     {
         <div class="text-center align-self-center mt-5">
             <svg version="1.1" id="Layer_1" x="0px" y="0px" width="100px" height="100px" viewBox="-58 -58 140 140" enable-background="new -58 -58 140 140" xml:space="preserve">
@@ -41,22 +41,20 @@
             <table class="table pmd-table table-hover pmd-table-card">
                 <thead class="thead-light">
                     <tr>
-                        <th>Employee</th>
                         <th>Leave Type</th>
                         <th>Start Date</th>
                         <th>End Date</th>
                         <th>Reason</th>
-                        <th>No of Leave</th>
+                        <th>No of Days</th>
                         <th>Status</th>
                         <th></th>
                     </tr>
                 </thead>
-                @foreach (var leave in Model.AnnualLeave)
+                @foreach (var leave in Model)
                 {
                     <tbody>
                         <tr>
-                            <td data-title="Employee">@Model.FirstName @Model.LastName</td>
-                            <td data-title="Leave Type">@leave.LeaveType.GetDisplayName()</td>
+                            <td data-title="Leave Type">@leave.Type.GetDisplayName()</td>
                             <td data-title="Start Date">@leave.StartDate.ToString("D", CultureInfo.InvariantCulture)</td>
                             <td data-title="End Date">@leave.EndDate.ToString("D", CultureInfo.InvariantCulture)</td>
                             <td data-title="Reason">@leave.Reason</td>

@@ -22,15 +22,15 @@ namespace WorkPortal.Controllers
         [Authorize]
         public IActionResult All()
         {
-            var userId = this.User.GetId();
-            var isUserApproved = employeeService.IsUserApproved(userId);
-
-            if (userId == null || !isUserApproved)
+            var id = this.User.GetId();
+            var isUserApproved = employeeService.IsUserApproved(id);
+            if (id == null || !isUserApproved)
             {
                 return Unauthorized();
             }
+            var userId = employeeService.UserId(id);
             var all = annualLeaveService
-                .All(userId);
+                .Mine(userId);
 
             return View(all);
         }
@@ -57,7 +57,7 @@ namespace WorkPortal.Controllers
             {
                 return Unauthorized();
             }
-            var daysDifference = (annualLeave.EndDate - annualLeave.StartDate).TotalDays;
+            var daysDifference = (annualLeave.EndDate.AddDays(1) - annualLeave.StartDate).TotalDays;
 
             if (annualLeave.EndDate < annualLeave.StartDate)
             {

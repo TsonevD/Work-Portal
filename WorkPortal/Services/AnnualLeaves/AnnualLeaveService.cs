@@ -1,10 +1,12 @@
-﻿using WorkPortal.Data;
+﻿using System.Collections.Generic;
+using WorkPortal.Data;
 using WorkPortal.Services.AnnualLeaves.Models;
 using System.Linq;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using WorkPortal.Models.AnnualLeave;
 using Models;
+using Models.Enums;
 
 namespace WorkPortal.Services.AnnualLeaves
 {
@@ -19,19 +21,31 @@ namespace WorkPortal.Services.AnnualLeaves
             this.mapper = mapper;
         }
 
-
-        public AllAnnualLeavesServiceModel All(string userId)
+        public ICollection<AllAnnualLeavesServiceModel> All()
         {
-            var all = this.data.Employees
-                .Where(x => x.UserId == userId)
+            var all = this.data.AnnualLeaves
+                .Where(x => x.Status == AnnualLeaveStatus.Pending)
                 .ProjectTo<AllAnnualLeavesServiceModel>(mapper)
-                .FirstOrDefault();
+                .ToList();
 
             return all;
         }
 
+        public ICollection<AnnualLeaveServiceModel> Mine(int userId)
+        {
+            var mine = this.data.AnnualLeaves
+                .Where(x => x.EmployeeId == userId)
+                .ProjectTo<AnnualLeaveServiceModel>(mapper)
+                .ToList();
+
+            return mine;
+        }
+
+
+
         public int Add(AnnualLeaveInputModel annualLeave , string userById)
         {
+            ;
             var employee = this.data.Employees.First(x => x.UserId == userById);
 
             var newLeaveRequest = new AnnualLeave()
@@ -43,6 +57,7 @@ namespace WorkPortal.Services.AnnualLeaves
                 Type = annualLeave.LeaveType,
                 DaysToBeTaken = annualLeave.DaysToBeTaken,
             };
+
             this.data.AnnualLeaves.Add(newLeaveRequest);
             employee.AnnualLeaves.Add(newLeaveRequest);
 
@@ -56,6 +71,24 @@ namespace WorkPortal.Services.AnnualLeaves
                 .Where(x => x.Id == id && x.EmployeeId == userId)
                 .ProjectTo<AnnualLeaveDetailsServiceModel>(this.mapper)
                 .FirstOrDefault();
+
+        public void Approve(int id)
+        {
+            var annualLeave = this.data.AnnualLeaves.Find(id);
+
+            annualLeave.Status = AnnualLeaveStatus.Approved;
+            
+            this.data.SaveChanges();
+        }
+
+        public void Decline(int id)
+        {
+            var annualLeave = this.data.AnnualLeaves.Find(id);
+
+            annualLeave.Status = AnnualLeaveStatus.Declined;
+
+            this.data.SaveChanges();
+        }
 
         public void Edit(int id , AnnualLeaveInputModel annualLeaveEdit, int userId)
         {
