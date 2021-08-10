@@ -11,21 +11,23 @@ namespace Models
         public int Id { get; init; }
 
         [Column(TypeName = DefaultDecimalValue)]
-        public decimal RatePerHour { get; set; }
-
-        [Column(TypeName = DefaultDecimalValue)]
-        public decimal WorkingHourPerMonth { get; set; }
+        public decimal WorkingHoursPerMonth { get; set; }
 
         public DateTime IssuedOn { get; init; }
 
         [Column(TypeName = DefaultDecimalValue)]
-        public decimal Salary { get; set; }
+        public decimal BeforeTaxSalary { get; set; }
+
+        [Column(TypeName = DefaultDecimalValue)]
+        public decimal AfterTaxSalary { get; set; }
+
+        [Column(TypeName = DefaultDecimalValue)]
+        public decimal Taxes { get; set; }
+
+        public int EmployeeId { get; set; }
 
         public ICollection<Shift> Shifts { get; init; } = new HashSet<Shift>();
 
         public ICollection<AnnualLeave> AnnualLeaves { get; init; } = new HashSet<AnnualLeave>();
-
-        public ICollection<Employee> Employees { get; init; } = new HashSet<Employee>();
-
     }
 }

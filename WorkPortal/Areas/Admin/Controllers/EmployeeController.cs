@@ -66,6 +66,7 @@ namespace WorkPortal.Areas.Admin.Controllers
                 return BadRequest();
             }
 
+
             employeeService
                 .AdminApproveUser(employee);
 

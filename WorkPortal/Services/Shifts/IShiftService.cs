@@ -19,7 +19,5 @@ namespace WorkPortal.Services.Shifts
 
 
         ShiftQueryModel FindShift(int id);
-
-
     }
 }

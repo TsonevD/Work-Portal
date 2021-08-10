@@ -56,15 +56,15 @@ namespace WorkPortal.Services.Shifts
         {
             var shift = this.data
                 .Shifts
-                .FirstOrDefault(x => x.Id == id);
+                .Find(id);
+            var employee = this.data.Employees.Find(employeeId);
 
+            employee.Shifts.Add(shift);
             shift.IsAssigned = true;
             shift.EmployeeId = employeeId;
 
             this.data.SaveChanges();
         }
-
-
 
         public ICollection<EmployeeServiceModel> AllEmployees()
         {

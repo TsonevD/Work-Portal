@@ -19,21 +19,6 @@ namespace WorkPortal.Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("EmployeePayslip", b =>
-                {
-                    b.Property<int>("EmployeesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PayslipsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EmployeesId", "PayslipsId");
-
-                    b.HasIndex("PayslipsId");
-
-                    b.ToTable("EmployeePayslip");
-                });
-
             modelBuilder.Entity("EmployeeShift", b =>
                 {
                     b.Property<int>("EmployeesId")
@@ -421,19 +406,27 @@ namespace WorkPortal.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<decimal>("AfterTaxSalary")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("BeforeTaxSalary")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("IssuedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("RatePerHour")
+                    b.Property<decimal>("Taxes")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("Salary")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("WorkingHourPerMonth")
+                    b.Property<decimal>("WorkingHoursPerMonth")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
 
                     b.ToTable("Payslips");
                 });
@@ -579,21 +572,6 @@ namespace WorkPortal.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("EmployeePayslip", b =>
-                {
-                    b.HasOne("Models.Employee", null)
-                        .WithMany()
-                        .HasForeignKey("EmployeesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Models.Payslip", null)
-                        .WithMany()
-                        .HasForeignKey("PayslipsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("EmployeeShift", b =>
                 {
                     b.HasOne("Models.Employee", null)
@@ -735,6 +713,15 @@ namespace WorkPortal.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Models.Payslip", b =>
+                {
+                    b.HasOne("Models.Employee", null)
+                        .WithMany("Payslips")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Models.Shift", b =>
                 {
                     b.HasOne("Models.Location", "Location")
@@ -770,6 +757,8 @@ namespace WorkPortal.Data.Migrations
                     b.Navigation("AnnualLeaves");
 
                     b.Navigation("InverseManager");
+
+                    b.Navigation("Payslips");
                 });
 
             modelBuilder.Entity("Models.Payslip", b =>
