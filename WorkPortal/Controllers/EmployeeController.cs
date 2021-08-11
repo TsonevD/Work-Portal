@@ -46,6 +46,10 @@ namespace WorkPortal.Controllers
         public IActionResult CompleteProfile(ProfileServiceModel profile)
         {
             var userId = this.User.GetId();
+            if(!ModelState.IsValid)
+            {
+                return View(profile);
+            }
 
             employeeService.CompleteProfile(profile, userId);
 

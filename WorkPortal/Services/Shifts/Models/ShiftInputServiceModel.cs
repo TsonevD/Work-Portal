@@ -12,19 +12,17 @@ namespace WorkPortal.Services.Shifts.Models
         public DateTime ShiftDate { get; set; }
 
         [Required]
-        [Display(Name = "Starting Time ")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:hh\\:mm}")]
-        [RegularExpression(@"^([0-1]?[0-9]|2[0-3]):(00|30)$", ErrorMessage = "The starting time should be in format 10:00 or 10:30 only.")]
+        [RegularExpression(@"((([0-1][0-9])|(2[0-3]))(:[0-5][0-9])(:[0-5][0-9])?)", ErrorMessage = "Time must be between 00:00 to 23:59")]
         public TimeSpan StartTime { get; set; }
         
         [Required]
-        [Display(Name = "Finishing Time ")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:hh\\:mm}")]
-        [RegularExpression(@"^([0-1]?[0-9]|2[0-3]):(00|30)$", ErrorMessage = "The finish time should be in format 10:00 or 10:30 only.")]
-        public TimeSpan FinishTime { get; set; }
+        [RegularExpression(@"((([0-1][0-9])|(2[0-3]))(:[0-5][0-9])(:[0-5][0-9])?)", ErrorMessage = "Time must be between 00:00 to 23:59")]
+        public TimeSpan FinishTime { get; set; }    
 
         [Display(Name = "Working hours")]
-        [RegularExpression(@"^([0-1]?[0-9]|2[0-3]):(00|30)$" , ErrorMessage = "The hours working should be in format 10:00 or 10:30 only.")]
+        [RegularExpression(@"^[0-9]+(\.[0-9]{1,2})$" , ErrorMessage = "Total hours should be in format 08.30")]
         [Range(ShiftMinHours , ShiftMaxHours, ErrorMessage = "The rate should be between {1} and {2} $")]
         public decimal HoursWorking { get; set; }
 

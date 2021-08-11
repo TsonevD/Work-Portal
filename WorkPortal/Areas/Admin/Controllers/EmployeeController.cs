@@ -15,9 +15,7 @@ namespace WorkPortal.Areas.Admin.Controllers
         private readonly IEmployeeService employeeService;
 
         public EmployeeController(IEmployeeService employeeService)
-        {
-            this.employeeService = employeeService;
-        }
+            => this.employeeService = employeeService;
 
         public IActionResult All()
         {
@@ -53,7 +51,7 @@ namespace WorkPortal.Areas.Admin.Controllers
             await employeeService
                 .AdminAddUser(employee);
 
-            return RedirectToAction("All");
+            return RedirectToAction(nameof(All));
         }
 
         public IActionResult Approve(string id)
@@ -65,7 +63,6 @@ namespace WorkPortal.Areas.Admin.Controllers
             {
                 return BadRequest();
             }
-
 
             employeeService
                 .AdminApproveUser(employee);
@@ -87,5 +84,6 @@ namespace WorkPortal.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(All));
         }
+
     }
 }

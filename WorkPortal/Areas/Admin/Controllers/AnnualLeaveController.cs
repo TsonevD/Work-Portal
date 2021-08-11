@@ -24,6 +24,7 @@ namespace WorkPortal.Areas.Admin.Controllers
             {
                 return Unauthorized();
             }
+
             var all = this.annualLeaveService
                 .All();
 
@@ -40,7 +41,7 @@ namespace WorkPortal.Areas.Admin.Controllers
 
             this.annualLeaveService.Approve(id);
 
-            return RedirectToAction("All");
+            return RedirectToAction(nameof(All));
         }
 
         public IActionResult Decline(int id)
@@ -52,7 +53,7 @@ namespace WorkPortal.Areas.Admin.Controllers
 
             this.annualLeaveService.Decline(id);
 
-            return RedirectToAction("All");
+            return RedirectToAction(nameof(All));
         }
     }
 }

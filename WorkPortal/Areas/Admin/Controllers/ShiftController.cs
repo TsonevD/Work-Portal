@@ -20,6 +20,10 @@ namespace WorkPortal.Areas.Admin.Controllers
         
         public IActionResult Add()
         {
+            if (!User.IsAdmin())
+            {
+                return Unauthorized();
+            }
             return View();
         }
 
@@ -30,19 +34,21 @@ namespace WorkPortal.Areas.Admin.Controllers
             {
                 return Unauthorized();
             }
-
-
             if (!ModelState.IsValid)
             {
                 return View(shift);
             }
             shiftService.Add(shift);
 
-            return RedirectToAction("All");
+            return RedirectToAction(nameof(All));
         }
 
         public IActionResult All()
         {
+            if (!User.IsAdmin())
+            {
+                return Unauthorized();
+            }
             var allShifts = shiftService.All();
 
             return View(allShifts);
@@ -50,6 +56,10 @@ namespace WorkPortal.Areas.Admin.Controllers
 
         public IActionResult Assign(int id)
         {
+            if (!User.IsAdmin())
+            {
+                return Unauthorized();
+            }
             var allEmployees = shiftService.AllEmployees();
             var shift = shiftService.FindShift(id);
 
@@ -63,6 +73,11 @@ namespace WorkPortal.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Assign(int id, int employeeId)
         {
+            ;
+            if (!User.IsAdmin())
+            {
+                return Unauthorized();
+            }
             if (!ModelState.IsValid)
             {
                 return View();
@@ -70,12 +85,7 @@ namespace WorkPortal.Areas.Admin.Controllers
 
             shiftService.Assign(id, employeeId);
 
-            return RedirectToAction("All");
+            return RedirectToAction(nameof(All));
         }
-
-
-
-
-
     }
 }
