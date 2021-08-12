@@ -6,6 +6,7 @@ using Xunit;
 using WorkPortal.Models.AnnualLeave;
 using Models.Enums;
 using System.Linq;
+using WorkPortal.Tests.Data;
 
 namespace WorkPortal.Tests.Controllers
 {
@@ -15,7 +16,7 @@ namespace WorkPortal.Tests.Controllers
         [Fact]
         public void AllhouldBeForApprovedUserAndReturnView()
         {
-            var user = GetApprovedUser();
+            var user = MockedData.GetApprovedUser();
             MyController<AnnualLeaveController>
                        .Instance()
                        .WithData(d=>d.WithSet<User>(u=>u.Add(user)))
@@ -28,7 +29,7 @@ namespace WorkPortal.Tests.Controllers
         [Fact]
         public void AddShouldBeForApprovedUserAndReturnView()
         {
-            var user = GetApprovedUser();
+            var user = MockedData.GetApprovedUser();
             MyController<AnnualLeaveController>
                        .Instance()
                        .WithData(d => d.WithSet<User>(u => u.Add(user)))
@@ -47,12 +48,12 @@ namespace WorkPortal.Tests.Controllers
             int daysToBeTaken,
             string Reason)
         {
-            var user = GetApprovedUser();
+            var user = MockedData.GetApprovedUser();
 
             MyController<AnnualLeaveController>
                 .Instance(controller=>controller
                 .WithData(d=>d.WithSet<User>(u=>u.Add(user)))
-                .WithData(d=>d.WithSet<Employee>(e => e.Add(GetEmployee())))
+                .WithData(d=>d.WithSet<Employee>(e => e.Add(MockedData.GetEmployee())))
                .WithUser(u=>u.WithIdentifier(user.Id)))
                 .Calling(c=>c.Add(new AnnualLeaveInputModel
                 {
@@ -83,10 +84,10 @@ namespace WorkPortal.Tests.Controllers
         [Fact]
         public void EditShouldBeForApprovedUserAndReturnView()
         {
-            var user = GetApprovedUser();
+            var user = MockedData.GetApprovedUser();
             MyController<AnnualLeaveController>
                        .Instance()
-                       .WithData(d=>d.WithSet<AnnualLeave>(a=>a.Add(GetAnnualLeave())))
+                       .WithData(d=>d.WithSet<AnnualLeave>(a=>a.Add(MockedData.GetAnnualLeave())))
                        .WithData(d => d.WithSet<User>(u => u.Add(user)))
                        .WithUser(u => u.WithIdentifier(user.Id))
                        .Calling(c => c.Edit(1))
@@ -103,13 +104,13 @@ namespace WorkPortal.Tests.Controllers
           int daysToBeTaken,
           string Reason)
         {
-            var user = GetApprovedUser();
+            var user = MockedData.GetApprovedUser();
 
             MyController<AnnualLeaveController>
                 .Instance(controller => controller
                 .WithData(d => d.WithSet<User>(u => u.Add(user)))
-                .WithData(d => d.WithSet<Employee>(e => e.Add(GetEmployee())))
-                .WithData(d=>d.WithSet<AnnualLeave>(a=>a.Add(GetAnnualLeave())))
+                .WithData(d => d.WithSet<Employee>(e => e.Add(MockedData.GetEmployee())))
+                .WithData(d=>d.WithSet<AnnualLeave>(a=>a.Add(MockedData.GetAnnualLeave())))
                .WithUser(u => u.WithIdentifier(user.Id)))
                 .Calling(c => c.Edit(1 , new AnnualLeaveInputModel
                 {
@@ -140,51 +141,16 @@ namespace WorkPortal.Tests.Controllers
         [Fact]
         public void DeleteShouldRemoveEntryAndRedirect()
         {
-            var user = GetApprovedUser();
+            var user = MockedData.GetApprovedUser();
             MyController<AnnualLeaveController>
                .Instance(controller => controller
                .WithData(d => d.WithSet<User>(u => u.Add(user)))
-               .WithData(d => d.WithSet<Employee>(e => e.Add(GetEmployee())))
-               .WithData(d => d.WithSet<AnnualLeave>(a => a.Add(GetAnnualLeave())))
+               .WithData(d => d.WithSet<Employee>(e => e.Add(MockedData.GetEmployee())))
+               .WithData(d => d.WithSet<AnnualLeave>(a => a.Add(MockedData.GetAnnualLeave())))
               .WithUser(u => u.WithIdentifier(user.Id)))
                .Calling(c=>c.Delete(1))
                .ShouldReturn()
                .Redirect(r=>r.To<AnnualLeaveController>(a=>a.All()));
-        }
-
-        private static Employee GetEmployee()
-        {
-            return new Employee()
-            {
-                Id = 1,
-                UserId = "user123",
-            };
-        }
-        private static AnnualLeave GetAnnualLeave()
-        {
-            return new AnnualLeave()
-            { 
-                Id = 1,
-                Type = AnnualLeaveType.PaidLeave,
-                StartDate = DateTime.Parse("14/09/2021"),
-                EndDate = DateTime.Parse("20/09/2021"),
-                DaysToBeTaken = 3,
-                Reason = "Dentist App",
-                EmployeeId = 1,
-            };
-        }
-        private static User GetApprovedUser()
-        {
-            var user = new User()
-            {
-                Id = "user123",
-                FirstName = TestUser.Username,
-                LastName = TestUser.Username,
-                Email = "test@abv.bg",
-                PasswordHash = TestUser.AuthenticationType,
-                IsApproved = true,
-            };
-            return user;
         }
     }
 }
