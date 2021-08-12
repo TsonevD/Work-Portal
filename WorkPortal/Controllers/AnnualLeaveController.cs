@@ -22,7 +22,6 @@ namespace WorkPortal.Controllers
         [Authorize]
         public IActionResult All()
         {
-            ;
             var id = this.User.GetId();
             var isUserApproved = employeeService.IsUserApproved(id);
             

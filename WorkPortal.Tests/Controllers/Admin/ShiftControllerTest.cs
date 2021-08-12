@@ -47,7 +47,7 @@ namespace WorkPortal.Tests.Controllers.Admin
 
         [Theory]
         [InlineData("14/08/2021", "10:00", "18:00", 8.30, 13.50, "First Avenue", 63, "W1W", "London", "H2B")]
-        public void postAddShouldRedirectAndReturnValidModel(
+        public void PostAddShouldRedirectAndReturnValidModel(
             string shiftDate,
             string startTime,
             string finishTime,

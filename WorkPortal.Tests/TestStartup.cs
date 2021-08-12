@@ -19,10 +19,6 @@ namespace WorkPortal.Tests
         public void ConfigureTestServices(IServiceCollection services)
         {
             base.ConfigureServices(services);
-
-            services.AddIdentityCore<User>();
-
-            //services.ReplaceTransient<IEmployeeService>(_ => EmployeeService);
         }
     }
 }

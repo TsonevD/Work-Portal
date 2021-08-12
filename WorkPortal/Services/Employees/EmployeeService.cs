@@ -131,6 +131,7 @@ namespace WorkPortal.Services.Employees
 
         public User FindUser(string id)
            => this.data.Users.FirstOrDefault(x => x.Id == id);
+
         public bool IsUserApproved(string userId)
             => this.data.Users.Where(x => x.Id == userId)
                 .Any(x => x.IsApproved);

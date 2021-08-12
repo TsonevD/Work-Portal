@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -46,7 +47,7 @@ namespace WorkPortal
                 .AddEntityFrameworkStores<WorkPortalDbContext>();
 
             services.AddAutoMapper(typeof(Startup));
-
+            
             services
                 .AddControllersWithViews(options =>
                 {

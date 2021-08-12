@@ -73,7 +73,6 @@ namespace WorkPortal.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Assign(int id, int employeeId)
         {
-            ;
             if (!User.IsAdmin())
             {
                 return Unauthorized();
