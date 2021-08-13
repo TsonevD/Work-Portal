@@ -4,7 +4,6 @@ using MyTested.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using WorkPortal.Controllers;
-using WorkPortal.Services.Employees;
 using WorkPortal.Services.Employees.Models;
 using Xunit;
 
@@ -92,7 +91,19 @@ namespace WorkPortal.Tests.Controllers
             .ShouldReturn()
             .Redirect(redirect => redirect.To<HomeController>(e=>e.Index()));
 
-
+        [Fact]
+        public void PostCompleteProfileWithInvalidModelShouldReturnView()
+            => MyController<EmployeeController>
+                  .Instance()
+                    .WithUser()
+                  .Calling(c => c.CompleteProfile(new ProfileServiceModel()))
+                  .ShouldHave()
+                   .ActionAttributes(attributes => attributes
+                  .RestrictingForHttpMethod(HttpMethod.Post))
+                  .InvalidModelState()
+                  .AndAlso()
+                  .ShouldReturn()
+                  .View(view => view.WithModelOfType<ProfileServiceModel>());
 
 
     }

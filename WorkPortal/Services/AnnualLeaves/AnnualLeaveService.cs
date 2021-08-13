@@ -45,7 +45,6 @@ namespace WorkPortal.Services.AnnualLeaves
 
         public int Add(AnnualLeaveInputModel annualLeave , string userById)
         {
-            ;
             var employee = this.data.Employees.First(x => x.UserId == userById);
 
             var newLeaveRequest = new AnnualLeave()

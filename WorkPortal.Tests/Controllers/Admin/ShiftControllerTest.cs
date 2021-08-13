@@ -25,14 +25,40 @@ namespace WorkPortal.Tests.Controllers.Admin
 
         [Fact]
         public void AllShouldReturnCorrectView()
-              =>
-            MyController<ShiftController>
+              => MyController<ShiftController>
                    .Instance(controller => controller
                        .WithUser(user => user.WithIdentifier(AreaName)
                        .InRole(AdministratorRoleName)))
                    .Calling(c => c.All())
                    .ShouldReturn()
                          .View();
+        [Fact]
+        public void AllShouldReturnUnAuthorizedWhenUserIsNotAdmin()
+                 => MyController<ShiftController>
+                 .Instance()
+                 .WithUser()
+                 .Calling(c => c.All())
+                 .ShouldReturn()
+                 .Unauthorized();
+        
+        [Fact]
+        public void GetAddShouldReturnUnAuthorizedWhenUserIsNotAdmin()
+              => MyController<ShiftController>
+              .Instance()
+              .WithUser()
+              .Calling(c => c.Add())
+              .ShouldReturn()
+              .Unauthorized();
+
+        [Fact]
+        public void PostAddShouldReturnUnAuthorizedWhenUserIsNotAdmin()
+          => MyController<ShiftController>
+          .Instance()
+          .WithUser()
+          .Calling(c => c.Add(With.Any<ShiftInputServiceModel>()))
+          .ShouldReturn()
+          .Unauthorized();
+
 
         [Fact]
         public void GetAddShouldReturnCorrectView()
@@ -102,12 +128,25 @@ namespace WorkPortal.Tests.Controllers.Admin
             .Redirect(redirect => redirect.To<ShiftController>(e => e.All()));
 
         [Fact]
+        public void PostAddWithInvalidModelShouldReturnModel()
+                 => MyController<ShiftController>
+                     .Instance(controller => controller
+                                 .WithUser(user => user.WithIdentifier(AreaName)
+                                 .InRole(AdministratorRoleName)))
+                             .Calling(c => c.Add(new ShiftInputServiceModel()))
+                     .ShouldHave()
+                      .ActionAttributes(attributes => attributes
+                     .RestrictingForHttpMethod(HttpMethod.Post))
+                     .InvalidModelState()
+                     .AndAlso()
+                     .ShouldReturn()
+                     .View(view => view.WithModelOfType<ShiftInputServiceModel>());
+
+
+        [Fact]
         public void GetAssignShouldReturnCorrectView()
         {
-            var shift = new Shift()
-            {
-                Id = 1
-            };
+            var shift = MockedData.GetShift();
             
             MyController<ShiftController>
            .Instance(controller => controller
@@ -118,17 +157,13 @@ namespace WorkPortal.Tests.Controllers.Admin
                 .ShouldReturn()
                 .View();
         }
+
+
         [Fact]
         public void PostAssignShouldRedirectAndReturnCorrectModel()
         {
-            var shift = new Shift()
-            {
-                Id = 1
-            };
-            var employee = new Employee()
-            {
-                Id = 1,
-            };
+            var shift = MockedData.GetShift();
+            var employee = MockedData.GetEmployee();
 
             MyController<ShiftController>
            .Instance(controller => controller
@@ -151,7 +186,5 @@ namespace WorkPortal.Tests.Controllers.Admin
             .ShouldReturn()
             .Redirect(redirect => redirect.To<ShiftController>(e => e.All()));
         }
-
-
     }
 }

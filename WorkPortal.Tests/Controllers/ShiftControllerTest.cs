@@ -9,6 +9,8 @@ namespace WorkPortal.Tests.Controllers
 {
     public class ShiftControllerTest
     {
+
+
         [Fact]
         public void MineShouldBeForApprovedUserAndReturnView()
         {
@@ -22,6 +24,15 @@ namespace WorkPortal.Tests.Controllers
                        .ShouldReturn()
                        .View();
         }
+        [Fact]
+        public void MineShouldReturnUnauthorizedForUnApprovedUser()
+          => MyController<ShiftsController>
+            .Instance()
+            .WithUser()
+            .Calling(c => c.Mine(With.Any<ShiftQueryModel>()))
+            .ShouldReturn()
+            .Unauthorized();
+
 
         [Fact]
         public void DetailsShouldBeForApprovedUserAndReturnView()
@@ -36,5 +47,19 @@ namespace WorkPortal.Tests.Controllers
                        .ShouldReturn()
                        .View();
         }
+
+        [Fact]
+        public void DetailsShouldReturnUnauthorizedForUnApprovedUser()
+        {
+            MyController<ShiftsController>
+                       .Instance()
+                       .WithData(d => d.WithSet<Shift>(u => u.Add(MockedData.GetShift())))
+                       .WithUser()
+                       .Calling(c => c.Details(1))
+                       .ShouldReturn()
+                       .Unauthorized();
+        }
+
+
     }
 }

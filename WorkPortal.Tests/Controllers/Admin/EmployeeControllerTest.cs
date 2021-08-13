@@ -7,6 +7,7 @@ using Xunit;
 using System;
 using Models;
 using System.Linq;
+using WorkPortal.Tests.Data;
 
 namespace WorkPortal.Tests.Controllers.Admin
 {
@@ -105,11 +106,33 @@ namespace WorkPortal.Tests.Controllers.Admin
             .ShouldReturn()
             .Redirect(redirect => redirect.To<EmployeeController>(e => e.All()));
 
+        [Theory]
+        [InlineData("Dimitar", "Tsonev")]
+        public void PostAddShouldThrowExceptionWhenModelInvalidAndReturnView(
+                 string firstName,
+                 string lastName
+                 )
+                 => MyController<EmployeeController>
+                 .Instance()
+                 .WithUser()
+                 .Calling(c => c.Add(new AddEmployeeInputModel
+                 {
+                     Firstname = firstName,
+                     Lastname = lastName,
+                 }))
+                    .ShouldHave()
+                     .ActionAttributes(attributes => attributes
+                    .RestrictingForHttpMethod(HttpMethod.Post))
+                    .InvalidModelState()
+                    .AndAlso()
+                    .ShouldReturn()
+                    .View(view => view
+                    .WithModelOfType<AddEmployeeInputModel>());
 
         [Fact]
         public void ApproveShouldRedirectWithValidInformation()
         {
-            var user = NewUser();
+            var user = MockedData.GetApprovedUser();
 
             MyController<EmployeeController>
                 .Instance()
@@ -117,13 +140,24 @@ namespace WorkPortal.Tests.Controllers.Admin
                 .WithData(data => data.WithSet<User>(x => x.Add(user)))
                 .Calling(c => c.Approve(user.Id))
                 .ShouldReturn()
-                .Redirect(redirect => redirect.To<EmployeeController>(e=>e.All()));;
+                .Redirect(redirect => redirect.To<EmployeeController>(e => e.All())); ;
+        }
+
+        [Fact]
+        public void ApproveShouldThrowBadRequestWhenEmployeeIsNull()
+        {
+            MyController<EmployeeController>
+                .Instance()
+                .WithUser()
+                .Calling(c => c.Approve("1"))
+                .ShouldReturn()
+                .BadRequest();
         }
 
         [Fact]
         public void DeleteShouldRedirectWithValidInformation()
         {
-            var user = NewUser();
+            var user = MockedData.GetApprovedUser();
 
             MyController<EmployeeController>
                 .Instance()
@@ -133,16 +167,15 @@ namespace WorkPortal.Tests.Controllers.Admin
                 .ShouldReturn()
                 .Redirect(redirect => redirect.To<EmployeeController>(e => e.All())); ;
         }
-
-        private User NewUser()
-            => new User()
+        [Fact]
+        public void DeleteShouldThrowBadRequestWhenEmployeeIsNull()
         {
-            Email = "asd@abv.bg",
-            FirstName = "FirstName",
-            LastName = "LastName",
-            DateOfBirth = DateTime.Parse("12/04/1989"),
-            PasswordHash = "asd123",
-        };
-
+            MyController<EmployeeController>
+                .Instance()
+                .WithUser()
+                .Calling(c => c.Delete("1"))
+                .ShouldReturn()
+                .BadRequest();
+        }
     }
 }

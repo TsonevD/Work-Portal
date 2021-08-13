@@ -108,7 +108,6 @@ namespace WorkPortal.Controllers
             }
 
             var userId = employeeService.UserId(getId);
-
             var isByUser = annualLeaveService.IsByUser(id, userId);
 
             if (!isByUser && !User.IsAdmin())
@@ -116,6 +115,10 @@ namespace WorkPortal.Controllers
                 return BadRequest();
             }
 
+            if (!ModelState.IsValid)
+            {
+                return View(annualLeave);
+            }
             annualLeaveService.Edit(id, annualLeave, userId);
 
             return RedirectToAction(nameof(All));

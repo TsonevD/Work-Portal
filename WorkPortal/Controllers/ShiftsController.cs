@@ -22,6 +22,12 @@ namespace WorkPortal.Controllers
         public IActionResult Mine(ShiftQueryModel query)
         {
             var id = this.User.GetId();
+            var isUserApproved = employeeService.IsUserApproved(id);
+
+            if (!isUserApproved)
+            {
+                return Unauthorized();
+            }
             var userId = this.employeeService.UserId(id);
 
             var mineShifts = this.shiftService
@@ -33,6 +39,12 @@ namespace WorkPortal.Controllers
         [Authorize]
         public IActionResult Details(int id)
         {
+            var userId = this.User.GetId();
+            var isUserApproved = employeeService.IsUserApproved(userId);
+            if (!isUserApproved)
+            {
+                return Unauthorized();
+            }
             var shift = shiftService.Details(id);
            
             return View(shift);

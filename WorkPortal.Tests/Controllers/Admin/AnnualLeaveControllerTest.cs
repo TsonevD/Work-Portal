@@ -29,6 +29,15 @@ namespace WorkPortal.Tests.Controllers.Admin
             .View();
 
         [Fact]
+        public void AllShouldReturnUnAuthorizedWhenUserIsNotAdmin()
+            => MyController<AnnualLeaveController>
+            .Instance()
+            .WithUser()
+            .Calling(c => c.All())
+            .ShouldReturn()
+            .Unauthorized();
+
+        [Fact]
         public void ApproveShouldRedirectWithValidModel()
             =>
                 MyController<AnnualLeaveController>
@@ -43,6 +52,15 @@ namespace WorkPortal.Tests.Controllers.Admin
             .Calling(c => c.Approve(1))
             .ShouldReturn()
             .Redirect(redirect => redirect.To<AnnualLeaveController>(a => a.All()));
+
+        [Fact]
+        public void ApproveShouldReturnUnAuthorizedWhenUserIsNotAdmin()
+                     => MyController<AnnualLeaveController>
+                     .Instance()
+                     .WithUser()
+                     .Calling(c => c.Approve(1))
+                     .ShouldReturn()
+                     .Unauthorized();
 
         [Fact]
         public void DeclineShouldRedirectWithValidModel()
@@ -60,5 +78,13 @@ namespace WorkPortal.Tests.Controllers.Admin
               .ShouldReturn()
               .Redirect(redirect => redirect.To<AnnualLeaveController>(a => a.All()));
 
+        [Fact]
+        public void DeclineShouldReturnUnAuthorizedWhenUserIsNotAdmin()
+                 => MyController<AnnualLeaveController>
+                 .Instance()
+                 .WithUser()
+                 .Calling(c => c.Decline(1))
+                 .ShouldReturn()
+                 .Unauthorized();
     }
 }
