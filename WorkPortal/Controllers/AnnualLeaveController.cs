@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using WorkPortal.Infrastructure;
 using WorkPortal.Models.AnnualLeave;
@@ -11,11 +12,12 @@ namespace WorkPortal.Controllers
     {
         private readonly IAnnualLeaveService annualLeaveService;
         private readonly IEmployeeService employeeService;
-
-        public AnnualLeaveController(IAnnualLeaveService service, IEmployeeService employeeService)
+        private readonly IEmailSender emailSender;
+        public AnnualLeaveController(IAnnualLeaveService service, IEmployeeService employeeService, IEmailSender emailSender)
         {
             this.annualLeaveService = service;
             this.employeeService = employeeService;
+            this.emailSender = emailSender;
         }
 
 

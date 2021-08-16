@@ -10,7 +10,7 @@ namespace WorkPortal.Services.Employees
     {
         Task AdminAddUser(AddEmployeeInputModel employee);
         void AdminDeleteUser(User user);
-        void AdminApproveUser(User user);
+        Task AdminApproveUser(User user);
 
         bool IsUserApproved(string userId);
 

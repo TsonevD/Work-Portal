@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WorkPortal.Data.Migrations
 {
+    [ExcludeFromCodeCoverage]
+
     public partial class ImplementedDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

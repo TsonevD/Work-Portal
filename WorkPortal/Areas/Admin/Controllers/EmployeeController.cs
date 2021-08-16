@@ -67,6 +67,8 @@ namespace WorkPortal.Areas.Admin.Controllers
             employeeService
                 .AdminApproveUser(employee);
 
+
+
             return RedirectToAction(nameof(All));
         }
 

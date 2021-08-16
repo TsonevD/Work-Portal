@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using WorkPortal.Models.AnnualLeave;
 using WorkPortal.Services.AnnualLeaves.Models;
 
@@ -17,9 +18,9 @@ namespace WorkPortal.Services.AnnualLeaves
 
         AnnualLeaveDetailsServiceModel EditDetails(int id, int userId);
 
-        void Approve(int id);
+        Task Approve(int id);
 
-        void Decline(int id);
+        Task Decline(int id);
 
         void Delete(int id);
 

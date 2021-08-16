@@ -2,8 +2,10 @@
 using WorkPortal.Data;
 using WorkPortal.Services.AnnualLeaves.Models;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using WorkPortal.Models.AnnualLeave;
 using Models;
 using Models.Enums;
@@ -14,11 +16,15 @@ namespace WorkPortal.Services.AnnualLeaves
     {
         private readonly WorkPortalDbContext data;
         private readonly IConfigurationProvider mapper;
+        private readonly IEmailSender emailSender;
 
-        public AnnualLeaveService(WorkPortalDbContext data, IConfigurationProvider mapper)
+
+        public AnnualLeaveService(WorkPortalDbContext data, IConfigurationProvider mapper, 
+            IEmailSender emailSender)
         {
             this.data = data;
             this.mapper = mapper;
+            this.emailSender = emailSender;
         }
 
         public ICollection<AllAnnualLeavesServiceModel> All()
@@ -71,22 +77,22 @@ namespace WorkPortal.Services.AnnualLeaves
                 .ProjectTo<AnnualLeaveDetailsServiceModel>(this.mapper)
                 .FirstOrDefault();
 
-        public void Approve(int id)
+        public async Task Approve(int id)
         {
             var annualLeave = this.data.AnnualLeaves.Find(id);
-
             annualLeave.Status = AnnualLeaveStatus.Approved;
-            
-            this.data.SaveChanges();
+            await this.data.SaveChangesAsync();
+
+            await SendConfirmationEmail(annualLeave);
         }
 
-        public void Decline(int id)
+        public async Task Decline(int id)
         {
             var annualLeave = this.data.AnnualLeaves.Find(id);
-
             annualLeave.Status = AnnualLeaveStatus.Declined;
 
-            this.data.SaveChanges();
+            await this.data.SaveChangesAsync();
+            await SendConfirmationEmail(annualLeave);
         }
 
         public void Edit(int id , AnnualLeaveInputModel annualLeaveEdit, int userId)
@@ -114,6 +120,15 @@ namespace WorkPortal.Services.AnnualLeaves
         public bool IsByUser(int id, int userId)
             => this.data.AnnualLeaves
                 .Any(x => x.Id == id && x.EmployeeId == userId);
+
+        private async Task SendConfirmationEmail(AnnualLeave leave)
+        {
+            var subject = $"Annual leave {leave.Status}";
+            var msg = $"Your request for ${leave.Type} for {leave.DaysToBeTaken} days has been {leave.Status}!";
+            var userEmail = leave.Employee.User.Email;
+
+            await emailSender.SendEmailAsync(userEmail, subject, msg);
+        }
 
     }
 }

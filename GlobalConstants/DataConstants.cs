@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 
 namespace GlobalConstants
 {
+    [ExcludeFromCodeCoverage]
     public abstract class DataConstants
     {
         public const string DefaultDecimalValue = "decimal(18,2)";
@@ -60,5 +63,6 @@ namespace GlobalConstants
 
         public const int TownNameMinLength = 3;
         public const int TownNameMaxLength = 30;
+
     }
 }

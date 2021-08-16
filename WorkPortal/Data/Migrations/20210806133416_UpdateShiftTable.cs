@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace WorkPortal.Data.Migrations
 {
+    [ExcludeFromCodeCoverage]
     public partial class UpdateShiftTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

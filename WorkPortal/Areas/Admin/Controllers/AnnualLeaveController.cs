@@ -7,7 +7,6 @@ namespace WorkPortal.Areas.Admin.Controllers
 {
     using static AdminConstants;
 
-
     [Area(AreaName)]
     [Authorize(Roles = AdministratorRoleName)]
     public class AnnualLeaveController : Controller
@@ -17,7 +16,7 @@ namespace WorkPortal.Areas.Admin.Controllers
         public AnnualLeaveController(IAnnualLeaveService annualLeaveService)
             => this.annualLeaveService = annualLeaveService;
 
-   
+
         public IActionResult All()
         {
             if (!this.User.IsAdmin())
@@ -40,6 +39,7 @@ namespace WorkPortal.Areas.Admin.Controllers
             }
 
             this.annualLeaveService.Approve(id);
+            
 
             return RedirectToAction(nameof(All));
         }
@@ -55,5 +55,6 @@ namespace WorkPortal.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(All));
         }
+
     }
 }
