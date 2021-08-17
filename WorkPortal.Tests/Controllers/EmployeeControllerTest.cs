@@ -59,7 +59,7 @@ namespace WorkPortal.Tests.Controllers
             {
                 Phone = phone,
                 Gender = gender,
-                ImageUrl = imageUrl,
+                ProfilePictureUrl = imageUrl,
                 HireDate = DateTime.Parse(hireDate),
                 JobTitle = jobTitle,
                 StreetName = streetName,

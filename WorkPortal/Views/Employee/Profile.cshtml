@@ -30,7 +30,7 @@
 {
 <div class="page-content">
     <div class="d-flex align-items-center mobile-view">
-        <img url="@Model.ImageUrl" alt="Profile-Pic" class="profile-pic rounded-circle mr-md-4 mr-sm-0" height="200" width="200">
+        <img src="@Model.ProfilePictureUrl" alt="Profile-Pic" class="profile-pic rounded-circle mr-md-4 mr-sm-0" height="200" width="200">
     </div>
     <div class="page-content profile-view">
         <div class="row">
@@ -65,11 +65,11 @@
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-3">
                                             <label class="pmd-list-subtitle">Email</label>
-                                            <p class="pmd-list-title"><a href="mailto:marie@gmail.com" title="marie@xyz.com">@Model.Email</a></p>
+                                            <p class="pmd-list-title"><a href="@Model.Email" title="@Model.Email">@Model.Email</a></p>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-3">
                                             <label class="pmd-list-subtitle">Date of Birth</label>
-                                            <p class="pmd-list-title">16<sup>th</sup>@Model.DateOfBirth.ToString("d", CultureInfo.InvariantCulture)</p>
+                                            <p class="pmd-list-title">@Model.DateOfBirth.ToString("d", CultureInfo.InvariantCulture)</p>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-3">
                                             <label class="pmd-list-subtitle">Gender</label>
@@ -85,10 +85,6 @@
                                     </div>
                                     <!-- View Card -->
                                     <div class="row view-employee-card">
-                                        <div class="col-12 col-md-6 col-lg-3">
-                                            <label class="pmd-list-subtitle">Employee Enrollment ID</label>
-                                            <p class="pmd-list-title">XYZ - 1111</p>
-                                        </div>
                                         <div class="col-12 col-md-6 col-lg-3">
                                             <label class="pmd-list-subtitle">Date of Joining</label>
                                             <p class="pmd-list-title">@Model.HireDate.ToString("d", CultureInfo.InvariantCulture)</p>

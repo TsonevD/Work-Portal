@@ -18,7 +18,7 @@ namespace WorkPortal.Services.Employees.Models
         public Gender Gender { get; set; }
         [Required]
         [Url]
-        public string ImageUrl { get; set; }
+        public string ProfilePictureUrl { get; set; }
         public DateTime HireDate { get; set; }
         [Required]
         [StringLength(JobTitleMaxLength, MinimumLength = JobTitleMinLength)]

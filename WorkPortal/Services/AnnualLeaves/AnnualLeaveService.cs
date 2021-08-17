@@ -55,6 +55,7 @@ namespace WorkPortal.Services.AnnualLeaves
 
             var newLeaveRequest = new AnnualLeave()
             {
+                Employee = employee,
                 EmployeeId = employee.Id,
                 StartDate = annualLeave.StartDate,
                 EndDate = annualLeave.EndDate,
@@ -79,20 +80,22 @@ namespace WorkPortal.Services.AnnualLeaves
 
         public async Task Approve(int id)
         {
+            ;
             var annualLeave = this.data.AnnualLeaves.Find(id);
             annualLeave.Status = AnnualLeaveStatus.Approved;
-            await this.data.SaveChangesAsync();
 
             await SendConfirmationEmail(annualLeave);
+            await this.data.SaveChangesAsync();
         }
 
         public async Task Decline(int id)
         {
+            ;
             var annualLeave = this.data.AnnualLeaves.Find(id);
             annualLeave.Status = AnnualLeaveStatus.Declined;
 
-            await this.data.SaveChangesAsync();
             await SendConfirmationEmail(annualLeave);
+            await this.data.SaveChangesAsync();
         }
 
         public void Edit(int id , AnnualLeaveInputModel annualLeaveEdit, int userId)
@@ -125,7 +128,7 @@ namespace WorkPortal.Services.AnnualLeaves
         {
             var subject = $"Annual leave {leave.Status}";
             var msg = $"Your request for ${leave.Type} for {leave.DaysToBeTaken} days has been {leave.Status}!";
-            var userEmail = leave.Employee.User.Email;
+            var userEmail = leave.Employee.User.Email; 
 
             await emailSender.SendEmailAsync(userEmail, subject, msg);
         }

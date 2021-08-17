@@ -54,8 +54,9 @@ namespace WorkPortal.Services.Employees
                 ManagerId = employee.ManagerId,
                 DepartmentId = employee.DepartmentId,
                 Phone = employee.Phone,
-                ProfilePictureUrl = employee.ImageUrl,
+                ProfilePictureUrl = employee.ProfilePictureUrl,
                 UserId = user.Id,
+                User = user,
                 Address = new Address()
                 {
                     PostCode = employee.PostCode,
@@ -98,9 +99,12 @@ namespace WorkPortal.Services.Employees
 
         public void CompleteProfile(ProfileServiceModel profile, string userId)
         {
+            var user = this.data.Users.Find(userId);
+
             var employee = new Employee()
             {
                 UserId = userId,
+                User = user,
                 MiddleName = profile.MiddleName,
                 Gender = profile.Gender,
                 HireDate = profile.HireDate,
@@ -108,7 +112,7 @@ namespace WorkPortal.Services.Employees
                 ManagerId = profile.ManagerId,
                 DepartmentId = profile.DepartmentId,
                 Phone = profile.Phone,
-                ProfilePictureUrl = profile.ImageUrl,
+                ProfilePictureUrl = profile.ProfilePictureUrl,
                 Address = new Address()
                 {
                     PostCode = profile.PostCode,
