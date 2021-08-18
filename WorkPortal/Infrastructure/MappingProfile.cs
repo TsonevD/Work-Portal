@@ -3,6 +3,7 @@ using Models;
 using WorkPortal.Models.AnnualLeave;
 using WorkPortal.Services.AnnualLeaves.Models;
 using WorkPortal.Services.Employees.Models;
+using WorkPortal.Services.Payslips.Models;
 using WorkPortal.Services.Shifts.Models;
 
 namespace WorkPortal.Infrastructure
@@ -33,17 +34,18 @@ namespace WorkPortal.Infrastructure
                 .ForMember(x=>x.TownName,
                     cfg=>cfg.MapFrom(x=>x.Address.Town.Name));
 
-            this.CreateMap<Shift, ShiftAssignModel>();
-            this.CreateMap<Shift, ShiftQueryModel>();
-
-            this.CreateMap<Location, LocationQueryModel>();
-
             this.CreateMap<Employee, EmployeeServiceModel>()
                 .ForMember(x=>x.UserFirstName,
                     cfg=>cfg.MapFrom(x=>x.User.FirstName))
                 .ForMember(x => x.UserLastName,
                     cfg => cfg.MapFrom(x => x.User.LastName));
 
+            this.CreateMap<Location, LocationQueryModel>();
+
+            this.CreateMap<Payslip, PayslipServiceModel>();
+
+            this.CreateMap<Shift, ShiftAssignModel>();
+            this.CreateMap<Shift, ShiftQueryModel>();
         }
     }
 }

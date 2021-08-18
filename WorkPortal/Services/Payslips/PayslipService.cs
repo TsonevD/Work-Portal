@@ -7,6 +7,8 @@ using Models;
 using Models.Enums;
 using WorkPortal.Data;
 using WorkPortal.Services.AnnualLeaves.Models;
+using WorkPortal.Services.Employees;
+using WorkPortal.Services.Payslips.Models;
 using WorkPortal.Services.Shifts;
 using WorkPortal.Services.Shifts.Models;
 
@@ -41,7 +43,8 @@ namespace WorkPortal.Services.Payslips
         public ICollection<AnnualLeaveServiceModel> EmployeeAnnualLeave(int id, int monthId)
         {
             var leaves = this.data.AnnualLeaves
-                .Where(x => x.EmployeeId == id && x.EndDate.Month == monthId
+                .Where(x => x.EmployeeId == id && x.Type != AnnualLeaveType.UnpaidLeave
+                            && x.EndDate.Month == monthId
                     && x.Type != AnnualLeaveType.UnpaidLeave)
                 .ProjectTo<AnnualLeaveServiceModel>(mapper)
                 .ToList();
@@ -60,10 +63,20 @@ namespace WorkPortal.Services.Payslips
             return shifts;
         }
 
+        public ICollection<PayslipServiceModel> EmployeePayslips(int id)
+        {
+            var payslips = this.data.Payslips
+                .Where(x => x.EmployeeId == id)
+                .ProjectTo<PayslipServiceModel>(mapper)
+                .ToList();
+
+            return payslips;
+        }
+
         public (decimal, decimal) GetAnnualLeaveData(int id, int monthId)
         {
             var allAnnualLeaves = this.data.AnnualLeaves
-                .Where(x => x.EmployeeId == id
+                .Where(x => x.EmployeeId == id && x.Type != AnnualLeaveType.UnpaidLeave
                             && x.EndDate.Month == monthId)
                 .ToList();
 

@@ -5,7 +5,7 @@ using Models.Enums;
 
 namespace Models
 {
-    using static DataConstants;
+    using static DataConstants.AnnualLeave;
     public class AnnualLeave
     {
         public int Id { get; init; }
@@ -14,10 +14,10 @@ namespace Models
 
         public DateTime EndDate { get; set; }
 
-        [MaxLength(DataConstants.AnnualLeave.DaysMaxValue)]
+        [MaxLength(DaysMaxValue)]
         public int DaysToBeTaken { get; set; }
 
-        [MaxLength(DataConstants.AnnualLeave.DaysMaxValue)]
+        [MaxLength(DaysMaxValue)]
         public int? RemainingDays { get; set; }
         
         [Required]
@@ -27,7 +27,6 @@ namespace Models
 
         public AnnualLeaveType Type { get; set; }
 
-        [Required]
         public int EmployeeId { get; set; }
 
         public Employee Employee { get; set; }

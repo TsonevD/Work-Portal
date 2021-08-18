@@ -40,8 +40,6 @@ namespace GlobalConstants
         public const int CompanyMinLength = 2;
         public const int CompanyMaxLength = 30;
 
-
-
         public const int PhoneMinLength = 10;
         public const int PhoneMaxLength = 36;
 
@@ -49,17 +47,18 @@ namespace GlobalConstants
         public const double ShiftMinHours = 0;
         public const double ShiftMaxHours = 16;
 
+        public const int MonthsMinValue = 1;
+        public const int MonthsMaxValue = 12;
+
+
         public const double RatePerHourMinValue = 10.00;
         public const double RatePerHourMaxValue = 100.00;
 
         public const int StaffNeededMinValue = 1;
         public const int StaffNeededMaxValue = 20;
 
-
-
         public const int JobTitleMinLength = 2;
         public const int JobTitleMaxLength = 25;
-
 
         public const int TownNameMinLength = 3;
         public const int TownNameMaxLength = 30;

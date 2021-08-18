@@ -38,11 +38,12 @@
                     }
                     @if (User.Identity.IsAuthenticated && !User.IsAdmin())
                     {
-                        <li class="nav-item float-md-left "><a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Profile">My Profile</a></li>
+                        <li class="nav-item float-md-left "><a class="nav-link text-dark"asp-controller="Employee" asp-action="Profile">My Profile</a></li>
                         if (isUserApproved)
                         {
-                            <li class="nav-item float-md-left "><a class="nav-link text-dark" asp-area="" asp-controller="Shifts" asp-action="Mine">Shifts</a></li>
-                            <li class="nav-item float-md-left "><a class="nav-link text-dark" asp-area="" asp-controller="AnnualLeave" asp-action="All">Annual Leave</a></li>
+                            <li class="nav-item float-md-left "><a class="nav-link text-dark" asp-controller="Shifts" asp-action="Mine">Shifts</a></li>
+                            <li class="nav-item float-md-left "><a class="nav-link text-dark" asp-controller="AnnualLeave" asp-action="All">Annual Leave</a></li>
+                            <li class="nav-item float-md-left "><a class="nav-link text-dark" asp-controller="Payslip" asp-action="Mine">Payslips</a></li>
                         }
                     }
 
@@ -80,8 +81,6 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js"></script>
-
-
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

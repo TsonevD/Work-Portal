@@ -18,7 +18,6 @@ namespace WorkPortal.Services.AnnualLeaves
         private readonly IConfigurationProvider mapper;
         private readonly IEmailSender emailSender;
 
-
         public AnnualLeaveService(WorkPortalDbContext data, IConfigurationProvider mapper, 
             IEmailSender emailSender)
         {
@@ -46,8 +45,6 @@ namespace WorkPortal.Services.AnnualLeaves
 
             return mine;
         }
-
-
 
         public int Add(AnnualLeaveInputModel annualLeave , string userById)
         {
@@ -80,7 +77,6 @@ namespace WorkPortal.Services.AnnualLeaves
 
         public async Task Approve(int id)
         {
-            ;
             var annualLeave = this.data.AnnualLeaves.Find(id);
             annualLeave.Status = AnnualLeaveStatus.Approved;
 
@@ -90,7 +86,6 @@ namespace WorkPortal.Services.AnnualLeaves
 
         public async Task Decline(int id)
         {
-            ;
             var annualLeave = this.data.AnnualLeaves.Find(id);
             annualLeave.Status = AnnualLeaveStatus.Declined;
 
@@ -128,7 +123,9 @@ namespace WorkPortal.Services.AnnualLeaves
         {
             var subject = $"Annual leave {leave.Status}";
             var msg = $"Your request for ${leave.Type} for {leave.DaysToBeTaken} days has been {leave.Status}!";
-            var userEmail = leave.Employee.User.Email; 
+
+            var employee = this.data.Employees.First(x=>x.Id==leave.EmployeeId);
+            var userEmail = this.data.Users.First(x=>x.Id == employee.UserId).Email;
 
             await emailSender.SendEmailAsync(userEmail, subject, msg);
         }

@@ -56,7 +56,6 @@ namespace WorkPortal.Services.Employees
                 Phone = employee.Phone,
                 ProfilePictureUrl = employee.ProfilePictureUrl,
                 UserId = user.Id,
-                User = user,
                 Address = new Address()
                 {
                     PostCode = employee.PostCode,
@@ -104,7 +103,6 @@ namespace WorkPortal.Services.Employees
             var employee = new Employee()
             {
                 UserId = userId,
-                User = user,
                 MiddleName = profile.MiddleName,
                 Gender = profile.Gender,
                 HireDate = profile.HireDate,

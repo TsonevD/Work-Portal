@@ -1,6 +1,6 @@
 ﻿using GlobalConstants;
-using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Models
@@ -15,6 +15,7 @@ namespace Models
 
         public int Year { get; init; }
 
+        [Range(MonthsMinValue,maximum:MonthsMaxValue)]
         public int Month { get; set; }
 
         [Column(TypeName = DefaultDecimalValue)]

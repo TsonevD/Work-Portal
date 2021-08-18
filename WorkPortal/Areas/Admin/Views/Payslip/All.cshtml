@@ -7,78 +7,101 @@
 
 <div id="content" class="pmd-content section-container center">
     <br />
-    <div class="container">
-        <form method="post">
-            @if (Model.AnnualLeave.Any())
-            {
-                <section class="component-section" id="employee">
-                    <h2>All Annual Leaves</h2>
-                    <table class="table pmd-table table-hover pmd-table-card">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>Leave Type</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Reason</th>
-                                <th>No of Days</th>
-                                <th>Status</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        @foreach (var leave in Model.AnnualLeave)
-                        {
-                            <tbody>
-                                <tr>
-                                    <td data-title="Leave Type">@leave.Type.GetDisplayName()</td>
-                                    <td data-title="Start Date">@leave.StartDate.ToString("D", CultureInfo.InvariantCulture)</td>
-                                    <td data-title="End Date">@leave.EndDate.ToString("D", CultureInfo.InvariantCulture)</td>
-                                    <td data-title="Reason">@leave.Reason</td>
-                                    <td data-title="No of Days">@leave.DaysToBeTaken</td>
-                                    <td data-title="Status">@leave.Status</td>
-                                </tr>
-                            </tbody>
-                        }
-                    </table>
-                </section>
-            }
-            <section class="component-section">
-                <h2>All Shifts</h2>
-                <div class="component">
-                    <table class="table pmd-table table-hover pmd-table-card">
-                        <thead class="thead-light">
-                            <tr>
-                                <th scope="col">Date</th>
-                                <th scope="col">Rate</th>
-                                <th scope="col">Shift Times</th>
-                                <th scope="col">Working Hours</th>
-                                <th scope="col">Address</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var shift in Model.Shifts)
-                            {
-                                <tr class="table-light">
-                                    <td>@shift.ShiftDate.ToString("M", CultureInfo.InvariantCulture)</td>
-                                    <td>@shift.RatePerHour $ </td>
-                                    <td>@shift.StartTime - @shift.FinishTime</td>
-                                    <td>@shift.HoursWorking</td>
-                                    <td>
-                                        @shift.Location.Town
-                                        @shift.Location.StreetName № @shift.Location.StreetNumber, @shift.Location.PostCode
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-            <div class="form-group">
-                <button asp-area="Admin" asp-controller="Payslip" asp-action="Generate" asp-route-employeeId="@Model.EmployeeId" asp-route-monthId="@Model.MonthId"
-                        type="submit" class="btn btn-outline-info btn-sm float-sm-right">
-                    Generate Payslip
-                </button>
-            </div>
-        </form>
+    @if (!Model.AnnualLeave.Any() && !Model.Shifts.Any())
+    {
+        <div class="text-center align-self-center mt-5">
+            <svg version="1.1" id="Layer_1" x="0px" y="0px" width="100px" height="100px" viewBox="-58 -58 140 140" enable-background="new -58 -58 140 140" xml:space="preserve">
+            <circle fill="#E7E9EF" cx="12" cy="12" r="70"></circle>
+            <g opacity="0.4">
+            <g id="XMLID_233_">
 
-    </div>
+            <circle id="XMLID_235_" fill="none" stroke="#3075BA" stroke-width="6" stroke-miterlimit="10" cx="11.998" cy="-3.917" r="20.464"></circle>
+                    </g>
+            <g id="XMLID_236_">
+            <path id="XMLID_237_" fill="none" stroke="#3075BA" stroke-width="6" stroke-miterlimit="10" d="M12,16.55
+                            c-17.581,0-31.833,14.249-31.833,31.831h63.667C43.834,30.799,29.58,16.55,12,16.55z"></path>
+                    </g>
+                </g>
+            </svg>
+            <h2 class="mt-3 mb-3">There isn`t any shifts and annual leave for this employee!</h2>
+            <a asp-area="Admin" asp-controller="Payslip" asp-action="Employees" class="btn btn-primary pmd-ripple-effect pmd-btn-raised mt-3">Back</a>
+        </div>
+    }
+    else
+    {
+        <div class="container">
+            <form method="post">
+                @if (Model.AnnualLeave.Any())
+                {
+                    <section class="component-section" id="employee">
+                        <h2>All Annual Leaves</h2>
+                        <table class="table pmd-table table-hover pmd-table-card">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Leave Type</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Reason</th>
+                                    <th>No of Days</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            @foreach (var leave in Model.AnnualLeave)
+                            {
+                                <tbody>
+                                    <tr>
+                                        <td data-title="Leave Type">@leave.Type.GetDisplayName()</td>
+                                        <td data-title="Start Date">@leave.StartDate.ToString("D", CultureInfo.InvariantCulture)</td>
+                                        <td data-title="End Date">@leave.EndDate.ToString("D", CultureInfo.InvariantCulture)</td>
+                                        <td data-title="Reason">@leave.Reason</td>
+                                        <td data-title="No of Days">@leave.DaysToBeTaken</td>
+                                        <td data-title="Status">@leave.Status</td>
+                                    </tr>
+                                </tbody>
+                            }
+                        </table>
+                    </section>
+                }
+                <section class="component-section">
+                    <h2>All Shifts</h2>
+                    <div class="component">
+                        <table class="table pmd-table table-hover pmd-table-card">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Rate</th>
+                                    <th scope="col">Shift Times</th>
+                                    <th scope="col">Working Hours</th>
+                                    <th scope="col">Address</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var shift in Model.Shifts)
+                                {
+                                    <tr class="table-light">
+                                        <td>@shift.ShiftDate.ToString("M", CultureInfo.InvariantCulture)</td>
+                                        <td>@shift.RatePerHour $ </td>
+                                        <td>@shift.StartTime - @shift.FinishTime</td>
+                                        <td>@shift.HoursWorking</td>
+                                        <td>
+                                            @shift.Location.Town
+                                            @shift.Location.StreetName № @shift.Location.StreetNumber, @shift.Location.PostCode
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <div class="form-group">
+                    <button asp-area="Admin" asp-controller="Payslip" asp-action="Generate" asp-route-employeeId="@Model.EmployeeId" asp-route-monthId="@Model.MonthId"
+                            type="submit" class="btn btn-outline-info btn-sm float-sm-right">
+                        Generate Payslip
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    }
 </div>
