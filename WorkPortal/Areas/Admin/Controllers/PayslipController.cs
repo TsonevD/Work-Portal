@@ -52,7 +52,6 @@ namespace WorkPortal.Areas.Admin.Controllers
             });
         }
 
-        [HttpPost]
         public IActionResult Generate(int employeeId, int monthId)
         {
             if (!User.IsAdmin())

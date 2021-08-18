@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.Operations;
 using WorkPortal.Infrastructure;
 using WorkPortal.Services.Employees;
 using WorkPortal.Services.Payslips;
@@ -24,8 +23,15 @@ namespace WorkPortal.Controllers
         {
             var id = this.User.GetId();
             var userId = employeeService.UserId(id);
+            var isUserApproved = employeeService.IsUserApproved(id);
 
-            var payslips = payslipService.EmployeePayslips(userId);
+            if (id == null || !isUserApproved)
+            {
+                return Unauthorized();
+            }
+
+            var payslips = payslipService
+                .EmployeePayslips(userId);
 
             return View(payslips);
         }

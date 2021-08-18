@@ -40,7 +40,7 @@ namespace WorkPortal.Tests.Controllers.Admin
                  .Calling(c => c.All())
                  .ShouldReturn()
                  .Unauthorized();
-        
+
         [Fact]
         public void GetAddShouldReturnUnAuthorizedWhenUserIsNotAdmin()
               => MyController<ShiftController>
@@ -72,7 +72,7 @@ namespace WorkPortal.Tests.Controllers.Admin
                           .View();
 
         [Theory]
-        [InlineData("14/08/2021", "10:00", "18:00", 8.30, 13.50, "First Avenue", 63, "W1W", "London", "H2B")]
+        [InlineData("14/10/2021", "10:00", "18:00", 8.30, 13.50, "First Avenue", 63, "W1W", "London", "H2B")]
         public void PostAddShouldRedirectAndReturnValidModel(
             string shiftDate,
             string startTime,
@@ -147,7 +147,7 @@ namespace WorkPortal.Tests.Controllers.Admin
         public void GetAssignShouldReturnCorrectView()
         {
             var shift = MockedData.GetShift();
-            
+
             MyController<ShiftController>
            .Instance(controller => controller
                       .WithUser(user => user.WithIdentifier(AreaName)
@@ -169,8 +169,8 @@ namespace WorkPortal.Tests.Controllers.Admin
            .Instance(controller => controller
                        .WithUser(user => user.WithIdentifier(AreaName)
                        .InRole(AdministratorRoleName))
-                       .WithData(data=>data.WithSet<Shift>(s =>s.Add(shift)))
-                       .WithData(em=>em.WithSet<Employee>(e=>e.Add(employee))
+                       .WithData(data => data.WithSet<Shift>(s => s.Add(shift)))
+                       .WithData(em => em.WithSet<Employee>(e => e.Add(employee))
                        ))
            .Calling(c => c.Assign(shift.Id, employee.Id))
            .ShouldHave()
