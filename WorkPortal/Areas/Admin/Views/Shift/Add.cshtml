@@ -2,14 +2,13 @@
 
 @{
     ViewBag.Title = "Add Shift";
-    @Html.DisplayFor(m => m.RatePerHour)
 }
 
 <div id="content" class="pmd-content admin section-container">
     <h1 class="text-center mb-3">New Shift</h1>
     <div class="page-content">
         <div class="card pmd-card">
-            <form name="myForm" id="myForm" method="post" action="" novalidate="novalidate">
+            <form name="myForm" id="myForm" method="post">
                 <div class="card-body ">
                     <div class="row">
                         <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed col-7 mt-5">
@@ -35,13 +34,13 @@
                         </div>
                         <div class="form-group col-4 mt-3 mb-3">
                             <label asp-for="RatePerHour">Rate per hour</label>
-                            <input asp-for="RatePerHour" type="text" class="form-control" value="0.00">
+                            <input asp-for="RatePerHour" type="text" class="form-control">
                             <span asp-validation-for="RatePerHour" class="small text-danger"></span>
                             <span class="pmd-textfield-focused"></span>
                         </div>
                         <div class="form-group col-4 mt-3 mb-3">
                             <label asp-for="HoursWorking">Total hours</label>
-                            <input asp-for="HoursWorking" class="form-control" type="text" value="0">
+                            <input asp-for="HoursWorking" class="form-control" type="text">
                             <span asp-validation-for="HoursWorking" class="small text-danger"></span>
                             <span class="pmd-textfield-focused"></span>
                         </div>

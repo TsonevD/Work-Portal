@@ -1,0 +1,84 @@
+﻿@using System.Globalization
+@using Models.Enums
+@model PayslipQueryModel
+@{
+    ViewBag.Title = "Payslip";
+}
+
+<div id="content" class="pmd-content section-container center">
+    <br />
+    <div class="container">
+        <form method="post">
+            @if (Model.AnnualLeave.Any())
+            {
+                <section class="component-section" id="employee">
+                    <h2>All Annual Leaves</h2>
+                    <table class="table pmd-table table-hover pmd-table-card">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Leave Type</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Reason</th>
+                                <th>No of Days</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        @foreach (var leave in Model.AnnualLeave)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td data-title="Leave Type">@leave.Type.GetDisplayName()</td>
+                                    <td data-title="Start Date">@leave.StartDate.ToString("D", CultureInfo.InvariantCulture)</td>
+                                    <td data-title="End Date">@leave.EndDate.ToString("D", CultureInfo.InvariantCulture)</td>
+                                    <td data-title="Reason">@leave.Reason</td>
+                                    <td data-title="No of Days">@leave.DaysToBeTaken</td>
+                                    <td data-title="Status">@leave.Status</td>
+                                </tr>
+                            </tbody>
+                        }
+                    </table>
+                </section>
+            }
+            <section class="component-section">
+                <h2>All Shifts</h2>
+                <div class="component">
+                    <table class="table pmd-table table-hover pmd-table-card">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Rate</th>
+                                <th scope="col">Shift Times</th>
+                                <th scope="col">Working Hours</th>
+                                <th scope="col">Address</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var shift in Model.Shifts)
+                            {
+                                <tr class="table-light">
+                                    <td>@shift.ShiftDate.ToString("M", CultureInfo.InvariantCulture)</td>
+                                    <td>@shift.RatePerHour $ </td>
+                                    <td>@shift.StartTime - @shift.FinishTime</td>
+                                    <td>@shift.HoursWorking</td>
+                                    <td>
+                                        @shift.Location.Town
+                                        @shift.Location.StreetName № @shift.Location.StreetNumber, @shift.Location.PostCode
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <div class="form-group">
+                <button asp-area="Admin" asp-controller="Payslip" asp-action="Generate" asp-route-employeeId="@Model.EmployeeId" asp-route-monthId="@Model.MonthId"
+                        type="submit" class="btn btn-outline-info btn-sm float-sm-right">
+                    Generate Payslip
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>

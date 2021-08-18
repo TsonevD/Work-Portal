@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WorkPortal.Infrastructure;
 using WorkPortal.Services.Shifts;
@@ -33,6 +34,10 @@ namespace WorkPortal.Areas.Admin.Controllers
             if (!User.IsAdmin())
             {
                 return Unauthorized();
+            }
+            if (shift.ShiftDate < DateTime.UtcNow)
+            {
+                ModelState.AddModelError("Shift Date" , "You cannot add shifts for previous days.");
             }
             if (!ModelState.IsValid)
             {

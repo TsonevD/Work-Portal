@@ -15,7 +15,7 @@ namespace Models
         public DateTime EndDate { get; set; }
 
         [MaxLength(DataConstants.AnnualLeave.DaysMaxValue)]
-        public int? DaysToBeTaken { get; set; }
+        public int DaysToBeTaken { get; set; }
 
         [MaxLength(DataConstants.AnnualLeave.DaysMaxValue)]
         public int? RemainingDays { get; set; }

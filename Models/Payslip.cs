@@ -13,7 +13,9 @@ namespace Models
         [Column(TypeName = DefaultDecimalValue)]
         public decimal WorkingHoursPerMonth { get; set; }
 
-        public DateTime IssuedOn { get; init; }
+        public int Year { get; init; }
+
+        public int Month { get; set; }
 
         [Column(TypeName = DefaultDecimalValue)]
         public decimal BeforeTaxSalary { get; set; }

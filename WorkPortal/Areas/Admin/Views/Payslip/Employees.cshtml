@@ -1,0 +1,40 @@
+﻿@model PayslipAssignModel
+@{
+    ViewBag.Title = "All Employees";
+}
+
+<div id="content" class="pmd-content section-container center">
+    <br />
+    <form>
+        <div class="form-group">
+            <h2 class="text-center font-weight-bold font-italic mb-5">Generate Payslip for:</h2>
+            <select asp-for="@Model.EmployeeId" class="form-control">
+                @foreach (var employee in Model.Employees)
+                {
+                    <option value="@employee.Id">@employee.UserFirstName @employee.UserLastName - @employee.JobTitle</option>
+                }
+            </select>
+            <br />
+            <h3 class="text-center font-weight-bold font-italic mt-3 mb-5">Month</h3>
+            <select asp-for="MonthId" class="form-control">
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+            </select>
+            <br/>
+            <button asp-area="Admin" asp-controller="Payslip" asp-action="All" asp-route-employeeId="@Model.EmployeeId", asp-route-monthId="@Model.MonthId"
+                    type="submit" class="btn btn-outline-info btn-md float-sm-right">
+                Check all shifts and annual leave requests.
+            </button>
+        </div>
+    </form>
+</div>

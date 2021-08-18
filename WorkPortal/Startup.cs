@@ -14,6 +14,7 @@ using WorkPortal.Infrastructure;
 using WorkPortal.Services;
 using WorkPortal.Services.AnnualLeaves;
 using WorkPortal.Services.Employees;
+using WorkPortal.Services.Payslips;
 using WorkPortal.Services.Shifts;
 
 namespace WorkPortal
@@ -58,8 +59,9 @@ namespace WorkPortal
 
             services.AddTransient<IAnnualLeaveService, AnnualLeaveService>();
             services.AddTransient<IEmployeeService, EmployeeService>();
-            services.AddTransient<IShiftService, ShiftService>();
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<IShiftService, ShiftService>();
+            services.AddTransient<IPayslipService, PayslipService>();
 
         }
 
