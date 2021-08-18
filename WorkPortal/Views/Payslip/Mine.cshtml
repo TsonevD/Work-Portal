@@ -34,9 +34,8 @@
                     <div class="col-md-10 offset-md-1">
                         <div class="page-header text-center">
                             <h2 id="tables">
-                                for:
+                                Payslips
                             </h2>
-                            <h2 class="font-weight-bold font-italic">@Model</h2>
                             <br />
                         </div>
                         <div class="component">
@@ -55,8 +54,8 @@
                                     @foreach (var payslip in Model)
                                     {
                                         <tr class="table-light">
-                                            <td>@payslip.Year.ToString("M", CultureInfo.InvariantCulture)</td>
-                                            <td>@payslip.Month$ </td>
+                                            <td>@payslip.Year</td>
+                                            <td>@payslip.Month.ToString() </td>
                                             <td>@payslip.WorkingHoursPerMonth</td>
                                             <td>@payslip.BeforeTaxSalary</td>
                                             <td>@payslip.Taxes</td>

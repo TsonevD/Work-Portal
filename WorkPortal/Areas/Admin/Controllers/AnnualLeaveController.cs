@@ -33,6 +33,7 @@ namespace WorkPortal.Areas.Admin.Controllers
 
         public IActionResult Approve(int id)
         {
+            ;
             if (!this.User.IsAdmin())
             {
                 return Unauthorized();
@@ -42,7 +43,7 @@ namespace WorkPortal.Areas.Admin.Controllers
             
 
             return RedirectToAction(nameof(All));
-        }
+            }
 
         public IActionResult Decline(int id)
         {

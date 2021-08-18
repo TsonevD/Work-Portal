@@ -21,6 +21,7 @@ namespace WorkPortal.Controllers
         [Authorize]
         public IActionResult Mine()
         {
+            ;
             var id = this.User.GetId();
             var userId = employeeService.UserId(id);
             var isUserApproved = employeeService.IsUserApproved(id);

@@ -54,6 +54,7 @@ namespace WorkPortal.Areas.Admin.Controllers
 
         public IActionResult Generate(int employeeId, int monthId)
         {
+            ;
             if (!User.IsAdmin())
             {
                 return Unauthorized();

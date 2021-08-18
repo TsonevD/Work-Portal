@@ -35,10 +35,10 @@ namespace WorkPortal.Areas.Admin.Controllers
             {
                 return Unauthorized();
             }
-            if (shift.ShiftDate < DateTime.UtcNow)
-            {
-                ModelState.AddModelError("Shift Date" , "You cannot add shifts for previous days.");
-            }
+            //if (shift.ShiftDate < DateTime.UtcNow)
+            //{
+            //    ModelState.AddModelError("Shift Date" , "You cannot add shifts for previous days.");
+            //}
             if (!ModelState.IsValid)
             {
                 return View(shift);

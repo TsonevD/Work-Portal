@@ -75,14 +75,14 @@ namespace WorkPortal.Services.Payslips
         public (decimal, decimal) GetAnnualLeaveData(int id, int monthId)
         {
             var allAnnualLeaves = this.data.AnnualLeaves
-                .Where(x => x.EmployeeId == id && x.Type != AnnualLeaveType.UnpaidLeave
-                            && x.EndDate.Month == monthId)
+                .Where(x => x.EmployeeId == id
+                            && x.EndDate.Month == monthId
+                             && x.Type == AnnualLeaveType.PaidLeave
+                            )
                 .ToList();
 
             var totalHours = 0m;
             var totalMoney = 0m;
-            if (!allAnnualLeaves.Any()) return (totalMoney, totalHours);
-
             foreach (var leave in allAnnualLeaves)
             {
                 var leaveHours = (leave.DaysToBeTaken * HOURS_WORKING);

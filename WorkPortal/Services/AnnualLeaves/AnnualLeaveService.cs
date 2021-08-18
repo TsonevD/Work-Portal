@@ -80,17 +80,18 @@ namespace WorkPortal.Services.AnnualLeaves
             var annualLeave = this.data.AnnualLeaves.Find(id);
             annualLeave.Status = AnnualLeaveStatus.Approved;
 
-            await SendConfirmationEmail(annualLeave);
             await this.data.SaveChangesAsync();
+
+            await SendConfirmationEmail(annualLeave);
         }
 
         public async Task Decline(int id)
         {
             var annualLeave = this.data.AnnualLeaves.Find(id);
             annualLeave.Status = AnnualLeaveStatus.Declined;
+            await this.data.SaveChangesAsync();
 
             await SendConfirmationEmail(annualLeave);
-            await this.data.SaveChangesAsync();
         }
 
         public void Edit(int id , AnnualLeaveInputModel annualLeaveEdit, int userId)
