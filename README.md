@@ -41,9 +41,11 @@ Can edit or delete managers and employees.
 
 ASP.NET Core 5
 
-Entity Framework Core 5.0.9
+Entity Framework Core 5
 
 Microsoft SQL Server Express
+
+SendGrid
 
 ASP.NET Identity System
 
